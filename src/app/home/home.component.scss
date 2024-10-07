@@ -1,0 +1,37 @@
+.home {
+    height: 200vh;
+    width: 100vw;
+
+    background-color: #ffffff;
+
+
+
+    .introtext {
+
+        text-align: center;
+        padding: 2rem;
+
+        h1 {
+            font-family: "Comforta", sans-serif;
+            font-size: 1.2em;
+            margin: 0;
+        }
+        p {
+            font-family: "Roboto", sans-serif;
+            font-size: 1em;
+        }
+
+        .buttons{
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 0.5rem;
+        }
+        .trialbtn, .demobtn {
+            border: 2px solid var(--cta);
+            color: var(--cta);
+        }
+    }
+}

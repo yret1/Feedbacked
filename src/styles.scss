@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    --cta: #5d9cf3;
+    --cta-hover: #4685dd;
+    --bg: #f5f5f5;
+    --text: #333;
+    --text-light: #666;
+    --text-dark: #222;
+    --border: #ddd;
+    --border-dark: #bbb;
+
+
+    --heading {
+        font-family: "Comforta", sans-serif;
+        font-size: 1.2em;
+        margin: 0;
+        color: var(--text-dark);
+    }
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.btnbase {
+    padding: 12px 6px;
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+}
