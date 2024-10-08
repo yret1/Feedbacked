@@ -19,12 +19,22 @@
         width: 100%;
         align-items: center;
         justify-content: space-between;
+
+        @media (min-width: 768px) {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            width: 70%;
+        }
     }
 
     .desknav {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 4px;
     }
 
     .mobilenav {
@@ -34,6 +44,11 @@
     h1 {
         font-size: 1.5em;
         margin: 0;
+
+        @media (min-width: 768px) {
+            font-size: 2em;
+            font-weight: 700;
+        }
     }
 
     ul {
@@ -48,14 +63,37 @@
     }
 
     .trialbtnmob {
-        padding: 12px 6px;
-        font-weight: 500;
-        border-radius: 5px;
-        border: none;
+        box-shadow: none;
+    color: var(--white);
+    letter-spacing: .4px;
+    background-color: #2b8aff;
+    border: 0 solid #2b8aff;
+    border-radius: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px 24px;
+    font-family: "Comforta", sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow .2s;
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+    }
+
+
+    .herolog{
+        font-family: "Comfortaa", sans-serif;
+        padding: 20px 10px;
+    }
+
+    .demo {
+        background-color: rgb(216, 216, 216);
+    }
+    .trial {
         background-color: #35d290;
         color: white;
     }
-
 
 
     @media (max-width: 768px) {

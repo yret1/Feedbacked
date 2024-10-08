@@ -3,7 +3,7 @@
     <h1>Feedbacked</h1>
 
     <nav class="mobilenav">
-      <button class="trialbtnmob">Start free trial</button>
+      <button class="trialbtnmob trial">Start free trial</button>
       <button class="menu">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -26,12 +26,16 @@
     </nav>
 
     <nav class="desknav">
-      <button class="trialbtnmob">Start free trial</button>
       <ul>
         <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
         <li><a routerLink="/about" routerLinkActive="active">About</a></li>
         <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
       </ul>
+
+      <app-auth-button class="herolog" />
+
+      <button class="trialbtnmob trial">Start free trial</button>
+      <button class="trialbtnmob demo">Book a Demo</button>
     </nav>
   </section>
 </header>
