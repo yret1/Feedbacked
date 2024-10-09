@@ -9,10 +9,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAuth0({
-      domain: 'localhost:4200',
+      domain: 'dev-5eli3086mapouaf4.eu.auth0.com',
       clientId: 'G5vr8hbauoirsINJQQAZgn9d7jQMyupX',
       authorizationParams: {
-        redirect_uri: window.location.origin,
+        redirect_uri: 'localhost:4200',
       },
     }),
   ],
