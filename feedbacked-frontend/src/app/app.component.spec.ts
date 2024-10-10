@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'feedbacked' title`, () => {
+  it(`should have the 'feedbacked-frontend' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('feedbacked');
+    expect(app.title).toEqual('feedbacked-frontend');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, feedbacked');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, feedbacked-frontend');
   });
 });
