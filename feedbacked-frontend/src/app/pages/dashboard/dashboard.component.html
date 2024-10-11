@@ -1,0 +1,15 @@
+<section class="dashboard">
+  <aside class="navbar"></aside>
+  <section class="clients">
+    @for(client of user.clients; track client.name){
+    <app-clientoverviewmodal
+      client="{{ client.name }}"
+      status="{{ client.status }}"
+      issues="{{ client.issues }}"
+    />
+    }@empty {
+    <p>No clients added</p>
+    <button>Add a new client</button>
+    }
+  </section>
+</section>
