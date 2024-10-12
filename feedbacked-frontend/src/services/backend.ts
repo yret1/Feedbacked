@@ -16,10 +16,18 @@ export class BackendService {
     });
   }
 
-  getClient(studioId: string, clientEmail: string): Observable<any> {
-    return this.http.post(`https://${this.baseUrl}/client`, {
+  getClient(userId: string, clientEmail: string): Observable<any> {
+    return this.http.post(`https://${this.baseUrl}/get-client`, {
+      userId,
+      clientEmail,
+    });
+  }
+
+  clientCompleted(studioId: string, clientEmail: string, newStatus: string) {
+    return this.http.post(`https://${this.baseUrl}/update-client-status`, {
       studioId,
       clientEmail,
+      newStatus,
     });
   }
 }

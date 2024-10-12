@@ -1,0 +1,14 @@
+<section class="dashclient">
+  @if(clientData){
+
+  <section class="clientexists">
+    <app-clientdetails [clientData]="clientData"></app-clientdetails>
+  </section>
+
+  }@else {
+  <div class="no-data">
+    <p>Something went wrong. Couldnt find client</p>
+    <button [routerLink]="goBack"></button>
+  </div>
+  }
+</section>

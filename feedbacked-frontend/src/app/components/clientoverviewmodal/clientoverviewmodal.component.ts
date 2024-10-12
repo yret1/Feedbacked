@@ -1,14 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-clientoverviewmodal',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './clientoverviewmodal.component.html',
-  styleUrl: './clientoverviewmodal.component.scss',
+  styleUrls: ['./clientoverviewmodal.component.scss'],
 })
-export class ClientoverviewmodalComponent {
+export class ClientoverviewmodalComponent implements OnChanges {
   @Input() status: string = '';
   @Input() client: string = '';
   @Input() issues: string = '';
+  @Input() email: string = '';
+  @Input() userId: string = '';
+
+  link: string = '';
+
+  ngOnChanges(): void {
+    if (this.userId && this.email) {
+      this.link = `/user/${this.userId}/client/${this.email}`;
+    }
+  }
 }

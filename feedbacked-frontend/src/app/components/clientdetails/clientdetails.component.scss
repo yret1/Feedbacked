@@ -1,0 +1,74 @@
+.detailbox {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.105);
+    border-radius: 15px;
+    padding: 10px;
+    font-family: var(--main-font);
+
+    .details{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+
+
+        h1{
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+    }
+
+    .statusbox{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+    }
+    .clientbutton__status{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .issues {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: var(--main-font);
+    }
+
+    .statuschange{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        button{
+            color: white;
+            display: flex;
+            border:none;
+            justify-content: center;
+            align-items: center;
+            gap: 4px    ;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background-color: #28F6AA;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+
+            svg{
+                width: 30px;
+            }
+        }
+
+        button:hover{
+            background-color: #31ca8d;
+        }
+    }
+}
