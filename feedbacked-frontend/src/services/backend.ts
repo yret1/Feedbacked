@@ -10,13 +10,10 @@ export class BackendService {
 
   constructor(private http: HttpClient) {}
 
-  getClients(studioId: string): Observable<any> {
-    const clients = this.http.post(`https://${this.baseUrl}/clients`, {
-      studioId,
+  getClients(userId: string): Observable<any> {
+    return this.http.post(`https://${this.baseUrl}/get-clients`, {
+      userId,
     });
-    console.log(clients);
-
-    return clients;
   }
 
   getClient(studioId: string, clientEmail: string): Observable<any> {

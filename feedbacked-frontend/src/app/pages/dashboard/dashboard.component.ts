@@ -1,14 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { ClientoverviewmodalComponent } from '../../components/clientoverviewmodal/clientoverviewmodal.component';
 import { BackendService } from '../../../services/backend';
-import { HttpClient } from '@angular/common/http';
 
 interface Client {
   name: string;
   email: string;
   phone: string;
   status: string;
-  issues: any[];
+  feedbacks: any[];
 }
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +25,9 @@ export class DashboardComponent {
 
   ngOnInit() {
     this.backendService.getClients(this.clientId).subscribe((data) => {
-      this.clients = data;
+      this.clients.set(data.clients);
+
+      console.log(data);
     });
   }
 }
