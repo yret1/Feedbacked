@@ -134,9 +134,62 @@ exports.updateClientStatus = async (req, res) => {
 
 exports.deleteClient = async (req, res) => {};
 
-exports.getClients = async (req, res) => {};
+exports.getClients = async (req, res) => {
+  const { userId } = req.body;
 
-exports.getClient = async (req, res) => {};
+  if (!userId) {
+    return res.status(400).json({ message: "Please enter all fields" });
+  }
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({ message: "User does not exist" });
+    }
+
+    if (user.clients.length === 0) {
+      return res.status(400).json({ message: "No clients found", clients: [] });
+    } else {
+      return res
+        .status(200)
+        .json({ message: "Clients found", clients: user.clients });
+    }
+  } catch (error) {
+    console.error("Error getting clients:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getClient = async (req, res) => {
+  const { userId, clientEmail } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ message: "Please enter all fields" });
+  }
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({ message: "User does not exist" });
+    }
+
+    if (user.clients.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Could not find client", clients: [] });
+    } else {
+      const client = user.clients.find(
+        (client) => client.email === clientEmail
+      );
+      return res.status(200).json({ message: "Client found", client: client });
+    }
+  } catch (error) {
+    console.error("Error getting clients:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 
 exports.updateClient = async (req, res) => {};
 
