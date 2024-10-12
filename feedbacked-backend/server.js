@@ -14,7 +14,18 @@ app.use(bodyParser.json());
 const { ATLAS_URI } = process.env;
 
 app.use("/", router);
-
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  next();
+});
 mongoose
   .connect(ATLAS_URI)
   .then(() => {

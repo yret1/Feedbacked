@@ -1,6 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ClientoverviewmodalComponent } from '../../components/clientoverviewmodal/clientoverviewmodal.component';
+import { BackendService } from '../../../services/backend';
+import { HttpClient } from '@angular/common/http';
 
+interface Client {
+  name: string;
+  email: string;
+  phone: string;
+  status: string;
+  issues: any[];
+}
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -9,26 +18,15 @@ import { ClientoverviewmodalComponent } from '../../components/clientoverviewmod
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  user = {
-    email: 'gustavssondev@gmail.com',
-    password: 'password',
+  constructor(private backendService: BackendService) {}
 
-    clients: [
-      {
-        name: 'Wilner Page',
-        status: 'active',
-        issues: 2,
-      },
-      {
-        name: 'Nordisk standard',
-        status: 'active',
-        issues: 3,
-      },
-      {
-        name: 'Leo Tamburini',
-        status: 'inactive',
-        issues: 0,
-      },
-    ],
-  };
+  clientId: string = '67098ea930f92b27553d10a1';
+
+  clients = signal<Client[]>([]);
+
+  ngOnInit() {
+    this.backendService.getClients(this.clientId).subscribe((data) => {
+      this.clients = data;
+    });
+  }
 }
