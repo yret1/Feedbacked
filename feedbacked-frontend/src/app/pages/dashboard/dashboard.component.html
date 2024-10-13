@@ -1,6 +1,7 @@
 <section class="dashboard">
   <aside class="navbar"></aside>
   <section class="clients">
+    <h1 class="clienthead">Your Clients</h1>
     @for(client of clients(); track client){
     <app-clientoverviewmodal
       client="{{ client.name }}"

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../../../services/backend';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClientdetailsComponent } from '../../components/clientdetails/clientdetails.component';
+import { ClientissuesComponent } from '../../components/clientissues/clientissues.component';
 
 @Component({
   selector: 'app-clientdash',
   standalone: true,
-  imports: [RouterLink, ClientdetailsComponent],
+  imports: [RouterLink, ClientdetailsComponent, ClientissuesComponent],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
 })

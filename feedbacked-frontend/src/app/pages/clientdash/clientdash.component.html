@@ -5,6 +5,16 @@
     <app-clientdetails [clientData]="clientData"></app-clientdetails>
   </section>
 
+  <section class="issuesbox">
+    <p>Issues</p>
+
+    <section class="issues">
+      @for(issue of clientData.feedbacks; track clientData.feedbacks){
+      <app-clientissues [clientData]="clientData" />
+      }
+    </section>
+  </section>
+
   }@else {
   <div class="no-data">
     <p>Something went wrong. Couldnt find client</p>

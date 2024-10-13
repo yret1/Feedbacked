@@ -2,7 +2,11 @@
 
 
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    font-family: var(--main-font);
+    background-color: var(--background);
+    background-image: var(--background-radient);
+    padding: 10px;
     display: flex;
 
 
@@ -27,4 +31,9 @@
         flex-direction: column;
         gap: 6px;
     }
+}
+
+.clienthead {
+    font-size: xx-large;
+    font-family: var(--main-font);
 }

@@ -5,7 +5,7 @@ import { ClientdashComponent } from './pages/clientdash/clientdash.component';
 export const routes: Routes = [
   {
     title: 'Dashboard',
-    path: '',
+    path: 'dashboard',
     component: DashboardComponent,
   },
   {

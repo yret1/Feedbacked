@@ -2,11 +2,15 @@
     cursor: pointer;
     width: 100%;
     padding: 20px 10px;
-    border-radius: 8px;
-
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-image: var(--background-radient);
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
 
 
     .details {
@@ -33,4 +37,8 @@
     .icon {
         width: 40px;
     }
+}
+
+.clientbutton:hover {
+    scale: 1.01;
 }
