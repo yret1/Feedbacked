@@ -1,4 +1,6 @@
-const IssueModel = new mongoose.Schema({
+const mong = require("mongoose");
+
+const IssueModel = new mong.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   image: { type: String, required: false },
@@ -6,4 +8,4 @@ const IssueModel = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Issue", IssueModel);
+module.exports = mong.model("Issue", IssueModel);

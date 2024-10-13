@@ -6,6 +6,7 @@ const {
   updateClientStatus,
   getClients,
   getClient,
+  addFeedback,
 } = require("./functions");
 const router = app.Router();
 
@@ -20,6 +21,8 @@ router.post("/get-clients", getClients);
 router.post("/get-client", getClient);
 
 //Plugin routes
+
+router.post("/newfeedback", addFeedback);
 
 //Add issue + some kind of auth?
 
