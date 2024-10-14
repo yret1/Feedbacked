@@ -10,7 +10,7 @@
 
     <section class="issues">
       @for(issue of clientData.feedbacks; track clientData.feedbacks){
-      <app-clientissues [clientData]="clientData" />
+      <app-clientissues [issue]="issue" />
       }
     </section>
   </section>

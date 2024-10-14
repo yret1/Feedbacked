@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ClientsInterface } from '../../interfaces/Clientsinterface';
+import {
+  ClientsInterface,
+  FeedbackInterface,
+} from '../../interfaces/Clientsinterface';
 
 @Component({
   selector: 'app-clientissues',
@@ -9,5 +12,18 @@ import { ClientsInterface } from '../../interfaces/Clientsinterface';
   styleUrl: './clientissues.component.scss',
 })
 export class ClientissuesComponent {
-  @Input() clientData!: ClientsInterface;
+  @Input() issue!: FeedbackInterface;
+
+  datestring = '';
+
+  dateFixer() {
+    if (this.issue !== undefined) {
+      let date = new Date(this.issue.created_at);
+      this.datestring = date.toDateString();
+    }
+  }
+
+  ngOnChanges(changes: any) {
+    this.dateFixer();
+  }
 }

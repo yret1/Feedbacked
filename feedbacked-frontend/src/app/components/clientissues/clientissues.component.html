@@ -1,6 +1,14 @@
-<article>
+<article class="issuemodal" id="{{ issue.id }}">
   <div>
-    <p>Issue # 123123</p>
-    <p>Date:</p>
+    <p class="date">Date: {{ datestring }}</p>
   </div>
+
+  <section class="details">
+    <p class="title">{{ issue.title }}</p>
+    <p class="desc">{{ issue.body }}</p>
+  </section>
+
+  <figure class="imagebox">
+    <img class="issueimage" src="{{ issue.image }}" alt="" />
+  </figure>
 </article>

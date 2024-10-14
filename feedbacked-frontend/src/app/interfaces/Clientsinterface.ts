@@ -5,3 +5,11 @@ export interface ClientsInterface {
   status: string;
   feedbacks: [];
 }
+
+export interface FeedbackInterface {
+  id: string;
+  title: string;
+  body: string;
+  image: string;
+  created_at: Date;
+}
