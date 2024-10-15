@@ -10,6 +10,10 @@
     --main-card: #F8FAFC;
 }
 
+body {
+    background: var(--background);
+    background-image: var(--background-radient);
+}
 
 *{
     box-sizing: border-box;
