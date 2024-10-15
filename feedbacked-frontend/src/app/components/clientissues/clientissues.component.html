@@ -9,6 +9,14 @@
   </section>
 
   <figure class="imagebox">
+    @if(issue.image !== ""){
     <img class="issueimage" src="{{ issue.image }}" alt="" />
+    }@else{
+    <p>No attached image</p>
+    }
   </figure>
+
+  <section class="buttonbox">
+    <button class="expbutton">Expand Issue</button>
+  </section>
 </article>

@@ -9,7 +9,11 @@
         "
       ></div>
       <p class="clientbutton__name">
-        {{ clientData.status.toUpperCase() }} Client
+        {{
+          clientData.status == "active"
+            ? "Ongoing Project"
+            : "Completed Project"
+        }}
       </p>
     </section>
   </section>
