@@ -2,7 +2,9 @@
   <aside class="navbar"></aside>
   <section class="clients">
     <h1 class="clienthead">Your Clients</h1>
-    @for(client of clients(); track client){
+    @if(!clients() || loading()){ @for(i of [1,2,3,4,5]; track $index) {
+    <app-loadingcomp height="80" index="{{ $index }}" />
+    } }@else {@for(client of clients(); track client){
     <app-clientoverviewmodal
       client="{{ client.name }}"
       status="{{ client.status }}"
@@ -13,6 +15,6 @@
     }@empty {
     <p>No clients added</p>
     <button>Add a new client</button>
-    }
+    }}
   </section>
 </section>

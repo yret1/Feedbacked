@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BackendService } from '../../../services/backend';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClientdetailsComponent } from '../../components/clientdetails/clientdetails.component';
 import { ClientissuesComponent } from '../../components/clientissues/clientissues.component';
+import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.component';
 
 @Component({
   selector: 'app-clientdash',
   standalone: true,
-  imports: [RouterLink, ClientdetailsComponent, ClientissuesComponent],
+  imports: [
+    RouterLink,
+    ClientdetailsComponent,
+    ClientissuesComponent,
+    LoadingcompComponent,
+  ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
 })
@@ -21,6 +27,8 @@ export class ClientdashComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  loading = signal<boolean>(true);
+
   clientData: any;
 
   ngOnInit(): void {
@@ -31,6 +39,7 @@ export class ClientdashComponent implements OnInit {
         (data) => {
           console.log(data);
           this.clientData = data.client;
+          this.loading.set(false);
         },
         (error) => {
           console.log(error);

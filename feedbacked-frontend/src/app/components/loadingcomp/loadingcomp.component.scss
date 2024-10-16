@@ -1,0 +1,18 @@
+
+
+@keyframes flashload {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+  }
+
+
+.loader{
+
+    background-color: white;
+    width: 100%;
+
+    border-radius: 15px;
+    opacity: 0.2;
+
+    animation: flashload 2s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}

@@ -1,5 +1,5 @@
 <section class="dashclient">
-  @if(clientData){
+  @if(clientData && !loading()){
 
   <section class="clientexists">
     <app-clientdetails [clientData]="clientData"></app-clientdetails>
@@ -13,6 +13,13 @@
       <app-clientissues [issue]="issue" />
       }
     </section>
+  </section>
+
+  }@else if(loading()){
+
+  <section class="loadingwrapp">
+    <app-loadingcomp height="80" index="0" />
+    <app-loadingcomp height="300" index="1" />
   </section>
 
   }@else {
