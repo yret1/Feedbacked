@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const { uuid } = require("uuidv4");
 const User = require("./schemas/usermodel.ts");
 const Client = require("./schemas/clientmodel.ts");
+const jwt = require("jsonwebtoken");
 
 exports.signupUser = async (req, res) => {
   const { email, password } = req.body;
@@ -34,23 +35,34 @@ exports.signupUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  User.findOne({ email: email }).then((user) => {
-    if (!user) {
-      return res
-        .status(400)
-        .json({ message: "User does not exist. Create an account!" });
-    } else {
-      bcrypt.compare(password, user.password).then((isMatch) => {
-        if (!isMatch) {
-          return res.status(400).json({ message: "Invalid password" });
-        } else {
-          res
-            .status(200)
-            .json({ message: "User logged in successfully", result: user });
-        }
+  let userFound;
+
+  User.findOne({ email: email })
+    .then((user) => {
+      if (!user) {
+        return res
+          .status(400)
+          .json({ message: "User does not exist. Create an account!" });
+      }
+
+      userFound = user;
+      return bcrypt.compare(password, user.password);
+    })
+    .then((result) => {
+      if (!result) {
+        return res.status(400).json({ message: "Invalid password" });
+      }
+
+      const token = jwt.sign(
+        { email: email, userId: userFound._id },
+        "potatoe",
+        { expiresIn: "1h" }
+      );
+      return res.status(200).json({
+        token: token,
+        expiresIn: 3600,
       });
-    }
-  });
+    });
 };
 
 exports.addClient = async (req, res) => {
