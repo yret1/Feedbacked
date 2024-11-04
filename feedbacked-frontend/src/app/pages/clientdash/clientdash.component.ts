@@ -61,9 +61,9 @@ export class ClientdashComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.userId = params['userId'];
       this.clientEmail = params['clientEmail'];
-      this.backendService.getClients(this.userId).subscribe((data) => {
+      this.backendService.getUser(this.userId).subscribe((data) => {
         console.log(data);
-        this.plan = data.plan;
+        this.plan = data.user.plan;
       });
       this.keyCheck();
       this.backendService.getClient(this.userId, this.clientEmail).subscribe(
