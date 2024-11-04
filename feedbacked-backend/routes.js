@@ -7,12 +7,14 @@ const {
   getClients,
   getClient,
   addFeedback,
+  getUser,
 } = require("./functions");
 const router = app.Router();
 
 //Auth routes
 router.post("/sign-up", signupUser);
 router.post("/login", loginUser);
+router.get("/get-user", getUser);
 
 //Client routes
 router.post("/add-client", addClient);

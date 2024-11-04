@@ -1,5 +1,14 @@
 <section class="dashclient">
-  @if(clientData && !loading()){
+  @if(clientData && !loading()){ @if(this.adding()){
+  <section class="addkeymodal">
+    <section class="innerbox">
+      <p>Add New Key</p>
+      <fieldset>
+        <label for="name">Key name</label>
+      </fieldset>
+    </section>
+  </section>
+  }
 
   <section class="clientexists">
     <app-clientdetails [clientData]="clientData"></app-clientdetails>
@@ -16,10 +25,19 @@
   </section>
   <section class="keysgrid">
     <section class="keys">
-      <h3>Active keys</h3>
+      <section class="head">
+        <h3>Active keys</h3>
+        <p>
+          Key allowance {{ this.clientData.keys.length }} / {{ allowedKeys }}
+        </p>
+      </section>
+
       <section class="keyslist">
         @for(key of clientData.keys; track clientData.keys){ }@empty {
-        <p>No keys found</p>
+        <section class="keysempty">
+          <p>No keys found</p>
+          <button (click)="toggleAdd()">Add Client Key</button>
+        </section>
         }
       </section>
     </section>

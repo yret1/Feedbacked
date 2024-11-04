@@ -71,9 +71,71 @@
     z-index: 10;
 
 
+    .head{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     h3{
         font-size: 1.5rem;
         font-weight: 600;
         font-family: var(--main-font);
+    }
+}
+
+.keysempty {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+
+
+
+    button{
+        padding: 10px 20px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: var(--main-font);
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+    }
+}
+
+
+.addkeymodal {
+    z-index: 50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+    transition: all 0.3s;
+    
+
+
+    .innerbox {
+
+        min-width: 300px;
+        min-height: 300px;
+
+        width: 40%;
+        aspect-ratio: 1/1;
+        border-radius: 15px;
+        box-shadow: 0 0 30px black;
+        background-color: white;
     }
 }

@@ -65,6 +65,14 @@ exports.loginUser = async (req, res) => {
     });
 };
 
+exports.getUser = async (req, res) => {
+  const { userId } = req.body;
+
+  const user = await User.findById(userId);
+
+  return res.status(200).json({ user: user });
+};
+
 exports.addClient = async (req, res) => {
   const { clientName, clientEmail, clientPhone, clientStatus, userId } =
     req.body;
