@@ -31,7 +31,7 @@ export class ClientdashComponent implements OnInit {
   allowedKeys: number = 0;
   loading = signal<boolean>(true);
 
-  adding = signal<boolean>(false);
+  adding = signal<boolean>(true);
 
   clientData: any;
 

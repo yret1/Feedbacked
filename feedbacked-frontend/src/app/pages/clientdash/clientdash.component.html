@@ -2,10 +2,16 @@
   @if(clientData && !loading()){ @if(this.adding()){
   <section class="addkeymodal">
     <section class="innerbox">
-      <p>Add New Key</p>
+      <p class="title">Add New Key</p>
       <fieldset>
         <label for="name">Key name</label>
+        <input type="text" required placeholder="Who is this key for?" />
       </fieldset>
+
+      <div>
+        <button class="cancel"></button>
+        <button class="accept"></button>
+      </div>
     </section>
   </section>
   }
