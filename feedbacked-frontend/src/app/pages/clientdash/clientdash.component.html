@@ -33,7 +33,7 @@
     <p>Issues</p>
 
     <section class="issues">
-      @for(issue of clientData.feedbacks; track clientData.feedbacks){
+      @for(issue of clientData.feedbacks; track issue.id){
       <app-clientissues [issue]="issue" />
       }
     </section>
@@ -48,7 +48,7 @@
       </section>
 
       <section class="keyslist">
-        @for(key of clientData.keys; track clientData.keys){
+        @for(key of clientData.keys; track key.for){
         <app-keycomp
           [key]="key.key"
           [for]="key.for"

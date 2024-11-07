@@ -37,7 +37,7 @@ export class ClientdashComponent implements OnInit {
   newKeyName: string = '';
   allowedKeys: number = 0;
   loading = signal<boolean>(true);
-  action: string = 'erroraddkey';
+  action: string = '';
   adding = signal<boolean>(false);
   popup = signal<boolean>(false);
 
@@ -47,7 +47,7 @@ export class ClientdashComponent implements OnInit {
     if (action === '') {
       this.adding.set(!this.adding());
     } else {
-      this.adding.set(!this.adding());
+      this.adding.set(false);
       this.action = action;
       this.popup.set(!this.popup());
 

@@ -3,7 +3,7 @@ export interface ClientsInterface {
   email: string;
   phone: string;
   status: string;
-  feedbacks: [];
+  feedbacks: FeedbackInterface[];
   keys: { key: string; for: string; clientEmail: string; created_at: string }[];
 }
 
