@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClientdetailsComponent } from '../../components/clientdetails/clientdetails.component';
 import { ClientissuesComponent } from '../../components/clientissues/clientissues.component';
 import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.component';
+import { PopupComponent } from '../../components/popup/popup.component';
 
 @Component({
   selector: 'app-clientdash',
@@ -13,6 +14,7 @@ import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.c
     ClientdetailsComponent,
     ClientissuesComponent,
     LoadingcompComponent,
+    PopupComponent,
   ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
@@ -30,13 +32,23 @@ export class ClientdashComponent implements OnInit {
   newKeyName: string = '';
   allowedKeys: number = 0;
   loading = signal<boolean>(true);
-
-  adding = signal<boolean>(true);
-
+  action: string = 'erroraddkey';
+  adding = signal<boolean>(false);
+  popup = signal<boolean>(false);
   clientData: any;
 
-  toggleAdd() {
-    this.adding.set(!this.adding());
+  toggleAdd(action: string) {
+    if (action === '') {
+      this.adding.set(!this.adding());
+    } else {
+      this.adding.set(!this.adding());
+      this.action = action;
+      this.popup.set(!this.popup());
+
+      setTimeout(() => {
+        this.popup.set(!this.popup());
+      }, 4000);
+    }
   }
 
   plan = 'base';

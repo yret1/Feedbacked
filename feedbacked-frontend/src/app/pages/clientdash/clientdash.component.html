@@ -8,12 +8,16 @@
         <input type="text" required placeholder="Who is this key for?" />
       </fieldset>
 
-      <div>
-        <button class="cancel"></button>
-        <button class="accept"></button>
+      <div class="buttonbox">
+        <button class="cancel" (click)="toggleAdd('erroraddkey')">
+          Cancel
+        </button>
+        <button class="accept">Add key</button>
       </div>
     </section>
   </section>
+  } @if(popup()){
+  <app-popup class="popup" [type]="action" />
   }
 
   <section class="clientexists">
@@ -42,7 +46,7 @@
         @for(key of clientData.keys; track clientData.keys){ }@empty {
         <section class="keysempty">
           <p>No keys found</p>
-          <button (click)="toggleAdd()">Add Client Key</button>
+          <button (click)="toggleAdd('')">Add Client Key</button>
         </section>
         }
       </section>

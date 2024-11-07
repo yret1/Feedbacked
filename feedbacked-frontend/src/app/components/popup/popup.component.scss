@@ -1,0 +1,50 @@
+.notice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
+    border: 2px solid #ccc;
+    background: var(--background);
+    background-image: var(--background-radient);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    color: white;
+    box-shadow: 0px 0px 10px 0px #ccc;
+
+    width: auto;
+    text-wrap: nowrap;
+ 
+    animation: popNotification 4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    padding: 5px 10px;
+    z-index: 50;
+
+    svg{
+        width: 25px;
+        aspect-ratio: 1/1;
+    }
+    p{
+        font-family: var(--main-font);
+        font-weight: 500;
+    }
+}
+
+
+@keyframes popNotification {
+    0% {
+        transform: translateY(-120%);
+        opacity: 0;
+    }
+    15% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    85% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120%);
+        opacity: 0;
+    }
+}

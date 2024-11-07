@@ -7,6 +7,7 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
@@ -130,11 +131,9 @@
     .innerbox {
 
         min-width: 300px;
-        min-height: 300px;
 
-        padding: 6px;
+        padding: 8px;
         width: 40%;
-        aspect-ratio: 1/1;
         border-radius: 15px;
         box-shadow: 0 0 30px black;
         background-color: white;
@@ -156,4 +155,55 @@
             font-family: var(--main-font);
         }
     }
+}
+
+
+.buttonbox {
+    width: 100%;
+    display: flex;
+    padding: 6px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+
+
+    button {
+        padding: 6px 10px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        font-family: var(--main-font);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        border: none;
+        color: white;
+    }
+
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+
+    .cancel{
+
+        background-color: var(--rejectcolor);
+  
+    }
+    .accept{
+
+
+        background-color: var(--acceptcolor);
+    }
+}
+
+.popup{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
