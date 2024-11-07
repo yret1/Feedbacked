@@ -24,7 +24,7 @@ router.post("/update-client-status", updateClientStatus);
 router.post("/get-clients", getClients);
 router.post("/get-client", getClient);
 router.post("/create-key", initializeKey);
-router.delete("/delete-key", deleteKey);
+router.post("/delete-key", deleteKey);
 
 //Plugin routes
 

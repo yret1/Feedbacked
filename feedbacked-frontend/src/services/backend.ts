@@ -36,4 +36,20 @@ export class BackendService {
       newStatus,
     });
   }
+
+  deleteKey(userId: string, clientEmail: string, key: string) {
+    return this.http.post(`https://${this.baseUrl}/delete-key`, {
+      userId,
+      clientEmail,
+      key,
+    });
+  }
+
+  addKey(userId: string, clientEmail: string, clientName: string) {
+    return this.http.post(`https://${this.baseUrl}/create-key`, {
+      userId,
+      clientEmail,
+      clientName,
+    });
+  }
 }

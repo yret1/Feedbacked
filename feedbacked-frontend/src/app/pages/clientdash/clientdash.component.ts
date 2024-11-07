@@ -6,6 +6,8 @@ import { ClientissuesComponent } from '../../components/clientissues/clientissue
 import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.component';
 import { PopupComponent } from '../../components/popup/popup.component';
 import { KeycompComponent } from '../../components/keycomp/keycomp.component';
+import { FormsModule } from '@angular/forms';
+import { ClientsInterface } from '../../interfaces/Clientsinterface';
 
 @Component({
   selector: 'app-clientdash',
@@ -17,6 +19,7 @@ import { KeycompComponent } from '../../components/keycomp/keycomp.component';
     LoadingcompComponent,
     PopupComponent,
     KeycompComponent,
+    FormsModule,
   ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
@@ -37,7 +40,8 @@ export class ClientdashComponent implements OnInit {
   action: string = 'erroraddkey';
   adding = signal<boolean>(false);
   popup = signal<boolean>(false);
-  clientData: any;
+
+  clientData!: ClientsInterface;
 
   toggleAdd(action: string) {
     if (action === '') {
@@ -63,6 +67,54 @@ export class ClientdashComponent implements OnInit {
     setTimeout(() => {
       this.popup.set(false);
     }, 4000);
+  }
+
+  deleteKey(key: string) {
+    console.log('Deleting key');
+    this.backendService.deleteKey(this.userId, this.clientEmail, key).subscribe(
+      (data) => {
+        this.clientData.keys = this.clientData.keys.filter(
+          (k: any) => k.key !== key
+        );
+
+        this.action = 'successdeletekey';
+        this.popup.set(true);
+
+        setTimeout(() => {
+          this.popup.set(false);
+        }, 4000);
+      },
+      (error) => {
+        this.action = 'errordeletekey';
+        this.popup.set(true);
+
+        setTimeout(() => {
+          this.popup.set(false);
+        }, 4000);
+      }
+    );
+  }
+
+  addKey() {
+    this.adding.set(false);
+    this.backendService
+      .addKey(this.userId, this.clientEmail, this.newKeyName)
+      .subscribe(
+        (data: any) => {
+          const generatedkey = data.key;
+          this.clientData.keys.push({
+            key: generatedkey,
+            for: this.newKeyName,
+            clientEmail: this.clientEmail,
+            created_at: new Date().toISOString(),
+          });
+          this.newKeyName = '';
+          this.toggleAdd('successaddkey');
+        },
+        (error) => {
+          this.toggleAdd('erroraddkey');
+        }
+      );
   }
 
   plan = 'base';

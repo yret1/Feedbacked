@@ -5,14 +5,19 @@
       <p class="title">Add New Key</p>
       <fieldset>
         <label for="name">Key name</label>
-        <input type="text" required placeholder="Who is this key for?" />
+        <input
+          type="text"
+          [(ngModel)]="newKeyName"
+          required
+          placeholder="Who is this key for?"
+        />
       </fieldset>
 
       <div class="buttonbox">
         <button class="cancel" (click)="toggleAdd('erroraddkey')">
           Cancel
         </button>
-        <button class="accept">Add key</button>
+        <button class="accept" (click)="addKey()">Add key</button>
       </div>
     </section>
   </section>
@@ -48,6 +53,7 @@
           [key]="key.key"
           [for]="key.for"
           (copyToClipboard)="copyToClipboard($event)"
+          (deleteKey)="deleteKey($event)"
         />
         }@empty {
         <section class="keysempty">
