@@ -43,7 +43,13 @@
       </section>
 
       <section class="keyslist">
-        @for(key of clientData.keys; track clientData.keys){ }@empty {
+        @for(key of clientData.keys; track clientData.keys){
+        <app-keycomp
+          [key]="key.key"
+          [for]="key.for"
+          (copyToClipboard)="copyToClipboard($event)"
+        />
+        }@empty {
         <section class="keysempty">
           <p>No keys found</p>
           <button (click)="toggleAdd('')">Add Client Key</button>

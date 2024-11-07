@@ -1,0 +1,31 @@
+.keysection {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 6px 0px;
+    background-color: var(--background);
+    background-image: var(--background-radient);
+    border-radius: 5px;
+}
+
+
+
+.key{
+
+
+
+    transition: all 0.3s ease;
+
+    cursor: pointer;
+
+
+
+
+    p{
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--text);
+        font-family: var(--main-font);
+    }
+}

@@ -5,6 +5,7 @@ import { ClientdetailsComponent } from '../../components/clientdetails/clientdet
 import { ClientissuesComponent } from '../../components/clientissues/clientissues.component';
 import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.component';
 import { PopupComponent } from '../../components/popup/popup.component';
+import { KeycompComponent } from '../../components/keycomp/keycomp.component';
 
 @Component({
   selector: 'app-clientdash',
@@ -15,6 +16,7 @@ import { PopupComponent } from '../../components/popup/popup.component';
     ClientissuesComponent,
     LoadingcompComponent,
     PopupComponent,
+    KeycompComponent,
   ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
@@ -49,6 +51,18 @@ export class ClientdashComponent implements OnInit {
         this.popup.set(!this.popup());
       }, 4000);
     }
+  }
+
+  copyToClipboard(key: string) {
+    console.log('Copying key to clipboard');
+    navigator.clipboard.writeText(key);
+
+    this.action = 'copied';
+    this.popup.set(true);
+
+    setTimeout(() => {
+      this.popup.set(false);
+    }, 4000);
   }
 
   plan = 'base';

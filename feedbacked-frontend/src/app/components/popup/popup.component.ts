@@ -64,6 +64,10 @@ export class PopupComponent implements OnInit {
       case 'errordeletecomment':
         this.message = 'Error deleting comment';
         break;
+      case 'copied':
+        this.message = 'Copied to clipboard';
+        this.error = false;
+        break;
     }
   }
 }
