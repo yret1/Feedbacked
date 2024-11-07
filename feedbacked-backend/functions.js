@@ -259,3 +259,54 @@ exports.addFeedback = async (req, res) => {
   }
 };
 exports.getFeedbacks = async (req, res) => {};
+
+exports.initializeKey = async (req, res) => {
+  const { userId, clientName, clientEmail } = req.body;
+
+  const key = uuid();
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(400).json({
+      message: "Could not find your dataconnection. Please contact support",
+    });
+  } else {
+    const userPlan = user.plan;
+    let allowedKeys = null;
+
+    switch (userPlan) {
+      case "base":
+        allowedKeys = 1;
+        break;
+      case "large":
+        allowedKeys = 3;
+        break;
+      case "enterprise":
+        allowedKeys = 10;
+        break;
+    }
+
+    const client = await user.clients.find(
+      (client) => client.email === clientEmail
+    );
+    const keyObject = {
+      key: key,
+      for: clientName,
+      clientEmail: clientEmail,
+      created_at: new Date(),
+    };
+    if (client) {
+      if (client.keys.length < allowedKeys) {
+        return res.status(400).json({
+          message:
+            "You have reached the maximum number of keys for this client",
+        });
+      } else {
+        client.keys.push(keyObject);
+        await user.save();
+        return res.status(200).json({ message: "Key generated", key: key });
+      }
+    }
+  }
+};

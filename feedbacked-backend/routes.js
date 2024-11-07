@@ -8,6 +8,7 @@ const {
   getClient,
   addFeedback,
   getUser,
+  initializeKey,
 } = require("./functions");
 const router = app.Router();
 
@@ -21,6 +22,7 @@ router.post("/add-client", addClient);
 router.post("/update-client-status", updateClientStatus);
 router.post("/get-clients", getClients);
 router.post("/get-client", getClient);
+router.post("/create-key", initializeKey);
 
 //Plugin routes
 

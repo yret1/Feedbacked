@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
       phone: String,
       status: String,
       feedbacks: [],
+      keys: [],
     },
   ],
   created_at: { type: Date, default: Date.now },
