@@ -310,3 +310,23 @@ exports.initializeKey = async (req, res) => {
     }
   }
 };
+
+exports.deleteKey = async (req, res) => {
+  const { userId, clientEmail, key } = req.body;
+
+  const user = await User.findById(userId);
+
+  const client = await user.clients.find(
+    (client) => client.email === clientEmail
+  );
+
+  const keytarget = await client.keys.find((keys) => keys.key === key);
+
+  if (keytarget) {
+    client.keys = client.keys.filter((target) => target.key !== key);
+    await user.save();
+    return res.status(200).json({ message: "Key deleted" });
+  } else {
+    return res.status(400).json({ message: "Key not found" });
+  }
+};

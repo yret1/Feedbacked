@@ -9,6 +9,7 @@ const {
   addFeedback,
   getUser,
   initializeKey,
+  deleteKey,
 } = require("./functions");
 const router = app.Router();
 
@@ -23,6 +24,7 @@ router.post("/update-client-status", updateClientStatus);
 router.post("/get-clients", getClients);
 router.post("/get-client", getClient);
 router.post("/create-key", initializeKey);
+router.delete("/delete-key", deleteKey);
 
 //Plugin routes
 

@@ -1,9 +1,10 @@
 .keysection {
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    
     align-items: center;
-    padding: 6px 0px;
+    padding: 6px 10px;
     background-color: var(--background);
     background-image: var(--background-radient);
     border-radius: 5px;
@@ -15,17 +16,50 @@
 
 
 
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 
     cursor: pointer;
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-
+    filter: blur(3px);
 
 
     p{
-        font-size: 1.2rem;
+        font-size: 0.8rem;
         font-weight: 500;
         color: var(--text);
         font-family: var(--main-font);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    svg{
+        width: 20px;
+    }
+}
+
+.key:hover{
+    filter: blur(0px);
+}
+
+
+.controll{
+
+    button{
+        width: 25px;
+        border:none;
+        background-color: transparent;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
