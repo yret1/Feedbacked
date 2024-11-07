@@ -55,12 +55,17 @@
           (copyToClipboard)="copyToClipboard($event)"
           (deleteKey)="deleteKey($event)"
         />
-        }@empty {
-        <section class="keysempty">
-          <p>No keys found</p>
-          <button (click)="toggleAdd('')">Add Client Key</button>
-        </section>
+
         }
+        <section class="keysempty">
+          @if(clientData.keys.length == 0){
+          <p>No keys found</p>
+          } @if(clientData.keys.length < allowedKeys){
+          <button (click)="toggleAdd('')">Add Client Key</button>
+          }@else {
+          <button disabled>Upgrade to add keys</button>
+          }
+        </section>
       </section>
     </section>
   </section>
