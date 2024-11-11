@@ -10,9 +10,22 @@ export class AuthService {
 
   signUpUser(email: string, password: string) {
     const authdata: AuthModel = { email: email, password: password };
+    console.log(authdata);
 
     this.http
       .post(`https://${this.baseUrl}/sign-up`, authdata)
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
+  signInUser(email: string, password: string) {
+    const authdata: AuthModel = { email: email, password: password };
+
+    console.log(authdata);
+
+    this.http
+      .post(`https://${this.baseUrl}/login`, authdata)
       .subscribe((response) => {
         console.log(response);
       });
