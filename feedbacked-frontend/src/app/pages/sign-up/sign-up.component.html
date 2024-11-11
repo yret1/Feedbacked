@@ -1,0 +1,39 @@
+<section class="authpage">
+  <section class="larger"></section>
+  <section class="formbox">
+    <div class="promotext">
+      <h1>Create Account,</h1>
+      <p>Sign up to get started!</p>
+    </div>
+    <form (ngSubmit)="onSubmit()" class="form" [formGroup]="signupForm">
+      <div class="form-group">
+        <label class="labelform" for="email">Email</label>
+        <input class="form-control" formControlName="email" type="email" />
+      </div>
+      <div class="form-group">
+        <label class="labelform" for="password">Password</label>
+        <input
+          class="form-control"
+          formControlName="password"
+          type="password"
+        />
+      </div>
+      <div class="form-group">
+        <label class="labelform" for="passwordconf">Confirm Password</label>
+        <input
+          class="form-control"
+          formControlName="passwordconf"
+          type="password"
+        />
+      </div>
+
+      <button [disabled]="!signupForm.valid" type="submit" class="submit">
+        Sign Up
+      </button>
+    </form>
+
+    <p>
+      I'm already a member, <a class="travel" routerLink="/sign-in">Sign In</a>
+    </p>
+  </section>
+</section>
