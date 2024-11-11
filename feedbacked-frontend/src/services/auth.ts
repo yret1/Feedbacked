@@ -6,7 +6,13 @@ import { AuthModel } from '../app/interfaces/Authmodel';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
+  private token?: string;
+
   private baseUrl = 'feedbacked.onrender.com';
+
+  getToken() {
+    return this.token;
+  }
 
   signUpUser(email: string, password: string) {
     const authdata: AuthModel = { email: email, password: password };
@@ -25,9 +31,9 @@ export class AuthService {
     console.log(authdata);
 
     this.http
-      .post(`https://${this.baseUrl}/login`, authdata)
+      .post<{ token: string }>(`https://${this.baseUrl}/login`, authdata)
       .subscribe((response) => {
-        console.log(response);
+        this.token = response.token;
       });
   }
 }

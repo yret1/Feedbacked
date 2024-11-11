@@ -11,20 +11,21 @@ const {
   initializeKey,
   deleteKey,
 } = require("./functions");
+const { checkAuth } = require("./middlewares");
 const router = app.Router();
 
 //Auth routes
 router.post("/sign-up", signupUser);
 router.post("/login", loginUser);
-router.post("/get-user", getUser);
+router.post("/get-user", checkAuth, getUser);
 
 //Client routes
-router.post("/add-client", addClient);
-router.post("/update-client-status", updateClientStatus);
-router.post("/get-clients", getClients);
-router.post("/get-client", getClient);
-router.post("/create-key", initializeKey);
-router.post("/delete-key", deleteKey);
+router.post("/add-client", checkAuth, addClient);
+router.post("/update-client-status", checkAuth, updateClientStatus);
+router.post("/get-clients", checkAuth, getClients);
+router.post("/get-client", checkAuth, getClient);
+router.post("/create-key", checkAuth, initializeKey);
+router.post("/delete-key", checkAuth, deleteKey);
 
 //Plugin routes
 
