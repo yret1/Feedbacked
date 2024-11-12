@@ -13,6 +13,7 @@
     .hero {
 
         width: 100%;
+        min-height: 60vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -20,14 +21,32 @@
         padding: 20px;
 
 
+
+        @media (min-width: 1024px){
+            padding: 50px 0px;
+        }
+
+
         .imageholder{
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             .image{
                 width: 100%;
                 aspect-ratio: 1/1;
                 background-color: #b4b4b43f;
                 border-radius: 10px;
                 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            }
+
+
+
+            @media (min-width: 1024px){
+                .image{
+                    width: 80%;
+                    aspect-ratio: 16/9;
+                }
             }
         }
 
@@ -39,7 +58,7 @@
             
             h2{
                 font-size: 3rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--main-color);
             margin-bottom: 20px;
             text-align: center;
@@ -67,6 +86,7 @@
 
 
             button{
+                cursor: pointer;
                 width: 100%;
                 padding: 10px 20px;
                 border-radius: 5px;
@@ -102,6 +122,55 @@
     flex-direction: column;
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
 }   
+
+
+.proconbox{
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+}
+
+
+.btnbox{
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+
+
+    button{
+        cursor: pointer;
+        width: 100%;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: white;
+        background-color: var(--background);
+        background-image: var(--background-radient);
+        border: none;
+        font-size: 1.2rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+
+        @media (min-width: 1024px){
+        width: 50%;}
+    }
+
+    p{
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--main-color);
+        text-align: center;
+        line-height: 30px;
+        opacity: 0.3;
+    }
 }
 
 
@@ -167,3 +236,5 @@
 
     
 }
+
+
