@@ -8,14 +8,13 @@
     --background-radient:linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
     --main-font: 'Poppins', sans-serif;
     --main-card: #F8FAFC;
-
+    --svg-background: url("../public/bg.svg");
     --acceptcolor: #28F6AA;
     --rejectcolor: #FF3D3D;
 }
 
 body {
-    background: var(--background);
-    background-image: var(--background-radient);
+   background-color: #ffffff;
 }
 
 *{

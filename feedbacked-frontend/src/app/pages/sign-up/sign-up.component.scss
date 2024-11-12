@@ -1,12 +1,12 @@
 .authpage {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: #ffffff;
     font-family: var(--main-font);
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    overflow-y: hidden;
 
 
     form{
@@ -82,12 +82,14 @@
 
         margin-top: 20px;
 
+        
         .labelform{
             position: absolute;
-            top: -16px;
+            top: -12px;
             left: 10px;
             background: #ffffff;
-            padding: 6px;
+            padding-left: 10px;
+            padding-right: 10px;
             
         }
 

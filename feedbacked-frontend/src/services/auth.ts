@@ -34,7 +34,12 @@ export class AuthService {
   }
 
   getAuthenthicated() {
+    console.log('getAuthenthicated', this.authenthicated.asObservable());
     return this.authenthicated.asObservable();
+  }
+
+  getIsAuthenthicated() {
+    return this.authenthicated.getValue();
   }
 
   getToken() {
@@ -79,6 +84,6 @@ export class AuthService {
     this.authenthicated.next(false);
     localStorage.removeItem('token');
     localStorage.removeItem('userID');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/signin']);
   }
 }
