@@ -34,7 +34,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userSubscription = this.authService.getId().subscribe((userId) => {
-      console.log('userId:', userId);
       if (userId) {
         this.backendService.getClients(userId).subscribe({
           next: (data) => {

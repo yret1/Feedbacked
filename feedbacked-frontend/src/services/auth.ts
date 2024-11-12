@@ -16,10 +16,6 @@ export class AuthService {
         this.userID.next(savedUserId);
         this.token = savedToken;
         this.authenthicated.next(true);
-        console.log('Restored session:', {
-          userId: savedUserId,
-          token: savedToken,
-        });
       }
     }
   }
@@ -50,9 +46,7 @@ export class AuthService {
 
     this.http
       .post(`https://${this.baseUrl}/sign-up`, authdata)
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe((response) => {});
   }
 
   signInUser(email: string, password: string) {
@@ -65,8 +59,6 @@ export class AuthService {
       )
       .subscribe({
         next: (response) => {
-          console.log('Resonpse', response);
-
           this.token = response.token;
           localStorage.setItem('token', this.token);
           localStorage.setItem('userID', response.userId);

@@ -60,7 +60,6 @@ export class ClientdashComponent implements OnInit {
   }
 
   copyToClipboard(key: string) {
-    console.log('Copying key to clipboard');
     navigator.clipboard.writeText(key);
 
     this.action = 'copied';
@@ -72,7 +71,6 @@ export class ClientdashComponent implements OnInit {
   }
 
   deleteKey(key: string) {
-    console.log('Deleting key');
     this.backendService.deleteKey(this.userId, this.clientEmail, key).subscribe(
       (data) => {
         this.clientData.keys = this.clientData.keys.filter(
@@ -143,15 +141,12 @@ export class ClientdashComponent implements OnInit {
       this.clientEmail = localStorage.getItem('client') ?? '';
 
       this.backendService.getUser(this.userId).subscribe((data) => {
-        console.log(data);
         this.plan = data.user.plan;
       });
       this.keyCheck();
       this.backendService.getClient(this.userId, this.clientEmail).subscribe(
         (data) => {
-          console.log(data);
           this.clientData = data.client;
-          console.log();
           this.loading.set(false);
         },
         (error) => {

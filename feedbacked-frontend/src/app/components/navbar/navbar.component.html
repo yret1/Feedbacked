@@ -1,5 +1,9 @@
 <nav>
-  @if(this.navVersion == "Client"){
+  @if(this.navVersion !== "Client"){
+  <section class="title">
+    <p>FEEDBACKED</p>
+  </section>
+  } @if(this.navVersion == "Client"){
 
   <section class="back">
     <svg
@@ -27,5 +31,11 @@
   </section>
 
   <section></section>
-  }@else if (navVersion== "Dash") {}@else {}
+  }@else if (navVersion== "Dash") {}@else if (navVersion == "Landing") {
+  <section class="actionbtns">
+    <button>Sign In</button>
+    <button class="starter">Get Started</button>
+  </section>
+
+  }
 </nav>
