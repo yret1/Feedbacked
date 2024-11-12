@@ -65,7 +65,7 @@ export class AuthService {
       )
       .subscribe({
         next: (response) => {
-          console.log('ResponseLogin', response);
+          console.log('Resonpse', response);
 
           this.token = response.token;
           localStorage.setItem('token', this.token);

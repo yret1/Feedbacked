@@ -8,6 +8,7 @@ import { PopupComponent } from '../../components/popup/popup.component';
 import { KeycompComponent } from '../../components/keycomp/keycomp.component';
 import { FormsModule } from '@angular/forms';
 import { ClientsInterface } from '../../interfaces/Clientsinterface';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'app-clientdash',
@@ -31,7 +32,8 @@ export class ClientdashComponent implements OnInit {
   clientEmail!: string;
   constructor(
     private backendService: BackendService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   newKeyName: string = '';
@@ -136,9 +138,10 @@ export class ClientdashComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.userId = params['userId'];
-      this.clientEmail = params['clientEmail'];
+    this.authService.getId().subscribe((userId) => {
+      this.userId = userId ?? '';
+      this.clientEmail = localStorage.getItem('client') ?? '';
+
       this.backendService.getUser(this.userId).subscribe((data) => {
         console.log(data);
         this.plan = data.user.plan;

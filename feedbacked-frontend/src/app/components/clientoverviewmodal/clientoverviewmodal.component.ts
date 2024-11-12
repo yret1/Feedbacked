@@ -18,8 +18,9 @@ export class ClientoverviewmodalComponent implements OnChanges {
   link: string = '';
 
   ngOnChanges(): void {
-    if (this.userId && this.email) {
-      this.link = `/user/${this.userId}/client/${this.email}`;
+    if (this.email) {
+      localStorage.setItem('client', this.email);
+      this.link = '/user/projects/client';
     }
   }
 }

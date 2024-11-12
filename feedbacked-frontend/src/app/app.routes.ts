@@ -22,7 +22,7 @@ export const routes: Routes = [
   },
   {
     title: 'Client Dashboard',
-    path: 'user/:userId/client/:clientEmail',
+    path: 'user/projects/client',
     component: ClientdashComponent,
   },
 ];
