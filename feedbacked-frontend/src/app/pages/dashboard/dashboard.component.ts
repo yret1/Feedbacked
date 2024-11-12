@@ -1,7 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ClientoverviewmodalComponent } from '../../components/clientoverviewmodal/clientoverviewmodal.component';
 import { BackendService } from '../../../services/backend';
 import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.component';
+import { AuthService } from '../../../services/auth';
+import { Subscription } from 'rxjs';
 
 interface Client {
   name: string;
@@ -17,21 +19,40 @@ interface Client {
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
-  constructor(private backendService: BackendService) {}
+export class DashboardComponent implements OnInit, OnDestroy {
+  private userSubscription: Subscription | undefined;
 
-  clientId: string = '67098ea930f92b27553d10a1';
+  constructor(
+    private backendService: BackendService,
+    private authService: AuthService
+  ) {}
+
+  userId = this.authService.getCurrentUserId();
   loading = signal<boolean>(true);
   clients = signal<Client[]>([]);
-
   placeholders = ['1', '2', '3', '4'];
 
   ngOnInit() {
-    this.backendService.getClients(this.clientId).subscribe((data) => {
-      this.clients.set(data.clients);
-      this.loading.set(false);
-
-      console.log(data);
+    this.userSubscription = this.authService.getId().subscribe((userId) => {
+      console.log('userId:', userId);
+      if (userId) {
+        this.backendService.getClients(userId).subscribe({
+          next: (data) => {
+            this.clients.set(data.clients);
+            this.loading.set(false);
+          },
+          error: (error) => {
+            console.error('Error fetching clients:', error);
+            this.loading.set(false);
+          },
+        });
+      }
     });
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }

@@ -60,6 +60,7 @@ exports.loginUser = async (req, res) => {
       );
       return res.status(200).json({
         token: token,
+        userId: userFound._id,
         expiresIn: 3600,
       });
     });

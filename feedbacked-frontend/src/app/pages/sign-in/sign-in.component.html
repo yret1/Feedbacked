@@ -1,0 +1,34 @@
+<section class="authpage">
+  <aside class="larger"></aside>
+  <section class="formbox">
+    <section class="wrapper">
+      <div class="promotext">
+        <h1>Welcome Back,</h1>
+        <p>Sign in to continue!</p>
+      </div>
+      <form (ngSubmit)="onSubmit()" class="form" [formGroup]="signupForm">
+        <div class="form-group">
+          <label class="labelform" for="email">Email</label>
+          <input class="form-control" formControlName="email" type="email" />
+        </div>
+        <div class="form-group">
+          <label class="labelform" for="password">Password</label>
+          <input
+            class="form-control"
+            formControlName="password"
+            type="password"
+          />
+        </div>
+
+        <button [disabled]="!signupForm.valid" type="submit" class="submit">
+          Sign In
+        </button>
+      </form>
+
+      <p class="already">
+        I'm a new user,
+        <a class="travel" routerLink="/signup">Sign Up</a>
+      </p>
+    </section>
+  </section>
+</section>
