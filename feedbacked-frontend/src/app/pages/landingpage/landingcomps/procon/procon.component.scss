@@ -1,11 +1,11 @@
 
 article{
-    width: 100%;
+    width: 300px;
     aspect-ratio: 16/9;
     text-align: center;
     padding: 12px;
     display: flex;
-    gap: 12px;
+    gap: 4px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,6 @@ article{
     border:3px solid #0000001f;
     position: relative;
     overflow: hidden;
-    
 
     svg {
         width: 70px;
@@ -22,7 +21,7 @@ article{
         right: -15px;
     }
     .name{
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-weight: 700;
         color: var(--main-color);
         text-align: center;
@@ -38,7 +37,7 @@ article{
 
 
     .desc{
-        font-size: 1rem;
+        font-size: 0.7rem;
         font-weight: 400;
         color: var(--main-color);
         text-align: center;
@@ -47,6 +46,34 @@ article{
     }
 }
 
+
+@media (min-width: 768px){
+    article{
+        width: 400px;
+
+
+        .name{
+            font-size: 1.5rem;
+        }
+
+        .desc{
+            font-size: 1rem;
+        }
+    }
+}
+
+@media (min-width: 1024px){
+    article{
+        width: 600px;
+
+        .name{
+            font-size: 2rem;
+        }
+        .desc{
+            font-size: 1.2rem;
+        }
+    }
+}
 
 .negative{
     border-color: #e6848472;

@@ -20,20 +20,21 @@
 
 
     .procon_wrapper{
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
         gap: 12px;
         width: 100%;
 
 
 
         @media (min-width: 768px){
-            grid-template-columns: 1fr 1fr;
+ 
             width: 80%;
         }
 
         @media (min-width: 1024px){
-            grid-template-columns: 1fr 1fr 1fr;
             width: 70%;
         }
     }
