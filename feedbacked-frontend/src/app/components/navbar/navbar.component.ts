@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private authService: AuthService) {}
 
-  navVersion: 'Landing' | 'Dash' | 'Client' = 'Landing';
+  navVersion: 'Landing' | 'Dash' | 'Client' | 'Auth' = 'Landing';
 
   routeTo = '/';
   private routerSubscription: Subscription | undefined;
@@ -60,6 +60,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } else if (currentUrl.includes('/user')) {
       this.navVersion = 'Client';
       this.routeTo = '/dashboard';
+    } else if (
+      currentUrl.includes('/signin') ||
+      currentUrl.includes('/signup')
+    ) {
+      this.navVersion = 'Auth';
+      this.routeTo = '/';
     } else {
       this.navVersion = 'Landing';
       this.routeTo = '/';

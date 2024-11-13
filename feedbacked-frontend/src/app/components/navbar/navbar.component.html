@@ -1,4 +1,7 @@
-<nav [ngClass]="scrolled ? 'scrollshadow' : ''">
+<nav
+  [ngClass]="scrolled ? 'scrollshadow' : ''"
+  [ngClass]="navVersion == 'Auth' ? 'authcolors' : ''"
+>
   @if(this.navVersion !== "Client"){
   <section class="title">
     <p [routerLink]="this.routeTo">FEEDBACKED</p>

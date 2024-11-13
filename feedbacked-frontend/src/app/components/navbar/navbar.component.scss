@@ -9,6 +9,7 @@ nav {
     align-items: center;
     z-index: 40;
     font-family: var(--main-font);
+    transition: all 0.3s;
 
     .title{
         font-weight: bolder;
@@ -56,6 +57,12 @@ nav {
         cursor: pointer;
         
     }
+}
+
+
+.authcolors{
+
+    background-color: transparent   ;
 }
 
 
