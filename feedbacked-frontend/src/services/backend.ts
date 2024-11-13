@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BackendService {
-  private baseUrl = 'feedbacked.onrender.com';
+  //private baseUrl = 'feedbacked.onrender.com';
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 

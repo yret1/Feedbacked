@@ -3,11 +3,12 @@ import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -18,6 +19,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   routeTo = '/';
   private routerSubscription: Subscription | undefined;
+
+  scrolled = false;
 
   signout() {
     this.authService.logout();
@@ -33,6 +36,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.routeChecker();
       });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        this.scrolled = true;
+      } else {
+        this.scrolled = false;
+      }
+    });
   }
 
   ngOnDestroy() {

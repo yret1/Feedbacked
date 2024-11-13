@@ -29,7 +29,9 @@
       by="Founder, Gustavsson Development"
     />
 
-    <section class="feedbacksecond"></section>
+    <section class="feedbacksecond">
+      <app-messagedisplaybox class="message" />
+    </section>
   </section>
 
   <section class="proconbox">
@@ -37,7 +39,43 @@
 
     <section class="btnbox">
       <button routerLink="/signup">Get started today</button>
-      <p>No card required</p>
+      <p>No extensions or installs for your client!</p>
+    </section>
+  </section>
+
+  <section class="integrations">
+    <section class="integabout">
+      <p class="header">2 way integrations</p>
+      <p class="title">Manage with ease</p>
+      <p class="desc">
+        Feedbacked integrates with your favourite project management tools.
+        Making project reviews, bughunting and planning a breeze!
+      </p>
+    </section>
+
+    <section class="integs">
+      @for(integration of integrations; track integration.name ){
+
+      <div class="imageholder">
+        <img src="{{ integration.url }}" alt="{{ integration.name }}" />
+      </div>
+      }
+    </section>
+  </section>
+
+  <section class="vfeed">
+    <section class="vfeedimage">
+      <div class="image"></div>
+    </section>
+
+    <section class="integabout">
+      <p class="header">Visual Feedback</p>
+      <p class="title">Get the context you need!</p>
+      <p class="desc">
+        With our visual feedback you can finaly see trough your clients eyes. No
+        more guessing, with a better understanding you can deliver outstanding
+        results. Everytime!
+      </p>
     </section>
   </section>
 </section>
