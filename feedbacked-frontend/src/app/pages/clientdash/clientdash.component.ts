@@ -30,6 +30,7 @@ export class ClientdashComponent implements OnInit {
 
   userId!: string;
   clientEmail!: string;
+
   constructor(
     private backendService: BackendService,
     private route: ActivatedRoute,
