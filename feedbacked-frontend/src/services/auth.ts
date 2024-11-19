@@ -22,7 +22,7 @@ export class AuthService {
 
   private token: string | null = localStorage.getItem('token');
   //private baseUrl = 'feedbacked.onrender.com';
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'localhost:3000';
   private authenthicated = new BehaviorSubject<boolean>(false);
   private userID = new BehaviorSubject<string | null>(null);
 
@@ -51,7 +51,7 @@ export class AuthService {
     const authdata: AuthModel = { email: email, password: password };
 
     this.http
-      .post(`https://${this.baseUrl}/sign-up`, authdata)
+      .post(`http://${this.baseUrl}/sign-up`, authdata)
       .subscribe((response) => {});
   }
 
@@ -60,7 +60,7 @@ export class AuthService {
 
     this.http
       .post<{ token: string; userId: string }>(
-        `https://${this.baseUrl}/login`,
+        `http://${this.baseUrl}/login`,
         authdata
       )
       .subscribe({
