@@ -1,14 +1,18 @@
 .dashboard {
 
+    padding-top: 10vh;
 
     width: 100vw;
     min-height: 100vh;
     font-family: var(--main-font);
-    background-color: var(--background);
-    background-image: var(--background-radient);
-    padding: 10px;
+    background-color:  white;
     display: flex;
+    flex-direction: column;
 
+
+    @media(min-width: 1024px){
+        flex-direction: row;
+    }
 
 
 

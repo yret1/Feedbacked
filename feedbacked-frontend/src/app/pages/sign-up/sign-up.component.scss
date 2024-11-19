@@ -1,6 +1,6 @@
 .authpage {
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     background: #ffffff;
     font-family: var(--main-font);
     display: flex;
@@ -169,7 +169,7 @@
         align-items: center;
 
         box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        height: 96vh;
+        height: 100vh;
         overflow: hidden;
         width: 30vw;
 

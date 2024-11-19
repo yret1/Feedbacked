@@ -1,5 +1,8 @@
 <section class="dashboard">
-  <aside class="navbar"></aside>
+  <aside class="navbar">
+    <section class="dashnavmobile"></section>
+    <section class="dashnav"></section>
+  </aside>
   <section class="clients">
     <h1 class="clienthead">Your Clients</h1>
     @if(!clients() || loading()){ @for(i of [1,2,3,4,5]; track $index) {
