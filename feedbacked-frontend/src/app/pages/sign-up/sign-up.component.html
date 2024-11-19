@@ -14,6 +14,24 @@
         <div class="form-group">
           <label class="labelform" for="email">Email</label>
           <input class="form-control" formControlName="email" type="email" />
+          <div
+            class="error-message"
+            *ngIf="
+              signupForm.get('email')?.touched &&
+              signupForm.get('email')?.invalid
+            "
+            [@errorAnimation]
+          >
+            <small
+              class="text-danger"
+              [hidden]="!hasError('email', 'required')"
+            >
+              Email is required
+            </small>
+            <small class="text-danger" [hidden]="!hasError('email', 'email')">
+              Please enter a valid email address
+            </small>
+          </div>
         </div>
         <div class="form-group">
           <label class="labelform" for="password">Password</label>
@@ -22,6 +40,27 @@
             formControlName="password"
             type="password"
           />
+          <div
+            class="error-message"
+            *ngIf="
+              signupForm.get('password')?.touched &&
+              signupForm.get('password')?.invalid
+            "
+            [@errorAnimation]
+          >
+            <small
+              class="text-danger"
+              [hidden]="!hasError('password', 'required')"
+            >
+              Password is required
+            </small>
+            <small
+              class="text-danger"
+              [hidden]="!hasError('password', 'minlength')"
+            >
+              Password must be at least 6 characters
+            </small>
+          </div>
         </div>
         <div class="form-group">
           <label class="labelform" for="passwordconf">Confirm Password</label>
@@ -30,10 +69,30 @@
             formControlName="passwordconf"
             type="password"
           />
+          <div
+            class="error-message"
+            *ngIf="
+              (signupForm.get('passwordconf')?.touched &&
+                signupForm.get('passwordconf')?.invalid) ||
+              hasPasswordMismatch()
+            "
+            [@errorAnimation]
+          >
+            <small
+              class="text-danger"
+              [hidden]="!hasError('passwordconf', 'required')"
+            >
+              Please confirm your password
+            </small>
+            <small class="text-danger" [hidden]="!hasPasswordMismatch()">
+              Passwords do not match
+            </small>
+          </div>
         </div>
 
         <button [disabled]="!signupForm.valid" type="submit" class="submit">
-          Sign Up
+          {{ signupForm.valid && !submitting ? "Sign up" : "Welcome!" }}
+          {{ submitting == true ? "Loading..." : "" }}
         </button>
       </form>
 

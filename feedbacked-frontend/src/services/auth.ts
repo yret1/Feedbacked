@@ -73,8 +73,9 @@ export class AuthService {
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
-          console.error('Login error:', error);
+          alert('Incorrect credentials. Please try again.');
           this.authenthicated.next(false);
+          return false;
         },
       });
   }
