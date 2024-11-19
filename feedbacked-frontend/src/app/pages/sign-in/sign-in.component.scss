@@ -1,12 +1,15 @@
 .authpage {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: #ffffff;
     font-family: var(--main-font);
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     
+
+   
 
 
     form{
@@ -17,7 +20,6 @@
         align-items: center;
 
         gap: 10px;
-
 
         button{
             width: 100%;
@@ -36,10 +38,12 @@
         button:hover{
             opacity: 0.8;
         }
+
     }
 
     .larger{
         display: none;
+        padding: 6px;
     }
     .formbox{
         padding: 40px 20px;
@@ -84,10 +88,11 @@
 
         .labelform{
             position: absolute;
-            top: -16px;
+            top: -12px;
             left: 10px;
             background: #ffffff;
-            padding: 6px;
+            padding-left: 10px;
+            padding-right: 10px;
             
         }
 
@@ -119,6 +124,19 @@
 
 .already{
     padding-top: 12px;
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+
+    .forgotlink{
+        text-decoration: none;
+        color: var(--text);
+        transition: all 0.3s;
+    }
+
+    .forgotlink:hover{
+        color: rgb(119, 119, 231);
+    }
 }
 
 
@@ -156,15 +174,31 @@
 
     
     .authpage .larger {
+        font-family: var(--main-font);
+        text-align: center;
+        color: white;
+        font-size: 2.4rem;
+        font-weight: 700;
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        height: 100vh;
+        height: 96vh;
+        overflow: hidden;
         width: 30vw;
 
         background: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
   background-size: 200% 200%;
   animation: gradientAnimation 4s ease infinite;
+
+
+  span{
+        font-size: 1.2rem;
+        color: white;
+        opacity: 1;
+  }
     }
 }
 
@@ -173,6 +207,9 @@
 @media (min-width: 1200px){
     .authpage .larger {
         width: 45vw;
+        color: white;
+        font-size: 3rem;
+        font-weight: 700;
     }
 
     .authpage .wrapper {

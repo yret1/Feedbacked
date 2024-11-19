@@ -1,0 +1,38 @@
+<section class="procon">
+  <section class="containter">
+    <div class="textbox neg">
+      <p>Without Feedbacked</p>
+      <span>
+        Got another vague "This is broken" from your client? The worst feeling!
+      </span>
+    </div>
+
+    <section class="procon_wrapper">
+      @for(procon of this.withoutFeedbacked; track procon.name){
+      <app-procon
+        [pro]="procon.pro"
+        name="{{ procon.name }}"
+        description="{{ procon.description }}"
+      ></app-procon>
+      }
+    </section>
+  </section>
+  <section class="containter">
+    <div class="textbox">
+      <p>With Feedbacked</p>
+      <span>
+        Life is just better with Feedbacked. You can now easily manage feedback!
+      </span>
+    </div>
+
+    <section class="procon_wrapper">
+      @for(procon of this.withFeedbacked; track procon.name){
+      <app-procon
+        [pro]="procon.pro"
+        name="{{ procon.name }}"
+        description="{{ procon.description }}"
+      ></app-procon>
+      }
+    </section>
+  </section>
+</section>

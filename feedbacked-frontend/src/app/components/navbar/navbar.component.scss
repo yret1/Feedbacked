@@ -1,13 +1,98 @@
 nav {
     display: flex;
-    padding: 6px 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    left: 0;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    z-index: 40;
+    font-family: var(--main-font);
+    transition: all 0.3s;
 
 
+    .middlebuttons{
+        display: flex;
+        gap: 10px;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .title{
+        font-weight: bolder;
+        font-size: larger;
+        
+
+        p{
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        p:hover{
+            color: var(--background)
+        }
+
+
+        @media (min-width: 768px){
+            p{
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px){
+            p{
+                font-size: 2rem;
+            }
+        }
+    }
+
+
+    .actionbtns{
+        display: flex;
+        gap: 6px;
+    }
+
+
+    button{
+        border: none;
+        border-radius: 5px;
+        padding: 8px 10px;
+        cursor: pointer;
+    }
+
+    .starter{
+        background-color: var(--background);
+        background-image: var(--background-radient);
+        color: white;
+    }
+
+
+    .out {
+        color: black;
+        background-color: white;
+        transition: all 0.3s;
+    }
+
+    .out:hover{
+        background-color: #ef7171;
+        color: #ffffff;
+    }
 
     svg{
         width: 50px;
         cursor: pointer;
         
     }
+}
+
+
+.authcolors{
+    background-color: transparent;
+}
+
+
+.scrollshadow{
+    transition: all 0.3s;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }

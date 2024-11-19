@@ -1,7 +1,10 @@
-<nav>
+<nav
+  [ngClass]="scrolled ? 'scrollshadow' : ''"
+  [ngClass]="navVersion == 'Auth' ? 'authcolors' : ''"
+>
   @if(this.navVersion !== "Client"){
   <section class="title">
-    <p>FEEDBACKED</p>
+    <p [routerLink]="this.routeTo">FEEDBACKED</p>
   </section>
   } @if(this.navVersion == "Client"){
 
@@ -31,10 +34,23 @@
   </section>
 
   <section></section>
-  }@else if (navVersion== "Dash") {}@else if (navVersion == "Landing") {
+  }@else if (navVersion== "Dash") {
   <section class="actionbtns">
-    <button>Sign In</button>
-    <button class="starter">Get Started</button>
+    <button (click)="this.signout()" class="out" routerLink="/signin">
+      Log Out
+    </button>
+  </section>
+  }@else if (navVersion == "Landing") {
+
+  <ul class="middlebuttons">
+    <li>Home</li>
+    <li>Integrations</li>
+    <li>Why</li>
+    <li>Contact</li>
+  </ul>
+  <section class="actionbtns">
+    <button class="sign" routerLink="/signin">Sign In</button>
+    <button class="starter" routerLink="/signup">Get Started</button>
   </section>
 
   }

@@ -6,31 +6,32 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BackendService {
-  private baseUrl = 'feedbacked.onrender.com';
+  //private baseUrl = 'feedbacked.onrender.com';
+  private baseUrl = 'localhost:3000';
 
   constructor(private http: HttpClient) {}
 
   getUser(userId: string): Observable<any> {
-    return this.http.post(`https://${this.baseUrl}/get-user`, {
+    return this.http.post(`http://${this.baseUrl}/get-user`, {
       userId,
     });
   }
 
   getClients(userId: string): Observable<any> {
-    return this.http.post(`https://${this.baseUrl}/get-clients`, {
+    return this.http.post(`http://${this.baseUrl}/get-clients`, {
       userId,
     });
   }
 
   getClient(userId: string, clientEmail: string): Observable<any> {
-    return this.http.post(`https://${this.baseUrl}/get-client`, {
+    return this.http.post(`http://${this.baseUrl}/get-client`, {
       userId,
       clientEmail,
     });
   }
 
   clientCompleted(studioId: string, clientEmail: string, newStatus: string) {
-    return this.http.post(`https://${this.baseUrl}/update-client-status`, {
+    return this.http.post(`http://${this.baseUrl}/update-client-status`, {
       studioId,
       clientEmail,
       newStatus,
@@ -38,7 +39,7 @@ export class BackendService {
   }
 
   deleteKey(userId: string, clientEmail: string, key: string) {
-    return this.http.post(`https://${this.baseUrl}/delete-key`, {
+    return this.http.post(`http://${this.baseUrl}/delete-key`, {
       userId,
       clientEmail,
       key,
@@ -46,7 +47,7 @@ export class BackendService {
   }
 
   addKey(userId: string, clientEmail: string, clientName: string) {
-    return this.http.post(`https://${this.baseUrl}/create-key`, {
+    return this.http.post(`http://${this.baseUrl}/create-key`, {
       userId,
       clientEmail,
       clientName,

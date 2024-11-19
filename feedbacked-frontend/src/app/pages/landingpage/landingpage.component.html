@@ -1,0 +1,81 @@
+<section class="landing">
+  <section class="hero">
+    <section class="about">
+      <section class="hero_text">
+        <h2>Handle client feedback with ease!</h2>
+        <p>
+          The revolutionary tool that helps you deliver projects above
+          expectations leaving a lasting impression.
+        </p>
+      </section>
+
+      <section class="hero_btn">
+        <button routerLink="/signup">Get started today</button>
+        <p>No card required</p>
+      </section>
+    </section>
+
+    <section class="imageholder">
+      <div class="image"></div>
+    </section>
+  </section>
+
+  <section class="why">
+    <app-headerbox
+      class="whybox"
+      title="Why Feedbacked?"
+      header="Handle client feedback with ease!"
+      description="Feedbacked changed the way we deal with client issues. It has saved us countless hours, a total gamechanger!"
+      by="Founder, Gustavsson Development"
+    />
+
+    <section class="feedbacksecond">
+      <app-messagedisplaybox class="message" />
+    </section>
+  </section>
+
+  <section class="proconbox">
+    <app-wwo />
+
+    <section class="btnbox">
+      <button routerLink="/signup">Get started today</button>
+      <p>No extensions or installs for your client!</p>
+    </section>
+  </section>
+
+  <section class="integrations">
+    <section class="integabout">
+      <p class="header">2 way integrations</p>
+      <p class="title">Manage with ease</p>
+      <p class="desc">
+        Feedbacked integrates with your favourite project management tools.
+        Making project reviews, bughunting and planning a breeze!
+      </p>
+    </section>
+
+    <section class="integs">
+      @for(integration of integrations; track integration.name ){
+
+      <div class="imageholder">
+        <img src="{{ integration.url }}" alt="{{ integration.name }}" />
+      </div>
+      }
+    </section>
+  </section>
+
+  <section class="vfeed">
+    <section class="vfeedimage">
+      <div class="image"></div>
+    </section>
+
+    <section class="integabout">
+      <p class="header">Visual Feedback</p>
+      <p class="title">Get the context you need!</p>
+      <p class="desc">
+        With our visual feedback you can finaly see trough your clients eyes. No
+        more guessing, with a better understanding you can deliver outstanding
+        results. Everytime!
+      </p>
+    </section>
+  </section>
+</section>
