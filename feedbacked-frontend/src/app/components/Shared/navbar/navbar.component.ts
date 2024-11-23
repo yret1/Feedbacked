@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../services/auth';
+import { AuthService } from '../../../../services/auth';
 import { CommonModule } from '@angular/common';
 import {
   animate,

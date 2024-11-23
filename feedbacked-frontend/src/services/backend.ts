@@ -53,4 +53,13 @@ export class BackendService {
       clientName,
     });
   }
+
+  updateAgencyName(userId: string, agencyName: string) {
+
+    console.log(userId, agencyName)
+    return this.http.post(`http://${this.baseUrl}/setUName`, {
+      userId,
+      agencyName,
+    });
+  }
 }
