@@ -4,7 +4,7 @@ import { BackendService } from '../../../services/backend';
 import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
 import { AuthService } from '../../../services/auth';
 import { Subscription } from 'rxjs';
-import {UserDetailsComponent} from "../../components/Dashboard Comps/user-details/user-details.component";
+import {RouterLink} from "@angular/router";
 
 interface Client {
   name: string;
@@ -16,7 +16,7 @@ interface Client {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ClientoverviewmodalComponent, LoadingcompComponent, UserDetailsComponent],
+  imports: [ClientoverviewmodalComponent, LoadingcompComponent, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -32,6 +32,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loading = signal<boolean>(true);
   clients = signal<Client[]>([]);
   placeholders = ['1', '2', '3', '4'];
+
+
+  createProject(){
+
+    //Implement create project feature here!
+  }
 
   ngOnInit() {
     this.userSubscription = this.authService.getId().subscribe((userId) => {

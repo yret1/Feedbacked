@@ -96,11 +96,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       });
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 20) {
-        this.scrolled = true;
-      } else {
-        this.scrolled = false;
-      }
+      this.scrolled = window.scrollY > 20;
     });
   }
 
