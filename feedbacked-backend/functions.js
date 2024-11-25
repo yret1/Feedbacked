@@ -331,3 +331,33 @@ exports.deleteKey = async (req, res) => {
     return res.status(400).json({ message: "Key not found" });
   }
 };
+
+exports.setAgencyName = async (req, res) => {
+  try {
+    const { userId, agencyName } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { username: agencyName },
+        { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      message: "Updated agency name successfully",
+      agencyName,
+      user: updatedUser
+    });
+
+  } catch (error) {
+    console.error('Error updating username:', error);
+    return res.status(500).json({
+      message: "Error updating username",
+      error: error.message
+    });
+
+  }
+}

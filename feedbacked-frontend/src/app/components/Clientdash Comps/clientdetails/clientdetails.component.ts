@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ClientsInterface } from '../../interfaces/Clientsinterface';
-import { BackendService } from '../../../services/backend';
+import { ClientsInterface } from '../../../interfaces/Clientsinterface';
+import { BackendService } from '../../../../services/backend';
 
 @Component({
   selector: 'app-clientdetails',

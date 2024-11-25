@@ -4,13 +4,14 @@
 
 :root {
     --text: #333;
-    --background: #c1e4fb;
+    --background: #f3f4f6;
     --background-radient:linear-gradient(135deg, #8BC6EC 0%, #979be2 100%);
     --main-font: 'Poppins', sans-serif;
     --main-card: #F8FAFC;
     --svg-background: url("../public/bg.svg");
     --acceptcolor: #28F6AA;
     --rejectcolor: #FF3D3D;
+    --gray-bg: #f3f4f6;
 }
 
 body {

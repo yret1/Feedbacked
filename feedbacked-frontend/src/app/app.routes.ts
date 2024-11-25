@@ -33,5 +33,12 @@ export const routes: Routes = [
     path: 'user/projects/client',
     component: ClientdashComponent,
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
   },
 ];
+
+
+//childroutes
+
+// dashboard/create to start new project
+//

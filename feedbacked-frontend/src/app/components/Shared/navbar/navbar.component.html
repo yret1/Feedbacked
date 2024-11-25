@@ -1,0 +1,147 @@
+<nav
+  [ngClass]="scrolled ? 'scrollshadow' : ''"
+  [ngClass]="navVersion == 'Auth' ? 'authcolors' : ''"
+>
+  @if(this.open){ @if(this.navVersion == "Landing" || this.navVersion ==
+  "Auth"){
+  <section class="openMobilenav" [@openClose]>
+    <ul [@linkStagger]="open">
+      @for(link of links; track link.name){
+      <li [@linkStagger]="open" (click)="openMenu()" [routerLink]="link.route">
+        {{ link.name }}
+      </li>
+      }
+    </ul>
+
+    <section class="actionbtns">
+      <button class="sign" (click)="openMenu()" routerLink="/signin">
+        Sign In
+      </button>
+      <button class="starter" (click)="openMenu()" routerLink="/signup">
+        Get Started
+      </button>
+    </section>
+  </section>
+  }@else if (this.navVersion === "Dash"){
+  <section class="openMobilenav" [@openClose]>
+    <ul [@linkStagger]="open">
+      @for(link of dashlinks; track link.name){
+      <li [@linkStagger]="open" (click)="openMenu()" [routerLink]="link.route">
+        {{ link.name }}
+      </li>
+      }
+    </ul>
+
+    <section class="actionbtns">
+      <button class="out" (click)="signout()">Log out</button>
+    </section>
+  </section>
+  } } @if(this.navVersion !== "Client"){
+  <section class="title">
+    <p
+      [routerLink]="this.routeTo"
+      [ngClass]="navVersion == 'Auth' ? 'auth' : ''"
+      [ngClass]="open ? 'open' : ''"
+    >
+      FEEDBACKED
+    </p>
+  </section>
+  } @if(this.navVersion == "Client"){
+
+  <section class="back">
+    <svg
+      routerLink="dashboard"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M6 12H18M6 12L11 7M6 12L11 17"
+          stroke="#000000"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+      </g>
+    </svg>
+  </section>
+
+  }@else if (navVersion== "Dash") {
+  <section class="actionbtns">
+    <button (click)="this.signout()" class="out" routerLink="/signin">
+      Log Out
+    </button>
+  </section>
+
+  <button (click)="openMenu()" class="mobilenav">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z"
+          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
+        ></path>
+        <path
+          d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z"
+          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
+        ></path>
+        <path
+          d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z"
+          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
+        ></path>
+      </g>
+    </svg>
+  </button>
+  }@else if (navVersion == "Landing" || navVersion == "Auth") {
+
+  <button (click)="openMenu()" class="mobilenav">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z"
+          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
+        ></path>
+        <path
+          d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z"
+          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
+        ></path>
+        <path
+          d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z"
+          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
+        ></path>
+      </g>
+    </svg>
+  </button>
+
+  <ul class="middlebuttons">
+    @for(link of links; track link.name){
+    <li [@linkStagger]="open" [routerLink]="link.route">
+      {{ link.name }}
+    </li>
+    }
+  </ul>
+  <section class="actionbtns">
+    <button class="sign" routerLink="/signin">Sign In</button>
+    <button class="starter" routerLink="/signup">Get Started</button>
+  </section>
+
+  }
+</nav>

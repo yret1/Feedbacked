@@ -9,7 +9,7 @@ const {
   addFeedback,
   getUser,
   initializeKey,
-  deleteKey,
+  deleteKey, setAgencyName,
 } = require("./functions");
 const { checkAuth } = require("./middlewares");
 const router = app.Router();
@@ -26,6 +26,7 @@ router.post("/get-clients", checkAuth, getClients);
 router.post("/get-client", checkAuth, getClient);
 router.post("/create-key", checkAuth, initializeKey);
 router.post("/delete-key", checkAuth, deleteKey);
+router.post("/setUName", checkAuth, setAgencyName);
 
 //Plugin routes
 

@@ -1,0 +1,13 @@
+@if(this.route !== "Landing"){
+
+  <section class="projectbox">
+    <p>{{this.route}}</p>
+
+    @if(this.route == "Projects"){
+      <button routerLink="/dashboard/create">+ Create new project</button>
+    }@else{
+      <div></div>
+    }
+  </section>
+
+}

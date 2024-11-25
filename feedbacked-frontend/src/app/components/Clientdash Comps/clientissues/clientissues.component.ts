@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import {
   ClientsInterface,
   FeedbackInterface,
-} from '../../interfaces/Clientsinterface';
+} from '../../../interfaces/Clientsinterface';
 
 @Component({
   selector: 'app-clientissues',

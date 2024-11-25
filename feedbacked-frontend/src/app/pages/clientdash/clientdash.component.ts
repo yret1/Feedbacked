@@ -1,11 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { BackendService } from '../../../services/backend';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ClientdetailsComponent } from '../../components/clientdetails/clientdetails.component';
-import { ClientissuesComponent } from '../../components/clientissues/clientissues.component';
-import { LoadingcompComponent } from '../../components/loadingcomp/loadingcomp.component';
-import { PopupComponent } from '../../components/popup/popup.component';
-import { KeycompComponent } from '../../components/keycomp/keycomp.component';
+import { ClientdetailsComponent } from '../../components/Clientdash Comps/clientdetails/clientdetails.component';
+import { ClientissuesComponent } from '../../components/Clientdash Comps/clientissues/clientissues.component';
+import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
+import { PopupComponent } from '../../components/Shared/popup/popup.component';
+import { KeycompComponent } from '../../components/Clientdash Comps/keycomp/keycomp.component';
 import { FormsModule } from '@angular/forms';
 import { ClientsInterface } from '../../interfaces/Clientsinterface';
 import { AuthService } from '../../../services/auth';

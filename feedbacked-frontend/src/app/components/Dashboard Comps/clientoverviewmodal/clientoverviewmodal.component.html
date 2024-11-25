@@ -1,0 +1,15 @@
+<article [routerLink]="link" class="clientbutton">
+
+  <figure class="image">
+    @if(image !== undefined){
+      <img src="{{image}}" alt="">
+
+    } @else {
+      <img class="placeholder" src="https://archive.org/download/placeholder-image/placeholder-image.jpg" alt="">
+    }
+  </figure>
+  <div>
+    <p class="client">{{client}}</p>
+    <p class="call">Go to project</p>
+  </div>
+</article>
