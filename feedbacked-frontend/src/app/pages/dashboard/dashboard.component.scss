@@ -5,14 +5,14 @@
     width: 100vw;
     min-height: 100vh;
     font-family: var(--main-font), sans-serif;
-    background-color:  white;
+    background-color: var(--background);
     display: flex;
     flex-direction: column;
 
   .lower{
     padding: 80px 20px 0 20px;
 
-    background-color: var(--gray-bg);
+    background-color: var(--background);
     height: 100%;
     width: 100%;
     display: flex;

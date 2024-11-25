@@ -1,6 +1,6 @@
 .clientbutton{
   width: 100%;
-
+  cursor: pointer;
   height: 350px;
 
   border-radius: 15px;
@@ -9,20 +9,46 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0 3px 5px;
+  transition: all 0.3s;
 
+  &:hover{
+    box-shadow: rgba(0, 0, 0, 0.04) 0 6px 10px;
+  }
 
 
   figure{
     width: 100%;
     height: 70%;
     background-color: #e5e7eb;
+
+    img{
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .placeholder{
+      opacity: 0.4;
+    }
   }
 
   div{
     height: 30%;
     width: 100%;
-    background-color: white;
     padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: white;
+
+    .client{
+      font-weight: 500;
+    }
+
+    .call{
+      padding: 0 0 0 10px;
+    }
   }
 }
