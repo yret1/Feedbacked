@@ -1,10 +1,11 @@
 .dashclient {
     width: 100vw;
     min-height: 100vh;
+
     font-family: var(--main-font);
     background-color: var(--background);
     background-image: var(--background-radient);
-    padding: 10vh 10px;
+    padding: 20vh 10px;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;

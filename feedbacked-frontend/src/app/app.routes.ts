@@ -5,6 +5,7 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { LandingpageComponent } from './pages/landingpage/landingpage.component';
 import { AuthGuard } from '../services/authguard';
+import { CreateClientComponent } from './components/Dashboard Comps/create-client/create-client.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,9 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
+    children: [{ path: 'create', component: CreateClientComponent }],
   },
+
   {
     title: 'Client Dashboard',
     path: 'user/projects/client',
@@ -36,7 +39,6 @@ export const routes: Routes = [
     canActivateChild: [AuthGuard],
   },
 ];
-
 
 //childroutes
 
