@@ -4,6 +4,7 @@ export interface ClientsInterface {
   phone: string;
   status: string;
   feedbacks: FeedbackInterface[];
+  url: string;
   keys: { key: string; for: string; clientEmail: string; created_at: string }[];
 }
 

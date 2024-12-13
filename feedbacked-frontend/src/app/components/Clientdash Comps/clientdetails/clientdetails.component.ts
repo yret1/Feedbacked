@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ClientsInterface } from '../../../interfaces/Clientsinterface';
 import { BackendService } from '../../../../services/backend';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientdetails',
@@ -12,25 +13,17 @@ import { BackendService } from '../../../../services/backend';
 export class ClientdetailsComponent {
   @Input() clientData!: ClientsInterface;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private router: Router) {}
 
   clientCompleted() {
-    this.backendService
-      .clientCompleted(
-        '67098ea930f92b27553d10a1',
-        this.clientData.email,
-        'inactive'
-      )
-      .subscribe(
-        (data) => {
-          console.log(data);
+    this.backendService.clientCompleted(
+      '67098ea930f92b27553d10a1',
+      this.clientData.email,
+      'inactive'
+    );
 
-          window.location.reload();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    this.router.navigate(['/dashboard']);
+    alert('Project closed succesfully!');
   }
 
   clientReopen() {

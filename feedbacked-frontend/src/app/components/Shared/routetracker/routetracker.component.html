@@ -1,13 +1,13 @@
-@if(this.route !== "Landing"){
+@if(this.route !== "Landing" && this.route !== "Client"){
 
-  <section class="projectbox">
-    <p>{{this.route}}</p>
+<section class="projectbox">
+  <p>{{ this.route }}</p>
 
-    @if(this.route == "Projects"){
-      <button routerLink="/dashboard/create">+ Create new project</button>
-    }@else{
-      <div></div>
-    }
-  </section>
+  @if(this.route == "Projects"){
+  <button routerLink="/dashboard/create">+ Create new project</button>
+  }@else{
+  <div></div>
+  }
+</section>
 
 }

@@ -3,15 +3,21 @@
     min-height: 100vh;
 
     font-family: var(--main-font);
-    background-color: var(--background);
-    background-image: var(--background-radient);
-    padding: 20vh 10px;
+    background-color: var(--primary);
+    padding: 80px 0px;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 10px;
+
+
+    @media (min-width: 768px) {
+
+        padding: 100px 0px;
+        
+    }
 }
 
 .clientexists{
@@ -19,29 +25,10 @@
 }
 
 
-.issuesbox{
-    width: 100%;
-    padding: 10px;
-    font-family: var(--main-font);
-    background-color: #F8FAFC;
-    //background-color: var(--background);
-    //background-image: var(--background-radient);
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 10;
-
-    p{
-        font-size: 1.5rem;
-        font-weight: 600;
-        font-family: var(--main-font);
-    }
-}
-
 .issues {
     display: flex;
     gap: 6px;
-    padding: 12px 5px;
-    overflow-x: scroll;
+    padding: 5px;
 }
 
 .loadingwrapp{

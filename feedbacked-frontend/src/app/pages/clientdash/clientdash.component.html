@@ -29,15 +29,17 @@
     <app-clientdetails [clientData]="clientData"></app-clientdetails>
   </section>
 
-  <section class="issuesbox">
-    <p>Issues</p>
+  <section class="issues">
+    <p>Active issues</p>
 
-    <section class="issues">
-      @for(issue of clientData.feedbacks; track issue.id){
+    <section>
+      @for(issue of clientData.feedbacks; track clientData.email ){
       <app-clientissues [issue]="issue" />
+
       }
     </section>
   </section>
+
   <section class="keysgrid">
     <section class="keys">
       <section class="head">
