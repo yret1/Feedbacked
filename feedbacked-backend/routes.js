@@ -1,17 +1,19 @@
-const app = require("express");
-const {
-  signupUser,
-  loginUser,
+import app from "express";
+import {
   addClient,
-  updateClientStatus,
-  getClients,
+  deleteKey,
   getClient,
-  addFeedback,
+  getClients,
   getUser,
   initializeKey,
-  deleteKey, setAgencyName,
-} = require("./functions");
-const { checkAuth } = require("./middlewares");
+  loginUser,
+  setAgencyName,
+  signupUser,
+  updateClientStatus,
+} from "./controllers/userFunctions.js";
+import { addFeedback } from "./controllers/pluginFunctions.js";
+
+import { checkAuth } from "./middlewares.js";
 const router = app.Router();
 
 //Auth routes
@@ -34,4 +36,4 @@ router.post("/newfeedback", addFeedback);
 
 //Add issue + some kind of auth?
 
-module.exports = router;
+export default router;
