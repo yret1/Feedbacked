@@ -10,7 +10,19 @@ const userSchema = new mongoose.Schema({
       email: String,
       phone: String,
       status: String,
-      feedbacks: [],
+      feedbacks: [
+        {
+          title: { type: String, required: true },
+          description: { type: String, required: true },
+          image: { type: String, required: false },
+          status: {
+            type: String,
+            required: true,
+            default: "Unresolved",
+          },
+          created_at: { type: Date, default: Date.now },
+        },
+      ],
       keys: [],
     },
   ],

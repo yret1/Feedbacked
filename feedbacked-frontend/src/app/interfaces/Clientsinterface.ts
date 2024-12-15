@@ -12,6 +12,7 @@ export interface FeedbackInterface {
   id: string;
   title: string;
   body: string;
-  image: string;
+  image?: string;
+  status: 'Resolved' | 'Unresolved';
   created_at: Date;
 }

@@ -29,48 +29,15 @@
     <app-clientdetails [clientData]="clientData"></app-clientdetails>
   </section>
 
-  <section class="issues">
-    <p>Active issues</p>
-
-    <section>
-      @for(issue of clientData.feedbacks; track clientData.email ){
-      <app-clientissues [issue]="issue" />
-
-      }
-    </section>
+  <section class="issueFilters">
+    <select (input)="filterChange($event)" name="filter" id="issueFilters">
+      <option value="Unresolved">Unresolved</option>
+      <option value="Resolved">Resolved</option>
+      <option value="All">All</option>
+    </select>
   </section>
 
-  <section class="keysgrid">
-    <section class="keys">
-      <section class="head">
-        <h3>Active keys</h3>
-        <p>
-          Key allowance {{ this.clientData.keys.length }} / {{ allowedKeys }}
-        </p>
-      </section>
-
-      <section class="keyslist">
-        @for(key of clientData.keys; track key.for){
-        <app-keycomp
-          [key]="key.key"
-          [for]="key.for"
-          (copyToClipboard)="copyToClipboard($event)"
-          (deleteKey)="deleteKey($event)"
-        />
-
-        }
-        <section class="keysempty">
-          @if(clientData.keys.length == 0){
-          <p>No keys found</p>
-          } @if(clientData.keys.length < allowedKeys){
-          <button (click)="toggleAdd('')">Add Client Key</button>
-          }@else {
-          <button disabled>Upgrade to add keys</button>
-          }
-        </section>
-      </section>
-    </section>
-  </section>
+  <section class="issues"></section>
 
   }@else if(loading()){
 

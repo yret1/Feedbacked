@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnChanges, OnInit, signal } from '@angular/core';
 import { BackendService } from '../../../services/backend';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClientdetailsComponent } from '../../components/Clientdash Comps/clientdetails/clientdetails.component';
@@ -6,8 +6,11 @@ import { ClientissuesComponent } from '../../components/Clientdash Comps/clienti
 import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
 import { PopupComponent } from '../../components/Shared/popup/popup.component';
 import { KeycompComponent } from '../../components/Clientdash Comps/keycomp/keycomp.component';
-import { FormsModule } from '@angular/forms';
-import { ClientsInterface } from '../../interfaces/Clientsinterface';
+import { FormsModule, ValueChangeEvent } from '@angular/forms';
+import {
+  ClientsInterface,
+  FeedbackInterface,
+} from '../../interfaces/Clientsinterface';
 import { AuthService } from '../../../services/auth';
 
 @Component({
@@ -26,26 +29,41 @@ import { AuthService } from '../../../services/auth';
   styleUrl: './clientdash.component.scss',
 })
 export class ClientdashComponent implements OnInit {
+  //Back url
   goBack = '/';
 
+  //Userdata handlers
   userId!: string;
   clientEmail!: string;
+  clientData!: ClientsInterface;
 
+  //Issueholders
+  issues!: FeedbackInterface[];
+  currentIssueLoop!: FeedbackInterface[];
+
+  //Filter functions
+  currentFilter: 'All' | 'Unresolved' | 'Resolved' = 'All';
+
+  //Private services
   constructor(
     private backendService: BackendService,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
 
+  //Loading tracker
+  loading = signal<boolean>(true);
+
+  //Key handling
   newKeyName: string = '';
   allowedKeys: number = 0;
-  loading = signal<boolean>(true);
   action: string = '';
   adding = signal<boolean>(false);
   popup = signal<boolean>(false);
 
-  clientData!: ClientsInterface;
+  // (Key handle functions)
 
+  //Trigger flow for adding new client key
   toggleAdd(action: string) {
     if (action === '') {
       this.adding.set(!this.adding());
@@ -60,6 +78,7 @@ export class ClientdashComponent implements OnInit {
     }
   }
 
+  //Copy key to clipboard
   copyToClipboard(key: string) {
     navigator.clipboard.writeText(key);
 
@@ -71,6 +90,7 @@ export class ClientdashComponent implements OnInit {
     }, 4000);
   }
 
+  //Delete key
   deleteKey(key: string) {
     this.backendService.deleteKey(this.userId, this.clientEmail, key).subscribe(
       (data) => {
@@ -118,9 +138,11 @@ export class ClientdashComponent implements OnInit {
       );
   }
 
+  //Placeholder plan
   plan = 'base';
 
   keyCheck() {
+    //TODO: Implement dynamic plan check!
     this.plan = 'base';
 
     switch (this.plan) {
@@ -133,6 +155,29 @@ export class ClientdashComponent implements OnInit {
       case 'enterprise':
         this.allowedKeys = 10;
         break;
+    }
+  }
+
+  //Filtersetter
+  filterChange(event: any) {
+    const filterTrigger = event.target!.value;
+    switch (filterTrigger) {
+      case 'All':
+        this.currentIssueLoop = this.issues;
+        break;
+      case 'Unresolved':
+        this.currentIssueLoop = this.issues.filter(
+          (iss) => iss.status !== 'Resolved'
+        );
+        break;
+      case 'Resolved':
+        this.currentIssueLoop = this.issues.filter(
+          (iss) => iss.status !== 'Unresolved'
+        );
+        break;
+
+      default:
+        this.currentIssueLoop = this.issues;
     }
   }
 
