@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
+
+//Defines strict type for any issue to be added.
 const IssueModel = new mongoose.Schema({
   id: { type: String, default: uuidv4() },
   title: { type: String, required: true },

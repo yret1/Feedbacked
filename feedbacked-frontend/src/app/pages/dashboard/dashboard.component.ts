@@ -4,7 +4,7 @@ import { BackendService } from '../../../services/backend';
 import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
 import { AuthService } from '../../../services/auth';
 import { Subscription } from 'rxjs';
-import {RouterLink} from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 interface Client {
   name: string;
@@ -32,12 +32,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loading = signal<boolean>(true);
   clients = signal<Client[]>([]);
   placeholders = ['1', '2', '3', '4'];
-
-
-  createProject(){
-
-    //Implement create project feature here!
-  }
 
   ngOnInit() {
     this.userSubscription = this.authService.getId().subscribe((userId) => {

@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { clientModel } from "./clientmodel.js";
+
+//Defines strict type for any user account.
 const userSchema = new mongoose.Schema({
   username: { type: String, required: false },
   email: { type: String, unique: true, required: true },

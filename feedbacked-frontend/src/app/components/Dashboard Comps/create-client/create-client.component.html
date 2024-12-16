@@ -1,1 +1,18 @@
-<p>create-client works!</p>
+<section class="create">
+  <form class="form" (submit)="onSubmit()" [formGroup]="createNewProject">
+    <div>
+      <label for="title">Client Email</label>
+      <input type="text" formControlName="clientEmail" />
+    </div>
+    <div>
+      <label for="title">Project Title</label>
+      <input type="text" formControlName="projectName" />
+    </div>
+    <div>
+      <label for="title">Project Url</label>
+      <input type="text" formControlName="projectUrl" />
+    </div>
+
+    <button>Create new project</button>
+  </form>
+</section>

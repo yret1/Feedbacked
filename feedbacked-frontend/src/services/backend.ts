@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { newClient } from '../app/interfaces/Backend';
 
 @Injectable({
   providedIn: 'root',
@@ -30,9 +31,31 @@ export class BackendService {
     });
   }
 
-  clientCompleted(studioId: string, clientEmail: string, newStatus: string) {
+  addClient = async ({
+    userId,
+    clientEmail,
+    clientName,
+    clientUrl,
+  }: newClient) => {
+    try {
+      const request = await this.http.post(
+        `http://${this.baseUrl}/add-client`,
+        {
+          userId,
+          clientEmail,
+          clientName,
+          clientUrl,
+        }
+      );
+
+      if (request) {
+      } else {
+      }
+    } catch (error) {}
+  };
+  clientCompleted(userId: string, clientEmail: string, newStatus: string) {
     return this.http.post(`http://${this.baseUrl}/update-client-status`, {
-      studioId,
+      studioId: userId,
       clientEmail,
       newStatus,
     });
@@ -55,8 +78,7 @@ export class BackendService {
   }
 
   updateAgencyName(userId: string, agencyName: string) {
-
-    console.log(userId, agencyName)
+    console.log(userId, agencyName);
     return this.http.post(`http://${this.baseUrl}/setUName`, {
       userId,
       agencyName,

@@ -28,7 +28,12 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    children: [{ path: 'create', component: CreateClientComponent }],
+  },
+  {
+    title: 'New Project',
+    path: 'dashboard/create',
+    component: CreateClientComponent,
+    canActivate: [AuthGuard],
   },
   {
     title: 'Project Issue',

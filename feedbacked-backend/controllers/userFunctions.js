@@ -1,7 +1,7 @@
 import User from "../schemas/usermodel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import { v4 as uuidv4 } from "uuid";
 //Sign up a new agency user
 export const signupUser = async (req, res) => {
   const { email, password } = req.body;
@@ -77,8 +77,7 @@ export const getUser = async (req, res) => {
 
 //Add new client to agency account
 export const addClient = async (req, res) => {
-  const { clientName, clientEmail, clientPhone, clientStatus, userId } =
-    req.body;
+  const { clientName, clientEmail, clientUrl, userId } = req.body;
 
   if (!clientName || !clientEmail || !clientStatus) {
     return res.status(400).json({ message: "Please enter all fields" });
@@ -91,12 +90,15 @@ export const addClient = async (req, res) => {
       return res.status(400).json({ message: "User does not exist" });
     }
 
+    const id = await uuidv4();
+
     const clientModel = new Client({
+      id: id,
       name: clientName,
       email: clientEmail,
-      phone: clientPhone,
-      status: clientStatus,
+      url: clientUrl,
       feedbacks: [],
+      keys: [],
       created_at: new Date(),
     });
 
@@ -106,7 +108,7 @@ export const addClient = async (req, res) => {
 
     res
       .status(201)
-      .json({ message: "Client added successfully", client: clientModel });
+      .json({ message: "Client added successfully", clientId: id });
   } catch (err) {
     return res
       .status(500)
