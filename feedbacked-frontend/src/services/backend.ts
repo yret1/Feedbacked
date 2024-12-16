@@ -31,31 +31,17 @@ export class BackendService {
     });
   }
 
-  addClient = async ({
-    userId,
-    clientEmail,
-    clientName,
-    clientUrl,
-  }: newClient) => {
-    try {
-      const request = await this.http.post(
-        `http://${this.baseUrl}/add-client`,
-        {
-          userId,
-          clientEmail,
-          clientName,
-          clientUrl,
-        }
-      );
-
-      if (request) {
-      } else {
-      }
-    } catch (error) {}
-  };
+  addClient({ userId, clientEmail, clientName, clientUrl }: newClient) {
+    return this.http.post(`http://${this.baseUrl}/add-client`, {
+      userId,
+      clientEmail,
+      clientName,
+      clientUrl,
+    });
+  }
   clientCompleted(userId: string, clientEmail: string, newStatus: string) {
     return this.http.post(`http://${this.baseUrl}/update-client-status`, {
-      studioId: userId,
+      userId: userId,
       clientEmail,
       newStatus,
     });

@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientoverviewmodal',
@@ -8,7 +9,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './clientoverviewmodal.component.html',
   styleUrls: ['./clientoverviewmodal.component.scss'],
 })
-export class ClientoverviewmodalComponent implements OnChanges {
+export class ClientoverviewmodalComponent {
   @Input() status: string = '';
   @Input() client: string = '';
   @Input() issues: string = '';
@@ -16,12 +17,10 @@ export class ClientoverviewmodalComponent implements OnChanges {
   @Input() userId: string = '';
   @Input() image?: string = undefined;
 
-  link: string = '';
+  constructor(private router: Router) {}
 
-  ngOnChanges(): void {
-    if (this.email) {
-      localStorage.setItem('client', this.email);
-      this.link = '/user/projects/client';
-    }
+  onSelect() {
+    localStorage.setItem('client', this.email);
+    this.router.navigate(['/user/projects/client']);
   }
 }

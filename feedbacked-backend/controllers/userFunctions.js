@@ -80,6 +80,8 @@ export const getUser = async (req, res) => {
 export const addClient = async (req, res) => {
   const { clientName, clientEmail, clientUrl, userId } = req.body;
 
+  console.log("Path hit");
+
   if (!clientName || !clientEmail) {
     return res.status(400).json({ message: "Please enter all fields" });
   }
@@ -124,14 +126,14 @@ export const deleteClient = async (req, res) => {};
 //Update status of specific client
 
 export const updateClientStatus = async (req, res) => {
-  const { studioId, clientEmail, newStatus } = req.body;
+  const { userId, clientEmail, newStatus } = req.body;
 
-  if (!studioId || !clientEmail || !newStatus) {
+  if (!userId || !clientEmail || !newStatus) {
     return res.status(400).json({ message: "Please enter all fields" });
   }
 
   try {
-    const user = await User.findById(studioId);
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(400).json({ message: "User does not exist" });
@@ -197,7 +199,6 @@ export const getClients = async (req, res) => {
 
 export const getClient = async (req, res) => {
   const { userId, clientEmail } = req.body;
-
   if (!userId) {
     return res.status(400).json({ message: "Please enter all fields" });
   }
@@ -214,10 +215,17 @@ export const getClient = async (req, res) => {
         .status(400)
         .json({ message: "Could not find client", clients: [] });
     } else {
-      const client = user.clients.find(
+      const client = await user.clients.find(
         (client) => client.email === clientEmail
       );
-      return res.status(200).json({ message: "Client found", client: client });
+
+      if (client) {
+        return res
+          .status(200)
+          .json({ message: "Client found", client: client });
+      } else {
+        return res.status(404).json({ message: "Client not found" });
+      }
     }
   } catch (error) {
     console.error("Error getting clients:", error);

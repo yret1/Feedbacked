@@ -113,6 +113,9 @@
       width: 100%;
       display: grid;
       grid-template-columns: 1fr;
+      align-items: center;
+      place-content: center;
+      gap: 10px;
 
 
 

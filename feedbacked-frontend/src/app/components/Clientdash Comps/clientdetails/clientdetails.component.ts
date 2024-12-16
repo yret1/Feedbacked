@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ClientsInterface } from '../../../interfaces/Clientsinterface';
 import { BackendService } from '../../../../services/backend';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth';
 
 @Component({
   selector: 'app-clientdetails',
@@ -10,17 +11,20 @@ import { Router } from '@angular/router';
   templateUrl: './clientdetails.component.html',
   styleUrl: './clientdetails.component.scss',
 })
-export class ClientdetailsComponent {
+export class ClientdetailsComponent implements OnInit {
   @Input() clientData!: ClientsInterface;
 
-  constructor(private backendService: BackendService, private router: Router) {}
+  userId!: string;
+  constructor(
+    private backendService: BackendService,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   clientCompleted() {
-    this.backendService.clientCompleted(
-      '67098ea930f92b27553d10a1',
-      this.clientData.email,
-      'inactive'
-    );
+    this.backendService
+      .clientCompleted(this.userId, this.clientData.email, 'inactive')
+      .subscribe();
 
     this.router.navigate(['/dashboard']);
     alert('Project closed succesfully!');
@@ -43,5 +47,14 @@ export class ClientdetailsComponent {
           console.log(error);
         }
       );
+  }
+
+  ngOnInit(): void {
+    const id = this.auth.getCurrentUserId();
+
+    if (id) {
+      this.userId = id;
+    } else {
+    }
   }
 }

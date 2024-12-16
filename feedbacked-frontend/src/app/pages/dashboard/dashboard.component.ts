@@ -38,7 +38,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (userId) {
         this.backendService.getClients(userId).subscribe({
           next: (data) => {
-            this.clients.set(data.clients);
+            console.log(data.clients);
+            const clients = data.clients.filter(
+              (client: Client) => client.status == 'active'
+            );
+            this.clients.set(clients);
             this.loading.set(false);
           },
           error: (error) => {

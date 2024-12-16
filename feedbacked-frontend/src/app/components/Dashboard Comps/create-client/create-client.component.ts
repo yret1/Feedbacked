@@ -29,6 +29,11 @@ export class CreateClientComponent implements OnInit {
     const clientName = this.createNewProject.value.projectName;
     const clientUrl = this.createNewProject.value.projectUrl;
     if (id && clientEmail !== '' && clientName !== '' && clientUrl !== '') {
+      console.log({
+        clientEmail,
+        clientName,
+        clientUrl,
+      });
       const params = {
         userId: id,
         clientEmail: clientEmail,
@@ -37,8 +42,12 @@ export class CreateClientComponent implements OnInit {
       };
 
       localStorage.setItem('client', this.createNewProject.value.clientEmail);
-      const newClient: any = await this.backendService.addClient(params);
-      this.router.navigate(['/user/projects/client']);
+
+      await this.backendService.addClient(params).subscribe();
+
+      setTimeout(() => {
+        this.router.navigate(['/user/projects/client']);
+      }, 200);
     }
   };
 
