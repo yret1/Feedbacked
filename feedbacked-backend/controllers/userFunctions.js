@@ -1,4 +1,5 @@
 import User from "../schemas/usermodel.js";
+import { Client } from "../schemas/clientmodel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
@@ -79,7 +80,7 @@ export const getUser = async (req, res) => {
 export const addClient = async (req, res) => {
   const { clientName, clientEmail, clientUrl, userId } = req.body;
 
-  if (!clientName || !clientEmail || !clientStatus) {
+  if (!clientName || !clientEmail) {
     return res.status(400).json({ message: "Please enter all fields" });
   }
 

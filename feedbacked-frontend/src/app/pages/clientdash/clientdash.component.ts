@@ -193,6 +193,7 @@ export class ClientdashComponent implements OnInit {
       this.backendService.getClient(this.userId, this.clientEmail).subscribe(
         (data) => {
           this.clientData = data.client;
+          console.log(data.client);
           this.loading.set(false);
 
           this.issues = data.client.feedbacks;

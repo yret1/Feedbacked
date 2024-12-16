@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { BackendService } from '../../../../services/backend';
 import { newClientResponse } from '../../../interfaces/Backend';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-client',
   standalone: true,
@@ -18,25 +18,27 @@ import { newClientResponse } from '../../../interfaces/Backend';
 export class CreateClientComponent implements OnInit {
   createNewProject!: FormGroup;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private router: Router) {}
 
   onSubmit = async () => {
     //Create new project and send user to new user page.
 
     const id = localStorage.getItem('userID');
 
-    if (id) {
+    const clientEmail = this.createNewProject.value.clientEmail;
+    const clientName = this.createNewProject.value.projectName;
+    const clientUrl = this.createNewProject.value.projectUrl;
+    if (id && clientEmail !== '' && clientName !== '' && clientUrl !== '') {
       const params = {
         userId: id,
-        clientEmail: this.createNewProject.value.clientEmail,
-        clientName: this.createNewProject.value.projectName,
-        clientUrl: this.createNewProject.value.projectUrl,
+        clientEmail: clientEmail,
+        clientName: clientName,
+        clientUrl: clientUrl,
       };
 
-      const newClient = await this.backendService.addClient(params);
-
-      if (newClient) {
-      }
+      localStorage.setItem('client', this.createNewProject.value.clientEmail);
+      const newClient: any = await this.backendService.addClient(params);
+      this.router.navigate(['/user/projects/client']);
     }
   };
 

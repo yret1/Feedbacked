@@ -8,11 +8,11 @@ const clientModel = new mongoose.Schema({
   email: { type: String, required: true },
   status: { type: String, default: "active" },
   url: { type: String, required: true },
-  feedbacks: [
-    {
-      type: IssueModel,
-    },
-  ],
+  feedbacks: {
+    type: [IssueModel],
+    required: false,
+    default: [],
+  },
   keys: [],
 });
 

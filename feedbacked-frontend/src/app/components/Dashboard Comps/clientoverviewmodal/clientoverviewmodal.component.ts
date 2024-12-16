@@ -14,7 +14,7 @@ export class ClientoverviewmodalComponent implements OnChanges {
   @Input() issues: string = '';
   @Input() email: string = '';
   @Input() userId: string = '';
-  @Input() image?: string = undefined
+  @Input() image?: string = undefined;
 
   link: string = '';
 
