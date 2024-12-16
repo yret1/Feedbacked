@@ -30,6 +30,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [{ path: 'create', component: CreateClientComponent }],
   },
+  {
+    title: 'Project Issue',
+    path: 'user/projects/client/issue/:issue',
+    component: DashboardComponent,
+  },
 
   {
     title: 'Client Dashboard',

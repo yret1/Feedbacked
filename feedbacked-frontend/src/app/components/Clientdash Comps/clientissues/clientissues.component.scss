@@ -1,80 +1,42 @@
-.issuemodal {
-    display: flex ;
-    flex-direction: column;
+.issueLooped {
+    width: 100%;
     padding: 12px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
-    transition: all 0.3s ease-in-out;
-    gap: 10px;
-    min-width: 250px;
-    border-radius: 15px;
-    background-image: var(--background-radient);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow:  0 0 5px rgb(165, 164, 164);
 
 
-    .date{
-        font-size:0.9rem;
-        font-weight: 400;
-        font-family: var(--main-font);
-    }
+    .details{
 
-    .details {
-        .title{
-            font-size: 1.2rem;
-            font-weight: 600;
-            font-family: var(--main-font);
+        :nth-child(1){
+            color: orange;
         }
-        .desc{
-            font-size: 1rem;
-            font-weight: 400;
-            font-family: var(--main-font);
+        :nth-child(2){
+            color: orange;
         }
     }
-
 
     .imagebox{
-        width: 100%;
-        aspect-ratio: 16/9;
-        border-radius: 15px;
-        background-color: white;
-        
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
-        color: rgba(0,0,0,0.5);
-    }
-}
 
-.issuemodal:hover{
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-
-}
+        div{
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+        }
 
 
-.buttonbox{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        .cam{
 
-
-    .expbutton{
-        padding: 10px 20px;
-        border-radius: 10px;
-        background-color: var(--primary-color);
-        color: white;
-        font-size: 1rem;
-        font-weight: 600;
-        font-family: var(--main-font);
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgb(206, 206, 206);
+            border-radius: 14px;
+        }
     }
 
-    .expbutton:hover{
-
-        border:1px solid rgba(0, 0, 0, 0.2);
-        color: blueviolet
-    }
 
 }

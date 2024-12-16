@@ -1,7 +1,8 @@
 import User from "../schemas/usermodel.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const addFeedback = async (req, res) => {
-  const { userId, clientEmail, feedbackTitle, feedbackBody, ImageUrl } =
+  const { userId, clientEmail, feedbackTitle, feedbackBody, ImageUrl, by } =
     req.body;
 
   if (!userId || !clientEmail || !feedbackTitle) {
@@ -29,9 +30,10 @@ export const addFeedback = async (req, res) => {
     }
 
     const feedback = {
-      id: uuid(),
+      id: uuidv4(),
       title: feedbackTitle,
-      body: feedbackBody,
+      description: feedbackBody,
+      by: by,
       image: ImageUrl,
       created_at: new Date(),
     };

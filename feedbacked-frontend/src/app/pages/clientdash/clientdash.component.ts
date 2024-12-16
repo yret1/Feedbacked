@@ -160,7 +160,7 @@ export class ClientdashComponent implements OnInit {
 
   //Filtersetter
   filterChange(event: any) {
-    const filterTrigger = event.target!.value;
+    const filterTrigger = event?.target?.value || 'All';
     switch (filterTrigger) {
       case 'All':
         this.currentIssueLoop = this.issues;
@@ -194,6 +194,10 @@ export class ClientdashComponent implements OnInit {
         (data) => {
           this.clientData = data.client;
           this.loading.set(false);
+
+          this.issues = data.client.feedbacks;
+
+          this.currentIssueLoop = data.client.feedbacks;
         },
         (error) => {
           console.log(error);
