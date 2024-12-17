@@ -47,11 +47,6 @@
     </p>
   </section>
   } @if (navVersion== "Dash" || navVersion === "Client") {
-  <section class="actionbtns">
-    <button (click)="this.signout()" class="out" routerLink="/signin">
-      Log Out
-    </button>
-  </section>
 
   <button (click)="openMenu()" class="mobilenav">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,18 +98,6 @@
       </g>
     </svg>
   </button>
-
-  <ul class="middlebuttons">
-    @for(link of links; track link.name){
-    <li [@linkStagger]="open" [routerLink]="link.route">
-      {{ link.name }}
-    </li>
-    }
-  </ul>
-  <section class="actionbtns">
-    <button class="sign" routerLink="/signin">Sign In</button>
-    <button class="starter" routerLink="/signup">Get Started</button>
-  </section>
 
   }
 </nav>
