@@ -61,13 +61,35 @@ const mouseTracker = (e) => {
   mouseXPos = mouseX;
 };
 
-const takeScreenShot = () => {
-  const screenTaken = document.getElementById("isShot").style;
-  const screenNotTaken = document.getElementById("noShot").style;
+function captureViewportScreenshot() {
+  const subBoxHide = document.getElementById("subbox");
 
-  screenTaken.display = "flex";
-  screenNotTaken.display = "none";
-};
+  subBoxHide.style.display = "none";
+  const element = document.body;
+
+  html2canvas(element, {
+    useCORS: true,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
+  }).then((canvas) => {
+    // Append the canvas to the body (for testing purposes)
+
+    // Convert the canvas to a base64 image
+    const image = canvas.toDataURL("image/png");
+
+    // Optionally, download the image
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "screenshot.png";
+    link.click();
+  });
+
+  setTimeout(() => {
+    subBoxHide.style.display = "flex";
+  }, 500);
+}
 const createIssueBox = () => {
   const newIssue = document.createElement("div");
 
@@ -132,7 +154,7 @@ const sendFeedback = () => {
 //Render the base UI.
 (function renderUi() {
   const submissionbox = document.createElement("section");
-
+  submissionbox.id = "subbox";
   submissionbox.style.position = "fixed"; // 'fixed' is often better than 'absolute'
   submissionbox.style.width = "300px";
   submissionbox.style.height = "auto";
@@ -302,6 +324,10 @@ const sendFeedback = () => {
 
   const shotBox = document.createElement("div");
   shotBox.id = "screenshot";
+  shotBox.style.width = "100%";
+  shotBox.style.display = "flex";
+  shotBox.style.justifyContent = "center";
+  shotBox.style.alignContent = "center";
 
   //Screenshot not taken
 
@@ -312,16 +338,38 @@ const sendFeedback = () => {
   noScreen.style.display = "flex";
   noScreen.style.justifyContent = "flex-start";
   noScreen.style.flexDirection = "column";
-  noScreen.addEventListener("click", takeScreenShot);
+  noScreen.style.padding = "6px";
+  noScreen.style.cursor = "pointer";
+  noScreen.style.fontFamily = "'Poppins', sans-serif";
+  noScreen.style.fontWeight = "600";
+  noScreen.style.borderRadius = "6px";
+  noScreen.style.backgroundColor = "transparent";
+  noScreen.style.flexDirection = "column";
+  noScreen.style.flexDirection = "column";
+  noScreen.addEventListener("click", async () => {
+    try {
+      const screenshot = await captureViewportScreenshot();
+      console.log("Screenshot captured:", screenshot);
+    } catch (error) {
+      console.error("Failed to capture screenshot:", error);
+    }
+  });
   shotBox.appendChild(noScreen);
   //Screenshot taken
+
+  const html2canScript = document.createElement("script");
+
+  html2canScript.src =
+    "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
 
   const isScreen = document.createElement("div");
   isScreen.id = "isShot";
 
   isScreen.style.display = "none";
   isScreen.style.width = "100%";
-  isScreen.style.aspectRatio = "video";
+  isScreen.style.aspectRatio = "16/9";
+  isScreen.style.borderRadius = "5px";
+  isScreen.style.border = "1px solid black";
 
   const image = document.createElement("img");
 
@@ -354,6 +402,8 @@ const sendFeedback = () => {
   button.innerHTML = "Send Feedback";
 
   button.addEventListener("click", sendFeedback);
+
+  document.body.appendChild(html2canScript);
 
   //Append elements
   submissionbox.appendChild(header);
