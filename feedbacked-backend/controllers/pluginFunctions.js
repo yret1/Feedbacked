@@ -2,13 +2,14 @@ import User from "../schemas/usermodel.js";
 import { v4 as uuidv4 } from "uuid";
 
 export const addFeedback = async (req, res) => {
-  const { userId, clientEmail, feedbackTitle, feedbackBody, ImageUrl, by } =
+  const { userId, clientId, feedbackTitle, feedbackBody, ImageUrl, by } =
     req.body;
 
-  if (!userId || !clientEmail || !feedbackTitle) {
+  console.log(req.body);
+  if (!userId || !clientId || !feedbackTitle) {
     return res.status(400).json({
       message:
-        "Please enter a valid userId, clientEmail and a title for the submitted issue",
+        "Please enter a valid userId, clientId and a title for the submitted issue",
     });
   }
 
@@ -21,7 +22,7 @@ export const addFeedback = async (req, res) => {
       });
     }
 
-    const client = user.clients.find((client) => client.email === clientEmail);
+    const client = user.clients.find((client) => client.id === clientId);
 
     if (!client) {
       return res.status(404).json({

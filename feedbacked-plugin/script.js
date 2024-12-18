@@ -1,13 +1,18 @@
 //Module open check
 let open = false;
 
-//Values for sending feedback
+let presigned = "";
+let preKey = "";
+let publicUrlImg = "";
 
+//Values for sending feedback
 let nameIn = "";
 let desc = "";
+let title = "";
 let image = "";
 
-const issuesAdded = [];
+let user = "{{userId}}";
+let client = "{{clientId}}";
 
 let mouseYPos;
 let mouseXPos;
@@ -17,7 +22,6 @@ const toggleOpen = () => {
 
   const buttonToggle = document.getElementById("openbutton");
   const input = document.querySelectorAll("#inputbox");
-
   const submitButton = document.getElementById("submitter");
 
   if (open) {
@@ -46,73 +50,97 @@ const setName = (e) => {
 
 const setDesc = (e) => {
   desc = e.target.value;
+  console.log("Desc", e.currentTarget.value);
 };
 
-const mouseTracker = (e) => {
-  // Normalize the event object to work across different browsers
-  e = e || window.event;
-
-  // Get mouse coordinates
-  const mouseX = e.clientX || e.pageX;
-  const mouseY = e.clientY || e.pageY;
-
-  // You can return the coordinates if needed
-  mouseYPos = mouseY;
-  mouseXPos = mouseX;
+const addTitle = (e) => {
+  title = e.target.value;
+  console.log("Title", e.currentTarget.value);
 };
+async function uploadImageToS3(file, presignedUrl) {
+  try {
+    const response = await fetch(presignedUrl, {
+      method: "PUT",
+      body: file,
+      headers: {
+        "Content-Type": file.type, // Ensure the Content-Type matches the presigned URL
+      },
+    });
+    if (response.ok) {
+      toastAlert(true, "Image captured");
+    } else {
+      console.error("Upload failed:", response.statusText);
+      toastAlert(true, "Image not sent");
+    }
+  } catch (err) {
+    console.error("Error during upload:", err);
+  }
+}
 
-function captureViewportScreenshot() {
-  const subBoxHide = document.getElementById("subbox");
-
-  subBoxHide.style.display = "none";
+// Example: Capturing and uploading a screenshot
+async function captureAndUploadScreenshot(presignedUrl) {
   const element = document.body;
 
-  html2canvas(element, {
+  const canvas = await html2canvas(element, {
     useCORS: true,
+    scrollX: window.scrollX,
+    scrollY: window.scrollY,
     width: window.innerWidth,
     height: window.innerHeight,
-    windowWidth: window.innerWidth,
-    windowHeight: window.innerHeight,
-  }).then((canvas) => {
-    // Append the canvas to the body (for testing purposes)
-
-    // Convert the canvas to a base64 image
-    const image = canvas.toDataURL("image/png");
-
-    // Optionally, download the image
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "screenshot.png";
-    link.click();
+    x: window.scrollX,
+    y: window.scrollY,
   });
 
-  setTimeout(() => {
-    subBoxHide.style.display = "flex";
-  }, 500);
+  const blob = await new Promise((resolve) =>
+    canvas.toBlob(resolve, "image/png")
+  );
+
+  await uploadImageToS3(blob, presignedUrl);
 }
-const createIssueBox = () => {
-  const newIssue = document.createElement("div");
 
-  const style = newIssue.style;
+// Fetch the presigned URL from your server
+async function fetchPresignedUrl() {
+  try {
+    const response = await fetch(
+      "http://localhost:3002/generate-presigned-url"
+    );
+    const { url, publicUrl } = await response.json();
+    publicUrlImg = publicUrl;
+    return url;
+  } catch (err) {
+    console.error("Error fetching presigned URL:", err);
+    throw err;
+  }
+}
 
-  style.minWidth = "100px";
-  style.padding = "6px";
-  style.position = "absolute";
-  style.backgroundColor = "red";
-  style.left = mouseXPos;
-  style.top = mouseYPos;
+const capureTrigger = async () => {
+  const noImg = document.getElementById("noShot").style;
+  const isImg = document.getElementById("isShot").style;
+  const imgbox = document.getElementById("imgSend");
 
-  document.body.appendChild(newIssue);
+  const submissionbox = document.getElementById("subbox").style;
+
+  submissionbox.display = "none";
+  const presignedUrl = await fetchPresignedUrl();
+  await captureAndUploadScreenshot(presignedUrl);
+
+  setTimeout(() => {
+    noImg.display = "none";
+    isImg.display = "flex";
+    submissionbox.display = "flex";
+    imgbox.src = publicUrlImg;
+  }, 300);
 };
 
 //Toast
 
-const toastAlert = (result) => {
+const toastAlert = (result, text) => {
   const toast = document.getElementById("toaster");
   const style = toast.style;
+
+  toast.innerHTML = text;
   switch (result) {
     case true:
-      toast.innerHTML = "Feedback sent!";
       style.display = "flex";
       style.color = "white";
       style.backgroundColor = "green";
@@ -120,7 +148,6 @@ const toastAlert = (result) => {
 
       break;
     default:
-      toast.innerHTML = "Oops, Something went wrong";
       style.color = "white";
       style.display = "flex";
       style.backgroundColor = "red";
@@ -131,28 +158,45 @@ const toastAlert = (result) => {
   }, 1500);
 };
 
-//Submit feedback
-const sendFeedback = () => {
-  const feedbackModel = {
-    name: nameIn,
-    desc: desc,
-    image: image,
+//Send feedback
+const sendFeedbackToClient = async () => {
+  const feedbackmodel = {
+    userId: user,
+    clientId: client,
+    feedbackTitle: title,
+    feedbackBody: desc,
+    ImageUrl: publicUrlImg,
+    by: nameIn,
   };
 
-  console.log("Submitted feedback", feedbackModel);
-  toggleOpen();
+  try {
+    const sendFeedback = await fetch("http://localhost:3000/newfeedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user,
+        clientId: client,
+        feedbackTitle: title,
+        feedbackBody: desc,
+        ImageUrl: publicUrlImg,
+        by: nameIn,
+      }),
+    });
 
-  const check = feedbackModel.desc !== "" || feedbackModel.name !== "";
+    const response = feedback.json();
 
-  if (check) {
-    toastAlert(true);
-  } else {
-    toastAlert(false);
-  }
+    if (response.ok) {
+      console.log("Added feedback");
+    } else {
+      console.log("oops something went wrong.");
+    }
+  } catch (error) {}
 };
 
 //Render the base UI.
-(function renderUi() {
+(async function renderUi() {
   const submissionbox = document.createElement("section");
   submissionbox.id = "subbox";
   submissionbox.style.position = "fixed"; // 'fixed' is often better than 'absolute'
@@ -216,9 +260,6 @@ const sendFeedback = () => {
   //Add eventlistner to toggle open
   openButton.addEventListener("click", toggleOpen);
 
-  //Track mouse
-  document.addEventListener("mousemove", mouseTracker);
-  document.body.addEventListener("click", createIssueBox);
   //Append button
   header.appendChild(openButton);
 
@@ -248,7 +289,7 @@ const sendFeedback = () => {
   name.style.border = "1px solid black";
   name.style.fontSize = "16px";
   name.value = nameIn;
-  name.addEventListener("keypress", setName);
+  name.addEventListener("input", setName);
   box.appendChild(name);
 
   //Create box for input name
@@ -274,7 +315,7 @@ const sendFeedback = () => {
   title.style.borderRadius = "5px";
   title.style.border = "1px solid black";
   title.style.fontSize = "16px";
-  title.addEventListener("input", setName);
+  title.addEventListener("input", addTitle);
   boxTitle.appendChild(title);
 
   //Description textarea
@@ -346,14 +387,8 @@ const sendFeedback = () => {
   noScreen.style.backgroundColor = "transparent";
   noScreen.style.flexDirection = "column";
   noScreen.style.flexDirection = "column";
-  noScreen.addEventListener("click", async () => {
-    try {
-      const screenshot = await captureViewportScreenshot();
-      console.log("Screenshot captured:", screenshot);
-    } catch (error) {
-      console.error("Failed to capture screenshot:", error);
-    }
-  });
+  noScreen.addEventListener("click", capureTrigger);
+
   shotBox.appendChild(noScreen);
   //Screenshot taken
 
@@ -361,6 +396,11 @@ const sendFeedback = () => {
 
   html2canScript.src =
     "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+
+  const awsScript = document.createElement("script");
+
+  awsScript.src =
+    "https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1692.0/aws-sdk.min.js";
 
   const isScreen = document.createElement("div");
   isScreen.id = "isShot";
@@ -401,9 +441,15 @@ const sendFeedback = () => {
   button.style.alignItems = "center";
   button.innerHTML = "Send Feedback";
 
-  button.addEventListener("click", sendFeedback);
+  button.addEventListener("click", sendFeedbackToClient);
+
+  const cloudScript = document.createElement("script");
+  cloudScript.src =
+    "https://cdnjs.cloudflare.com/ajax/libs/cloudinary-core/2.13.1/cloudinary-core.js";
 
   document.body.appendChild(html2canScript);
+  document.body.appendChild(cloudScript);
+  document.body.appendChild(awsScript);
 
   //Append elements
   submissionbox.appendChild(header);
