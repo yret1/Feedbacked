@@ -7,6 +7,11 @@ let nameIn = "";
 let desc = "";
 let image = "";
 
+const issuesAdded = [];
+
+let mouseYPos;
+let mouseXPos;
+
 const toggleOpen = () => {
   open = !open;
 
@@ -32,8 +37,96 @@ const toggleOpen = () => {
   }
 };
 
+//Data handlers
 const setName = (e) => {
-  nameIn = e.target.value;
+  nameIn = e.currentTarget.value;
+
+  console.log("Name", e.currentTarget.value);
+};
+
+const setDesc = (e) => {
+  desc = e.target.value;
+};
+
+const mouseTracker = (e) => {
+  // Normalize the event object to work across different browsers
+  e = e || window.event;
+
+  // Get mouse coordinates
+  const mouseX = e.clientX || e.pageX;
+  const mouseY = e.clientY || e.pageY;
+
+  // You can return the coordinates if needed
+  mouseYPos = mouseY;
+  mouseXPos = mouseX;
+};
+
+const takeScreenShot = () => {
+  const screenTaken = document.getElementById("isShot").style;
+  const screenNotTaken = document.getElementById("noShot").style;
+
+  screenTaken.display = "flex";
+  screenNotTaken.display = "none";
+};
+const createIssueBox = () => {
+  const newIssue = document.createElement("div");
+
+  const style = newIssue.style;
+
+  style.minWidth = "100px";
+  style.padding = "6px";
+  style.position = "absolute";
+  style.backgroundColor = "red";
+  style.left = mouseXPos;
+  style.top = mouseYPos;
+
+  document.body.appendChild(newIssue);
+};
+
+//Toast
+
+const toastAlert = (result) => {
+  const toast = document.getElementById("toaster");
+  const style = toast.style;
+  switch (result) {
+    case true:
+      toast.innerHTML = "Feedback sent!";
+      style.display = "flex";
+      style.color = "white";
+      style.backgroundColor = "green";
+      style.animation = "";
+
+      break;
+    default:
+      toast.innerHTML = "Oops, Something went wrong";
+      style.color = "white";
+      style.display = "flex";
+      style.backgroundColor = "red";
+  }
+
+  setTimeout(() => {
+    style.display = "none";
+  }, 1500);
+};
+
+//Submit feedback
+const sendFeedback = () => {
+  const feedbackModel = {
+    name: nameIn,
+    desc: desc,
+    image: image,
+  };
+
+  console.log("Submitted feedback", feedbackModel);
+  toggleOpen();
+
+  const check = feedbackModel.desc !== "" || feedbackModel.name !== "";
+
+  if (check) {
+    toastAlert(true);
+  } else {
+    toastAlert(false);
+  }
 };
 
 //Render the base UI.
@@ -55,7 +148,24 @@ const setName = (e) => {
   submissionbox.style.alignItems = "center";
   submissionbox.style.zIndex = "500";
   submissionbox.style.gap = "4px";
+  submissionbox.style.fontFamily = "'Poppins', sans-serif";
   submissionbox.style.transition = "all 0.3s ease-in-out";
+
+  //Create toast for sending confirmations to user
+
+  const toast = document.createElement("div");
+  toast.id = "toaster";
+  const toastS = toast.style;
+  toastS.borderRadius = "5px";
+  toastS.padding = "6px";
+  toastS.fontFamily = "'Poppins', sans-serif";
+  toastS.display = "flex";
+  toastS.justifyContent = "center";
+  toastS.alignItems = "center";
+  toastS.position = "fixed";
+  toastS.zIndex = "600";
+  toastS.right = "10px";
+  toastS.top = "10px";
 
   //Create header field
   const header = document.createElement("div");
@@ -84,6 +194,9 @@ const setName = (e) => {
   //Add eventlistner to toggle open
   openButton.addEventListener("click", toggleOpen);
 
+  //Track mouse
+  document.addEventListener("mousemove", mouseTracker);
+  document.body.addEventListener("click", createIssueBox);
   //Append button
   header.appendChild(openButton);
 
@@ -112,6 +225,7 @@ const setName = (e) => {
   name.style.borderRadius = "5px";
   name.style.border = "1px solid black";
   name.style.fontSize = "16px";
+  name.value = nameIn;
   name.addEventListener("keypress", setName);
   box.appendChild(name);
 
@@ -138,7 +252,7 @@ const setName = (e) => {
   title.style.borderRadius = "5px";
   title.style.border = "1px solid black";
   title.style.fontSize = "16px";
-  title.addEventListener("keypress", setName);
+  title.addEventListener("input", setName);
   boxTitle.appendChild(title);
 
   //Description textarea
@@ -164,7 +278,62 @@ const setName = (e) => {
   descArea.style.borderRadius = "5px";
   descArea.style.border = "1px solid black";
   descArea.style.fontSize = "16px";
+
+  descArea.addEventListener("input", setDesc);
   boxDesc.appendChild(descArea);
+
+  //Screenshot
+
+  const boxShot = document.createElement("div");
+  boxShot.id = "inputbox";
+  boxShot.style.width = "100%";
+  boxShot.style.height = "0px";
+  boxShot.style.display = "none";
+  boxShot.style.flexDirection = "column";
+  boxShot.style.justifyContent = "flex-start";
+  boxShot.style.gap = "3px";
+  boxShot.style.alignItems = "flex-start";
+  boxShot.style.fontFamily = "'Poppins', sans-serif";
+
+  const shotLabel = document.createElement("label");
+  shotLabel.innerHTML = "Screenshot";
+  shotLabel.style.color = "black";
+  boxShot.appendChild(shotLabel);
+
+  const shotBox = document.createElement("div");
+  shotBox.id = "screenshot";
+
+  //Screenshot not taken
+
+  const noScreen = document.createElement("button");
+  noScreen.id = "noShot";
+
+  noScreen.innerHTML = "No sceenshot taken. Take one!";
+  noScreen.style.display = "flex";
+  noScreen.style.justifyContent = "flex-start";
+  noScreen.style.flexDirection = "column";
+  noScreen.addEventListener("click", takeScreenShot);
+  shotBox.appendChild(noScreen);
+  //Screenshot taken
+
+  const isScreen = document.createElement("div");
+  isScreen.id = "isShot";
+
+  isScreen.style.display = "none";
+  isScreen.style.width = "100%";
+  isScreen.style.aspectRatio = "video";
+
+  const image = document.createElement("img");
+
+  image.id = "imgSend";
+  image.style.display = "block";
+  image.style.width = "100%";
+  image.style.height = "100%";
+  image.style.objectFit = "cover";
+
+  isScreen.appendChild(image);
+  boxShot.appendChild(shotBox);
+  shotBox.appendChild(isScreen);
 
   //Submit button
 
@@ -184,17 +353,19 @@ const setName = (e) => {
   button.style.alignItems = "center";
   button.innerHTML = "Send Feedback";
 
+  button.addEventListener("click", sendFeedback);
+
   //Append elements
   submissionbox.appendChild(header);
   document.body.appendChild(submissionbox);
+  submissionbox.appendChild(toast);
 
   //Input name
   submissionbox.appendChild(box);
   submissionbox.appendChild(boxTitle);
   submissionbox.appendChild(boxDesc);
+  submissionbox.appendChild(boxShot);
   submissionbox.appendChild(button);
 })();
-
-//Submit feedback
 
 //Errors?
