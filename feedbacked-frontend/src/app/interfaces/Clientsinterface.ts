@@ -1,4 +1,5 @@
 export interface ClientsInterface {
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -16,4 +17,15 @@ export interface FeedbackInterface {
   image?: string;
   status: 'Resolved' | 'Unresolved';
   created_at: Date;
+}
+
+export interface IssueInterface {
+  id: string;
+  title: string;
+  by: string;
+  description: string;
+  image: string;
+  status: 'Unresolved' | 'Resolved';
+  created_at: string;
+  _id: string;
 }

@@ -6,7 +6,7 @@ import { ClientissuesComponent } from '../../components/Clientdash Comps/clienti
 import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
 import { PopupComponent } from '../../components/Shared/popup/popup.component';
 import { KeycompComponent } from '../../components/Clientdash Comps/keycomp/keycomp.component';
-import { FormsModule, ValueChangeEvent } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import {
   ClientsInterface,
   FeedbackInterface,
@@ -186,7 +186,7 @@ export class ClientdashComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getId().subscribe((userId) => {
       this.userId = userId ?? '';
-      this.clientId = this.authService.getCurrentClientId() || '';
+      this.clientId = localStorage.getItem('client') || '';
 
       this.backendService.getUser(this.userId).subscribe((data) => {
         this.plan = data.user.plan;

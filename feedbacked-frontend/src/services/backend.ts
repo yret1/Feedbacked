@@ -73,14 +73,9 @@ export class BackendService {
     });
   }
 
-  getSpecificIssue(userId: string, issueId: string) {
-    const clientId = this.auth.getCurrentClientId();
-    return this.http
-      .get(
-        `http://${this.baseUrl}/getFeedback/${userId}/${issueId}/${clientId}`
-      )
-      .subscribe((res) => {
-        console.log(res);
-      });
+  getSpecificIssue(userId: string, issueId: string, clientId: string) {
+    return this.http.get(
+      `http://${this.baseUrl}/getFeedback/${userId}/${issueId}/${clientId}`
+    );
   }
 }

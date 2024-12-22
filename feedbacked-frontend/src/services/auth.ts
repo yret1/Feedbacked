@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   getCurrentClientId() {
+    console.log(this.currentClientId.getValue());
     return this.currentClientId.getValue();
   }
 

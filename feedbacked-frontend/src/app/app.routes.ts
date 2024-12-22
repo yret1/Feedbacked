@@ -38,7 +38,7 @@ export const routes: Routes = [
   },
   {
     title: 'Project Issue',
-    path: 'user/projects/client/issue/:issue',
+    path: 'user/projects/client/issue/:issue/:clientId',
     component: IssuePageComponent,
     canActivate: [AuthGuard],
   },

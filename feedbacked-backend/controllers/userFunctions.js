@@ -339,10 +339,6 @@ export const setAgencyName = async (req, res) => {
   }
 };
 
-//Retrevie all feedback for a specific client
-
-export const getFeedbacks = async (req, res) => {};
-
 //Retrive specific feedback
 
 export const getFeedback = async (req, res) => {
@@ -351,15 +347,10 @@ export const getFeedback = async (req, res) => {
   const user = await User.findById(userId);
 
   if (user) {
-    const client = await user.clients.find((client) => (client.id = clientId));
-
-    console.log(client);
-
+    const client = await user.clients.find((client) => client.id === clientId);
     const targetIssue = await client.feedbacks.find(
       (issue) => issue.id === issueId
     );
-
-    console.log(targetIssue);
     return res.status(200).json(targetIssue);
   } else {
     return res.status(404).json({ message: "No user found." });

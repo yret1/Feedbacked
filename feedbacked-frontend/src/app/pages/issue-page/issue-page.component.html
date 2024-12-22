@@ -1,1 +1,19 @@
-<p>issue-page works!</p>
+@if(issue){
+<section class="wrapper">
+  <section class="details">
+    <h2>Issue: {{ issue.title }}</h2>
+    <details title="Issue details">
+      <summary>Issue details</summary>
+      <p>
+        Issue <span>#{{ issueId }}</span>
+      </p>
+      <p>
+        Created by {{ issue.by }} on {{ issue.created_at | date : "medium" }}
+      </p>
+    </details>
+  </section>
+</section>
+
+}@else {
+<app-loadingcomp />
+}

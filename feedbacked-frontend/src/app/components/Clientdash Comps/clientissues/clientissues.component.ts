@@ -15,10 +15,10 @@ import { DatePipe } from '@angular/common';
 })
 export class ClientissuesComponent implements OnInit {
   @Input() issue!: FeedbackInterface;
-
+  @Input() clientId!: string;
   link = '';
 
   ngOnInit(): void {
-    this.link = `issue/${this.issue.id}`;
+    this.link = `issue/${this.issue.id}/${this.clientId}`;
   }
 }
