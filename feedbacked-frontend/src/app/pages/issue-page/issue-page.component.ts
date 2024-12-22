@@ -5,11 +5,12 @@ import { AuthService } from '../../../services/auth';
 import { IssueInterface } from '../../interfaces/Clientsinterface';
 import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
 import { DatePipe } from '@angular/common';
+import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 
 @Component({
   selector: 'app-issue-page',
   standalone: true,
-  imports: [LoadingcompComponent, DatePipe],
+  imports: [LoadingcompComponent, DatePipe, CenterwrappComponent],
   templateUrl: './issue-page.component.html',
   styleUrl: './issue-page.component.scss',
 })

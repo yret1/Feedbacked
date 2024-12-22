@@ -9,14 +9,46 @@
     font-family: "Poppins", "sans-serif";
 
     @media (min-width: 768px) {
+        width: 80%;
+        padding: 100px 0px;
+        
+    }
 
-        padding: 100px 20px;
+    @media (min-width: 1024px) {
+        width: 60%;
         
     }
 
 
     .details{
         width: 100%;
+
+
+        section{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+
+            button{
+                padding: 4px;
+                background-color: transparent;
+                border: 2px solid black;
+                border-radius: 6px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+
+
+                &:hover{
+                    background-color: var(--acceptcolor);
+                }
+            }
+        }
+
+        summary{
+            color: grey;
+        }
 
         p{
             font-size: 12px;

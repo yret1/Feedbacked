@@ -1,19 +1,26 @@
 @if(issue){
-<section class="wrapper">
-  <section class="details">
-    <h2>Issue: {{ issue.title }}</h2>
-    <details title="Issue details">
-      <summary>Issue details</summary>
-      <p>
-        Issue <span>#{{ issueId }}</span>
-      </p>
-      <p>
-        Created by {{ issue.by }} on {{ issue.created_at | date : "medium" }}
-      </p>
-    </details>
+<app-centerwrapp>
+  <section class="wrapper">
+    <section class="details">
+      <section>
+        <h2>Issue: {{ issue.title }}</h2>
+        <button>Resolve issue</button>
+      </section>
+      <h3>
+        What happened? <span>{{ issue.description }}</span>
+      </h3>
+      <details title="Issue details">
+        <summary>Issue technicals</summary>
+        <p>
+          Issue <span>#{{ issueId }}</span>
+        </p>
+        <p>
+          Created by {{ issue.by }} on {{ issue.created_at | date : "medium" }}
+        </p>
+      </details>
+    </section>
   </section>
-</section>
-
+</app-centerwrapp>
 }@else {
 <app-loadingcomp />
 }
