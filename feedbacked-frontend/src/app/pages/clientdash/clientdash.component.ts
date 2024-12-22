@@ -12,6 +12,7 @@ import {
   FeedbackInterface,
 } from '../../interfaces/Clientsinterface';
 import { AuthService } from '../../../services/auth';
+import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 
 @Component({
   selector: 'app-clientdash',
@@ -24,6 +25,7 @@ import { AuthService } from '../../../services/auth';
     PopupComponent,
     KeycompComponent,
     FormsModule,
+    CenterwrappComponent,
   ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
@@ -34,7 +36,7 @@ export class ClientdashComponent implements OnInit {
 
   //Userdata handlers
   userId!: string;
-  clientEmail!: string;
+  clientId!: string;
   clientData!: ClientsInterface;
 
   //Issueholders
@@ -92,7 +94,7 @@ export class ClientdashComponent implements OnInit {
 
   //Delete key
   deleteKey(key: string) {
-    this.backendService.deleteKey(this.userId, this.clientEmail, key).subscribe(
+    this.backendService.deleteKey(this.userId, this.clientId, key).subscribe(
       (data) => {
         this.clientData.keys = this.clientData.keys.filter(
           (k: any) => k.key !== key
@@ -119,14 +121,14 @@ export class ClientdashComponent implements OnInit {
   addKey() {
     this.adding.set(false);
     this.backendService
-      .addKey(this.userId, this.clientEmail, this.newKeyName)
+      .addKey(this.userId, this.clientId, this.newKeyName)
       .subscribe(
         (data: any) => {
           const generatedkey = data.key;
           this.clientData.keys.push({
             key: generatedkey,
             for: this.newKeyName,
-            clientEmail: this.clientEmail,
+            clientEmail: this.clientData.email,
             created_at: new Date().toISOString(),
           });
           this.newKeyName = '';
@@ -184,16 +186,18 @@ export class ClientdashComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getId().subscribe((userId) => {
       this.userId = userId ?? '';
-      this.clientEmail = localStorage.getItem('client') ?? '';
+      this.clientId = this.authService.getCurrentClientId() || '';
 
       this.backendService.getUser(this.userId).subscribe((data) => {
         this.plan = data.user.plan;
       });
       this.keyCheck();
-      this.backendService.getClient(this.userId, this.clientEmail).subscribe(
+      this.backendService.getClient(this.userId, this.clientId).subscribe(
         (data) => {
           this.clientData = data.client;
           console.log(data);
+          this.issues = data.client.feedbacks;
+          this.currentIssueLoop = data.client.feedbacks;
           this.loading.set(false);
         },
         (error) => {

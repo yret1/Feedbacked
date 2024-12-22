@@ -11,7 +11,8 @@ export interface ClientsInterface {
 export interface FeedbackInterface {
   id: string;
   title: string;
-  body: string;
+  by: string;
+  description: string;
   image?: string;
   status: 'Resolved' | 'Unresolved';
   created_at: Date;

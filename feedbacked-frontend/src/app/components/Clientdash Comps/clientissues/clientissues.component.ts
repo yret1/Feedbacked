@@ -4,24 +4,21 @@ import {
   FeedbackInterface,
 } from '../../../interfaces/Clientsinterface';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-clientissues',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './clientissues.component.html',
   styleUrl: './clientissues.component.scss',
 })
 export class ClientissuesComponent implements OnInit {
   @Input() issue!: FeedbackInterface;
 
-  datestring = '';
-
   link = '';
 
   ngOnInit(): void {
     this.link = `issue/${this.issue.id}`;
-
-    this.datestring = new Date(this.issue.created_at).toDateString();
   }
 }

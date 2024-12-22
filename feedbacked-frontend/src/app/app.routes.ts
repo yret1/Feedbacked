@@ -6,6 +6,7 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { LandingpageComponent } from './pages/landingpage/landingpage.component';
 import { AuthGuard } from '../services/authguard';
 import { CreateClientComponent } from './components/Dashboard Comps/create-client/create-client.component';
+import { IssuePageComponent } from './pages/issue-page/issue-page.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,8 @@ export const routes: Routes = [
   {
     title: 'Project Issue',
     path: 'user/projects/client/issue/:issue',
-    component: DashboardComponent,
+    component: IssuePageComponent,
+    canActivate: [AuthGuard],
   },
 
   {

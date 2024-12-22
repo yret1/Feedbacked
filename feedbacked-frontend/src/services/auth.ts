@@ -26,8 +26,20 @@ export class AuthService {
   private authenthicated = new BehaviorSubject<boolean>(false);
   private userID = new BehaviorSubject<string | null>(null);
 
+  private currentClientId = new BehaviorSubject<string | null>(null);
+
   getId() {
     return this.userID.asObservable();
+  }
+
+  getCurrentClientId() {
+    return this.currentClientId.getValue();
+  }
+
+  setCurrentClient(id: string) {
+    this.currentClientId.next(id);
+    localStorage.setItem('client', id);
+    console.log('Current client', id);
   }
 
   getCurrentUserId() {

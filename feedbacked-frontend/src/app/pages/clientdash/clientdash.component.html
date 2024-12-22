@@ -25,43 +25,49 @@
   <app-popup class="popup" [type]="action" />
   }
 
-  <section class="clientexists">
-    <app-clientdetails [clientData]="clientData"></app-clientdetails>
-  </section>
+  <app-centerwrapp>
+    <section class="clientexists">
+      <app-clientdetails [clientData]="clientData"></app-clientdetails>
+    </section>
+  </app-centerwrapp>
 
-  <section class="issueFilters">
-    <select (input)="filterChange($event)" name="filter" id="issueFilters">
-      <option value="Unresolved">Unresolved</option>
-      <option value="Resolved">Resolved</option>
-      <option value="All">All</option>
-    </select>
+  <app-centerwrapp>
+    <section class="issueFilters">
+      <select (input)="filterChange($event)" name="filter" id="issueFilters">
+        <option value="Unresolved">Unresolved</option>
+        <option value="Resolved">Resolved</option>
+        <option value="All">All</option>
+      </select>
 
-    <div class="buttonbox">
-      <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          aria-hidden="true"
-          class="w-5 h-5 rotate-90"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
-          ></path>
-        </svg>
-      </button>
-    </div>
-  </section>
+      <div class="buttonbox">
+        <button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+            class="w-5 h-5 rotate-90"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </section>
+  </app-centerwrapp>
 
-  <section class="issues">
-    @for(issue of this.currentIssueLoop; track issue.id;){
-    <app-clientissues [issue]="issue" />
-    }
-  </section>
+  <app-centerwrapp>
+    <section class="issues">
+      @for(issue of this.currentIssueLoop; track issue.id;){
+      <app-clientissues [issue]="issue" />
+      }
+    </section>
+  </app-centerwrapp>
 
   }@else if(loading()){
 

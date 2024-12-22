@@ -198,7 +198,7 @@ export const getClients = async (req, res) => {
 //Retrive specific client
 
 export const getClient = async (req, res) => {
-  const { userId, clientEmail } = req.body;
+  const { userId, clientId } = req.body;
   if (!userId) {
     return res.status(400).json({ message: "Please enter all fields" });
   }
@@ -216,7 +216,7 @@ export const getClient = async (req, res) => {
         .json({ message: "Could not find client", clients: [] });
     } else {
       const client = await user.clients.find(
-        (client) => client.email === clientEmail
+        (client) => client.id === clientId
       );
 
       if (client) {
@@ -342,3 +342,26 @@ export const setAgencyName = async (req, res) => {
 //Retrevie all feedback for a specific client
 
 export const getFeedbacks = async (req, res) => {};
+
+//Retrive specific feedback
+
+export const getFeedback = async (req, res) => {
+  const { userId, clientId, issueId } = req.params;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const client = await user.clients.find((client) => (client.id = clientId));
+
+    console.log(client);
+
+    const targetIssue = await client.feedbacks.find(
+      (issue) => issue.id === issueId
+    );
+
+    console.log(targetIssue);
+    return res.status(200).json(targetIssue);
+  } else {
+    return res.status(404).json({ message: "No user found." });
+  }
+};

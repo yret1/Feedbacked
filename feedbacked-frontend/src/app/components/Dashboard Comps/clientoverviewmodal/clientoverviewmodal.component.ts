@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth';
 
 @Component({
   selector: 'app-clientoverviewmodal',
@@ -10,17 +11,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./clientoverviewmodal.component.scss'],
 })
 export class ClientoverviewmodalComponent {
-  @Input() status: string = '';
-  @Input() client: string = '';
-  @Input() issues: string = '';
-  @Input() email: string = '';
-  @Input() userId: string = '';
+  @Input() status!: string;
+  @Input() client!: string;
+  @Input() issues!: string;
+  @Input() email!: string;
+  @Input() clientId!: string;
+  @Input() issueId!: string;
   @Input() image?: string = undefined;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   onSelect() {
-    localStorage.setItem('client', this.email);
-    this.router.navigate(['/user/projects/client']);
+    this.auth.setCurrentClient(this.clientId);
+
+    setTimeout(() => {
+      this.router.navigate(['/user/projects/client']);
+    }, 100);
   }
 }

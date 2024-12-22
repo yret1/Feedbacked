@@ -4,6 +4,7 @@ import {
   deleteKey,
   getClient,
   getClients,
+  getFeedback,
   getUser,
   initializeKey,
   loginUser,
@@ -29,6 +30,7 @@ router.post("/get-client", checkAuth, getClient);
 router.post("/create-key", checkAuth, initializeKey);
 router.post("/delete-key", checkAuth, deleteKey);
 router.post("/setUName", checkAuth, setAgencyName);
+router.get("/getFeedback/:userId/:issueId/:clientId", checkAuth, getFeedback);
 
 //Plugin routes
 

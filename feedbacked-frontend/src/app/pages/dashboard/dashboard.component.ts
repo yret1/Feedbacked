@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { RouterLink } from '@angular/router';
 
 interface Client {
+  id: string;
   name: string;
   email: string;
   phone: string;
