@@ -25,7 +25,6 @@ export class ClientdetailsComponent implements OnInit {
     this.backendService
       .clientCompleted(this.userId, this.clientData.email, 'inactive')
       .subscribe();
-
     this.router.navigate(['/dashboard']);
     alert('Project closed succesfully!');
   }
