@@ -77,6 +77,19 @@ async function uploadImageToS3(file, presignedUrl) {
   }
 }
 
+//Delete captured Screenshot
+
+async function clearScreenshot() {
+  const noImg = document.getElementById("noShot").style;
+  const isImg = document.getElementById("isShot").style;
+
+  noImg.display = "flex";
+  isImg.display = "none";
+  presigned = "";
+  image = "";
+  publicUrlImg = "";
+}
+
 // Example: Capturing and uploading a screenshot
 async function captureAndUploadScreenshot(presignedUrl) {
   const element = document.body;
@@ -405,12 +418,34 @@ const sendFeedbackToClient = async () => {
   const isScreen = document.createElement("div");
   isScreen.id = "isShot";
 
-  isScreen.style.display = "none";
-  isScreen.style.width = "100%";
-  isScreen.style.aspectRatio = "16/9";
-  isScreen.style.borderRadius = "5px";
-  isScreen.style.border = "1px solid black";
+  const screenStyle = isScreen.style;
+  screenStyle.display = "none";
+  screenStyle.position = "relative";
+  screenStyle.width = "100%";
+  screenStyle.aspectRatio = "16/9";
+  screenStyle.borderRadius = "5px";
+  screenStyle.border = "1px solid black";
+  screenStyle.overflow = "hidden";
 
+  const remImg = document.createElement("button");
+  remImg.id = "delBtn";
+  remImg.innerHTML = "X";
+  const remStyle = remImg.style;
+  remStyle.position = "absolute";
+  remStyle.top = "0";
+  remStyle.right = "0";
+  remStyle.backgroundColor = "red";
+  remStyle.color = "white";
+  remStyle.display = "flex";
+  remStyle.justifyContent = "center";
+  remStyle.alignItems = "center";
+  remStyle.padding = "5px";
+  remStyle.border = "none";
+  remStyle.borderRadius = "2px";
+  remStyle.cursor = "pointer";
+
+  remImg.addEventListener("click", clearScreenshot);
+  isScreen.appendChild(remImg);
   const image = document.createElement("img");
 
   image.id = "imgSend";
@@ -422,6 +457,8 @@ const sendFeedbackToClient = async () => {
   isScreen.appendChild(image);
   boxShot.appendChild(shotBox);
   shotBox.appendChild(isScreen);
+
+  //Draw tool
 
   //Submit button
 
