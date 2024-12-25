@@ -208,6 +208,26 @@ const sendFeedbackToClient = async () => {
   } catch (error) {}
 };
 
+//Track mousePos for placing paths
+
+const mousePos = (e) => {
+  const posX = e.clientX;
+  const posY = e.clientY;
+
+  mouseXPos = posX;
+  mouseYPos = posY;
+};
+
+//Create drawing functionallity
+
+const initDrawing = () => {
+  //Track mousePos for placing paths
+  //Add all eventelisteners needed
+  //Movement listner document.addEventListener("mousemove", mousePos);
+  //OnStart listner document.addEventListener("mousedown", startDraw);
+  //OnEnd listner document.addEventListener("mouseup", startDraw);
+};
+
 //Render the base UI.
 (async function renderUi() {
   const submissionbox = document.createElement("section");
@@ -499,6 +519,8 @@ const sendFeedbackToClient = async () => {
   submissionbox.appendChild(boxDesc);
   submissionbox.appendChild(boxShot);
   submissionbox.appendChild(button);
+
+  initDrawing();
 })();
 
 //Errors?
