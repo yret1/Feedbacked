@@ -4,6 +4,15 @@ let open = false;
 let presigned = "";
 let preKey = "";
 let publicUrlImg = "";
+let large = false;
+
+//Drawing functionality
+let isDrawing = false;
+let drawingActive = false;
+let currentPath = "";
+let currentPathElement = null;
+let paths = [];
+let color = "#FF0000";
 
 //Values for sending feedback
 let nameIn = "";
@@ -16,6 +25,14 @@ let client = "{{clientId}}";
 
 let mouseYPos;
 let mouseXPos;
+
+const checkScreenSize = () => {
+  if (window.innerWidth > 1023) {
+    return true;
+  }
+
+  return false;
+};
 
 const toggleOpen = () => {
   open = !open;
@@ -218,53 +235,222 @@ const mousePos = (e) => {
   mouseYPos = posY;
 };
 
+const toggleDrawingActive = () => {
+  // Check current cursor state and toggle between pen and default
+  const button = document.getElementById("drawing");
+  const currentCursor = document.body.style.cursor;
+  const drawingField = document.querySelector(".fbdrawing-overlay");
+
+  console.log(drawingField);
+
+  if (
+    currentCursor ===
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M13.9713 8.02792C14.5398 7.45944 15.4615 7.45944 16.0299 8.02792C16.5984 8.59639 16.5984 9.51807 16.0299 10.0865L12.0091 14.1074C11.4978 14.6187 11.2421 14.8744 10.9507 15.0773C10.692 15.2575 10.413 15.4064 10.1194 15.521C9.78861 15.6501 9.43388 15.7203 8.72443 15.8605L7.9668 16.0102L8.15783 15.1976C8.31291 14.5379 8.39045 14.2081 8.51946 13.9006C8.634 13.6276 8.77848 13.3682 8.95026 13.1271C9.14376 12.8555 9.38334 12.6159 9.8625 12.1367L13.9713 8.02792Z' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E\") 0 24, auto"
+  ) {
+    document.body.style.cursor = "default";
+    button.style.border = "2px solid black";
+    button.style.backgroundColor = "white";
+    drawingField.classList.remove("active");
+    isDrawing = false;
+  } else {
+    // Set custom pen cursor using the same SVG that's used in the pen button
+    document.body.style.cursor =
+      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M13.9713 8.02792C14.5398 7.45944 15.4615 7.45944 16.0299 8.02792C16.5984 8.59639 16.5984 9.51807 16.0299 10.0865L12.0091 14.1074C11.4978 14.6187 11.2421 14.8744 10.9507 15.0773C10.692 15.2575 10.413 15.4064 10.1194 15.521C9.78861 15.6501 9.43388 15.7203 8.72443 15.8605L7.9668 16.0102L8.15783 15.1976C8.31291 14.5379 8.39045 14.2081 8.51946 13.9006C8.634 13.6276 8.77848 13.3682 8.95026 13.1271C9.14376 12.8555 9.38334 12.6159 9.8625 12.1367L13.9713 8.02792Z' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E\") 0 24, auto";
+    isDrawing = true;
+
+    drawingField.classList.add("active");
+    button.style.border = "2px solid blue";
+    button.style.backgroundColor = "#BFDBFE";
+  }
+};
+
 //Create drawing functionallity
+
+const startDraw = (event) => {
+  if (!isDrawing) return;
+
+  const svg = event.target.closest("svg");
+  const rect = svg.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  currentPath = `M ${x} ${y}`;
+  currentPathElement = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "path"
+  );
+  currentPathElement.setAttribute("stroke", color);
+  currentPathElement.setAttribute("stroke-width", "2");
+  currentPathElement.setAttribute("fill", "none");
+  currentPathElement.setAttribute("d", currentPath);
+
+  svg.appendChild(currentPathElement);
+  paths.push(currentPathElement);
+};
+
+const draw = (event) => {
+  if (!isDrawing || !currentPathElement) return;
+
+  const svg = event.target.closest("svg");
+  const rect = svg.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  currentPath += ` L ${x} ${y}`;
+  currentPathElement.setAttribute("d", currentPath);
+};
+
+const stopDraw = () => {
+  currentPathElement = null;
+};
+
+const changeColor = (e) => {
+  const colorDisp = document.getElementById("colorDisp");
+  color = e.target.value;
+  colorDisp.style.backgroundColor = color;
+};
 
 const initDrawing = () => {
   //Track mousePos for placing paths
-  //Add all eventelisteners needed
-  //Movement listner document.addEventListener("mousemove", mousePos);
-  //OnStart listner document.addEventListener("mousedown", startDraw);
-  //OnEnd listner document.addEventListener("mouseup", startDraw);
+
+  const container = document.createElement("div");
+  container.className = "fbdrawing-overlay";
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.style.width = "100%";
+  svg.style.height = "100%";
+  svg.addEventListener("mousedown", startDraw);
+  svg.addEventListener("mousemove", draw);
+  svg.addEventListener("mouseup", stopDraw);
+  svg.addEventListener("mouseleave", stopDraw);
+
+  container.appendChild(svg);
+  document.body.appendChild(container);
+
+  large = checkScreenSize();
+
+  if (large) {
+    const controls = document.createElement("div");
+    const contStyle = controls.style;
+
+    //Controller base styles
+    contStyle.position = "fixed";
+    contStyle.zIndex = 1001;
+    contStyle.padding = "12px";
+    contStyle.borderRadius = "10px";
+    contStyle.boxShadow = "0 4px 6px rgba(0,0,0,0.3)";
+    contStyle.left = "50%";
+    contStyle.transform = "translate()";
+    contStyle.bottom = "20px";
+    contStyle.backgroundColor = "white";
+    contStyle.display = "flex";
+    contStyle.gap = "4px";
+    contStyle.justifyContent = "center";
+    contStyle.alignItems = "center";
+    contStyle.height = "auto";
+
+    /* Control Buttons */
+    //Drawing Toggle
+    const pen = document.createElement("button");
+    pen.id = "drawing";
+    pen.innerHTML =
+      '<svg viewBox="0 0 24 24" style="width: 25px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13.9713 8.02792C14.5398 7.45944 15.4615 7.45944 16.0299 8.02792C16.5984 8.59639 16.5984 9.51807 16.0299 10.0865L12.0091 14.1074C11.4978 14.6187 11.2421 14.8744 10.9507 15.0773C10.692 15.2575 10.413 15.4064 10.1194 15.521C9.78861 15.6501 9.43388 15.7203 8.72443 15.8605L7.9668 16.0102L8.15783 15.1976C8.31291 14.5379 8.39045 14.2081 8.51946 13.9006C8.634 13.6276 8.77848 13.3682 8.95026 13.1271C9.14376 12.8555 9.38334 12.6159 9.8625 12.1367L13.9713 8.02792Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>';
+    const penStyle = pen.style;
+    penStyle.height = "100%";
+    penStyle.display = "flex";
+    penStyle.justifyContent = "center";
+    penStyle.alignItems = "center";
+    penStyle.padding = "2px";
+    penStyle.cursor = "pointer";
+    penStyle.backgroundColor = "white";
+    penStyle.borderRadius = "4px";
+
+    pen.addEventListener("click", toggleDrawingActive);
+
+    controls.appendChild(pen);
+
+    //Undo Draw
+    const undo = document.createElement("button");
+    undo.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" style="width: 25px" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 8H16.5C18.9853 8 21 10.0147 21 12.5C21 14.9853 18.9853 17 16.5 17H3M3 8L6 5M3 8L6 11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>';
+    const undoStyle = undo.style;
+    undoStyle.height = "100%";
+    undoStyle.display = "flex";
+    undoStyle.justifyContent = "center";
+    undoStyle.alignItems = "center";
+    undoStyle.padding = "2px";
+    undoStyle.cursor = "pointer";
+    undoStyle.backgroundColor = "white";
+    undoStyle.borderRadius = "4px";
+
+    undo.addEventListener("click", () => {
+      if (paths.length > 0) {
+        const lastPath = paths.pop();
+        lastPath.remove();
+      }
+    });
+
+    controls.appendChild(undo);
+    //Clear drawing
+    const del = document.createElement("button");
+    del.addEventListener("click", () => {
+      const svg = document.querySelector(".fbdrawing-overlay svg");
+      while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+      }
+      paths = [];
+    });
+    del.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" style="width: 25px" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>';
+    const delStyle = del.style;
+    delStyle.height = "100%";
+    delStyle.display = "flex";
+    delStyle.justifyContent = "center";
+    delStyle.alignItems = "center";
+    delStyle.padding = "2px";
+    delStyle.cursor = "pointer";
+    delStyle.backgroundColor = "white";
+    delStyle.borderRadius = "4px";
+    controls.appendChild(del);
+
+    const splitter = document.createElement("div");
+    splitter.id = "fblineD";
+
+    controls.appendChild(splitter);
+
+    const colorWrap = document.createElement("label");
+    colorWrap.id = "colorWrap";
+
+    const colorBall = document.createElement("div");
+    colorBall.style.backgroundColor = color;
+    colorBall.id = "colorDisp";
+
+    const colorButton = document.createElement("input");
+    colorButton.id = "colorSelect";
+    colorButton.type = "color";
+    colorButton.value = color;
+    colorButton.addEventListener("change", changeColor);
+
+    colorBall.appendChild(colorButton);
+    colorWrap.appendChild(colorBall);
+
+    controls.appendChild(colorWrap);
+    //Append to html
+    document.body.appendChild(controls);
+  } else {
+    return;
+  }
 };
 
 //Render the base UI.
 (async function renderUi() {
   const submissionbox = document.createElement("section");
   submissionbox.id = "subbox";
-  submissionbox.style.position = "fixed"; // 'fixed' is often better than 'absolute'
-  submissionbox.style.width = "300px";
-  submissionbox.style.height = "auto";
-  submissionbox.style.padding = "12px"; // Added padding
-  submissionbox.style.backgroundColor = "white";
-  submissionbox.style.bottom = "20px"; // Add some padding from bottom
-  submissionbox.style.right = "20px"; // Add some padding from right
-  submissionbox.style.borderRadius = "10px"; // Optional: rounded corners
-  submissionbox.style.boxShadow = "0 4px 6px rgba(0,0,0,0.3)"; // Optional: subtle shadow
-  submissionbox.style.display = "flex"; // Display as flex
-  submissionbox.style.flexDirection = "column"; // Column alignment
-  submissionbox.style.justifyContent = "flex-start"; // Top centered
-  submissionbox.style.alignItems = "center";
-  submissionbox.style.zIndex = "500";
-  submissionbox.style.gap = "4px";
-  submissionbox.style.fontFamily = "'Poppins', sans-serif";
-  submissionbox.style.transition = "all 0.3s ease-in-out";
 
   //Create toast for sending confirmations to user
 
   const toast = document.createElement("div");
   toast.id = "toaster";
-  const toastS = toast.style;
-  toastS.borderRadius = "5px";
-  toastS.padding = "6px";
-  toastS.fontFamily = "'Poppins', sans-serif";
-  toastS.display = "flex";
-  toastS.justifyContent = "center";
-  toastS.alignItems = "center";
-  toastS.position = "fixed";
-  toastS.zIndex = "600";
-  toastS.right = "10px";
-  toastS.top = "10px";
 
   //Create header field
   const header = document.createElement("div");
@@ -354,14 +540,6 @@ const initDrawing = () => {
   //Description textarea
   const boxDesc = document.createElement("div");
   boxDesc.id = "inputbox";
-  boxDesc.style.width = "100%";
-  boxDesc.style.height = "0px";
-  boxDesc.style.display = "none";
-  boxDesc.style.flexDirection = "column";
-  boxDesc.style.justifyContent = "flex-start";
-  boxDesc.style.gap = "3px";
-  boxDesc.style.alignItems = "flex-start";
-  boxDesc.style.fontFamily = "'Poppins', sans-serif";
 
   const descLabel = document.createElement("label");
   descLabel.innerHTML = "Describe it.";
@@ -369,12 +547,7 @@ const initDrawing = () => {
   boxDesc.appendChild(descLabel);
 
   const descArea = document.createElement("textarea");
-  descArea.style.width = "100%";
-  descArea.style.padding = "4px";
-  descArea.style.borderRadius = "5px";
-  descArea.style.border = "1px solid black";
-  descArea.style.fontSize = "16px";
-
+  descArea.id = "fbdescript";
   descArea.addEventListener("input", setDesc);
   boxDesc.appendChild(descArea);
 
@@ -382,14 +555,6 @@ const initDrawing = () => {
 
   const boxShot = document.createElement("div");
   boxShot.id = "inputbox";
-  boxShot.style.width = "100%";
-  boxShot.style.height = "0px";
-  boxShot.style.display = "none";
-  boxShot.style.flexDirection = "column";
-  boxShot.style.justifyContent = "flex-start";
-  boxShot.style.gap = "3px";
-  boxShot.style.alignItems = "flex-start";
-  boxShot.style.fontFamily = "'Poppins', sans-serif";
 
   const shotLabel = document.createElement("label");
   shotLabel.innerHTML = "Screenshot";
@@ -397,31 +562,13 @@ const initDrawing = () => {
   boxShot.appendChild(shotLabel);
 
   const shotBox = document.createElement("div");
-  shotBox.id = "screenshot";
-  shotBox.style.width = "100%";
-  shotBox.style.display = "flex";
-  shotBox.style.justifyContent = "center";
-  shotBox.style.alignContent = "center";
 
   //Screenshot not taken
 
   const noScreen = document.createElement("button");
   noScreen.id = "noShot";
-
   noScreen.innerHTML = "No sceenshot taken. Take one!";
-  noScreen.style.display = "flex";
-  noScreen.style.justifyContent = "flex-start";
-  noScreen.style.flexDirection = "column";
-  noScreen.style.padding = "6px";
-  noScreen.style.cursor = "pointer";
-  noScreen.style.fontFamily = "'Poppins', sans-serif";
-  noScreen.style.fontWeight = "600";
-  noScreen.style.borderRadius = "6px";
-  noScreen.style.backgroundColor = "transparent";
-  noScreen.style.flexDirection = "column";
-  noScreen.style.flexDirection = "column";
   noScreen.addEventListener("click", capureTrigger);
-
   shotBox.appendChild(noScreen);
   //Screenshot taken
 
@@ -438,45 +585,197 @@ const initDrawing = () => {
   const isScreen = document.createElement("div");
   isScreen.id = "isShot";
 
-  const screenStyle = isScreen.style;
-  screenStyle.display = "none";
-  screenStyle.position = "relative";
-  screenStyle.width = "100%";
-  screenStyle.aspectRatio = "16/9";
-  screenStyle.borderRadius = "5px";
-  screenStyle.border = "1px solid black";
-  screenStyle.overflow = "hidden";
-
   const remImg = document.createElement("button");
   remImg.id = "delBtn";
   remImg.innerHTML = "X";
-  const remStyle = remImg.style;
-  remStyle.position = "absolute";
-  remStyle.top = "0";
-  remStyle.right = "0";
-  remStyle.backgroundColor = "red";
-  remStyle.color = "white";
-  remStyle.display = "flex";
-  remStyle.justifyContent = "center";
-  remStyle.alignItems = "center";
-  remStyle.padding = "5px";
-  remStyle.border = "none";
-  remStyle.borderRadius = "2px";
-  remStyle.cursor = "pointer";
 
   remImg.addEventListener("click", clearScreenshot);
   isScreen.appendChild(remImg);
-  const image = document.createElement("img");
 
+  const image = document.createElement("img");
   image.id = "imgSend";
-  image.style.display = "block";
-  image.style.width = "100%";
-  image.style.height = "100%";
-  image.style.objectFit = "cover";
 
   isScreen.appendChild(image);
   boxShot.appendChild(shotBox);
   shotBox.appendChild(isScreen);
+
+  const styles = document.createElement("style");
+  styles.textContent = `
+
+    #colorSelect{
+
+   height: 33px;
+    width: auto;
+    aspect-ratio: 1/1;
+    border: 2px solid black;
+    opacity: 0;
+    position: absolute;
+    }
+
+
+    #colorWrap{
+    position: relative;
+    height: 33px;
+    width: auto;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+    border: 2px solid black;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    }
+
+
+    #colorDisp{
+
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+    border: 2px solid black;
+    }
+
+
+    #fblineD{
+    height: 33px;
+    width: 2px;
+    background-color: black;
+    }
+
+   .fbdrawing-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .fbdrawing-overlay.active {
+      pointer-events: all !important;
+    }
+
+    #subbox{
+    position: fixed;
+    width: 300px;
+    height: auto;
+    padding: 12px;
+    background-color: white;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 500;
+    gap: 4px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-in-out;
+
+  }
+
+
+  #toaster{
+ border-radius: 5px;
+ padding: 6px;
+ font-family: 'Poppins', sans-serif;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ position: fixed;
+ z-index: 600;
+ right: 10px;
+ top:10px;
+}
+
+
+  #fbdescript{
+    width: 100%;
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 16px;
+  }
+
+    #inputbox{
+    width: 100%;
+    height: 0px;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 3px;
+    align-items: flex-start;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  #screenshot{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #noShot{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 6px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-radius: 6px;
+    background-color: transparent;
+    flex-direction: column;
+  }
+
+  #isShot{
+    display: none;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 5px;
+    border: 1px solid black;
+    overflow: hidden;
+  }
+  #delBtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  #imgSend{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+  }
+
+
+
+
+  #submitter{
+    width: 100%;
+    padding : 6px;
+    border:none;
+    color:white;
+    font-size:20px;
+    border-radius: 6px;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background-color: blue;
+  }`;
 
   //Draw tool
 
@@ -486,16 +785,6 @@ const initDrawing = () => {
 
   button.id = "submitter";
 
-  button.style.width = "100%";
-  button.style.padding = "6px";
-  button.style.border = "none";
-  button.style.display = "none";
-  button.style.color = "white";
-  button.style.fontSize = "20px";
-  button.style.borderRadius = "6px";
-  button.style.backgroundColor = "blue";
-  button.style.justifyContent = "center";
-  button.style.alignItems = "center";
   button.innerHTML = "Send Feedback";
 
   button.addEventListener("click", sendFeedbackToClient);
@@ -504,6 +793,7 @@ const initDrawing = () => {
   cloudScript.src =
     "https://cdnjs.cloudflare.com/ajax/libs/cloudinary-core/2.13.1/cloudinary-core.js";
 
+  document.head.appendChild(styles);
   document.body.appendChild(html2canScript);
   document.body.appendChild(cloudScript);
   document.body.appendChild(awsScript);
@@ -520,6 +810,7 @@ const initDrawing = () => {
   submissionbox.appendChild(boxShot);
   submissionbox.appendChild(button);
 
+  window.addEventListener("resize", checkScreenSize);
   initDrawing();
 })();
 
