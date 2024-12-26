@@ -5,6 +5,25 @@ let presigned = "";
 let preKey = "";
 let publicUrlImg = "";
 let large = false;
+let sending = false;
+
+// Override console methods
+const originalError = console.error;
+const originalWarn = console.warn;
+const consoleErrors = [];
+const consoleWarnings = [];
+
+console.error = function (...args) {
+  errors.push(args.join(" "));
+  originalError.apply(console, args);
+};
+
+console.warn = function (...args) {
+  warnings.push(args.join(" "));
+  originalWarn.apply(console, args);
+
+  alert(consoleWarnings);
+};
 
 //Drawing functionality
 let isDrawing = false;
@@ -37,9 +56,9 @@ const checkScreenSize = () => {
 const toggleOpen = () => {
   open = !open;
 
-  const buttonToggle = document.getElementById("openbutton");
-  const input = document.querySelectorAll("#inputbox");
-  const submitButton = document.getElementById("submitter");
+  const buttonToggle = document.getElementById("fbopenbutton");
+  const input = document.querySelectorAll("#fbinputbox");
+  const submitButton = document.getElementById("fbsubmitter");
 
   if (open) {
     buttonToggle.style.rotate = "180deg";
@@ -97,8 +116,8 @@ async function uploadImageToS3(file, presignedUrl) {
 //Delete captured Screenshot
 
 async function clearScreenshot() {
-  const noImg = document.getElementById("noShot").style;
-  const isImg = document.getElementById("isShot").style;
+  const noImg = document.getElementById("fbnoShot").style;
+  const isImg = document.getElementById("fbisShot").style;
 
   noImg.display = "flex";
   isImg.display = "none";
@@ -143,14 +162,26 @@ async function fetchPresignedUrl() {
   }
 }
 
-const capureTrigger = async () => {
-  const noImg = document.getElementById("noShot").style;
-  const isImg = document.getElementById("isShot").style;
-  const imgbox = document.getElementById("imgSend");
+const resetInputs = () => {
+  const name = document.getElementById("fbnameinput");
+  const title = document.getElementById("fbtitleinput");
+  const desc = document.getElementById("fbdescript");
 
-  const submissionbox = document.getElementById("subbox").style;
+  name.value = "";
+  title.value = "";
+  desc.value = "";
+};
+
+const capureTrigger = async () => {
+  const noImg = document.getElementById("fbnoShot").style;
+  const isImg = document.getElementById("fbisShot").style;
+  const imgbox = document.getElementById("fbimgSend");
+  const controls = document.getElementById("fbcontrolbox").style;
+
+  const submissionbox = document.getElementById("fbsubbox").style;
 
   submissionbox.display = "none";
+  controls.display = "none";
   const presignedUrl = await fetchPresignedUrl();
   await captureAndUploadScreenshot(presignedUrl);
 
@@ -158,6 +189,7 @@ const capureTrigger = async () => {
     noImg.display = "none";
     isImg.display = "flex";
     submissionbox.display = "flex";
+    controls.display = "flex";
     imgbox.src = publicUrlImg;
   }, 300);
 };
@@ -165,7 +197,7 @@ const capureTrigger = async () => {
 //Toast
 
 const toastAlert = (result, text) => {
-  const toast = document.getElementById("toaster");
+  const toast = document.getElementById("fbtoaster");
   const style = toast.style;
 
   toast.innerHTML = text;
@@ -190,16 +222,29 @@ const toastAlert = (result, text) => {
 
 //Send feedback
 const sendFeedbackToClient = async () => {
-  const feedbackmodel = {
-    userId: user,
-    clientId: client,
-    feedbackTitle: title,
-    feedbackBody: desc,
-    ImageUrl: publicUrlImg,
-    by: nameIn,
-  };
+  const subButton = document.getElementById("fbsubmitter");
 
+  if (nameIn == "" || desc == "" || title == "") {
+    toastAlert(false, "Please enter all fields before sending!");
+    return;
+  }
   try {
+    sending = true;
+    subButton.disabled = true;
+    subButton.innerHTML = "Sending...";
+
+    const userAgent = navigator.userAgent;
+
+    // Extract Browser
+    const browserMatch = userAgent.match(
+      /(Chrome|Safari|Firefox|Edge|Opera)\/(\d+\.\d+\.\d+\.\d+)/
+    );
+    const browser = browserMatch ? browserMatch[1] : "Unknown Browser";
+
+    // Extract Device and OS
+    const deviceMatch = userAgent.match(/\((.*?)\)/);
+    const device = deviceMatch ? deviceMatch[1] : "Unknown Device";
+
     const sendFeedback = await fetch("http://localhost:3000/newfeedback", {
       method: "POST",
       headers: {
@@ -212,17 +257,32 @@ const sendFeedbackToClient = async () => {
         feedbackBody: desc,
         ImageUrl: publicUrlImg,
         by: nameIn,
+        errors: consoleErrors,
+        warnings: consoleWarnings,
+        device: {
+          browser: browser,
+          device: device,
+        },
       }),
     });
 
-    const response = feedback.json();
+    setTimeout(() => {
+      toastAlert(true, "Feedback sent!");
+      nameIn = "";
+      desc = "";
+      title = "";
+      image = "";
 
-    if (response.ok) {
-      console.log("Added feedback");
-    } else {
-      console.log("oops something went wrong.");
-    }
-  } catch (error) {}
+      resetInputs();
+      sending = false;
+      subButton.disabled = false;
+      subButton.innerHTML = "Send feedback";
+    }, 100);
+  } catch (error) {
+    toastAlert(false, "Something went wrong!");
+    sending = false;
+    subButton.disabled = false;
+  }
 };
 
 //Track mousePos for placing paths
@@ -237,11 +297,9 @@ const mousePos = (e) => {
 
 const toggleDrawingActive = () => {
   // Check current cursor state and toggle between pen and default
-  const button = document.getElementById("drawing");
+  const button = document.getElementById("fbdrawing");
   const currentCursor = document.body.style.cursor;
   const drawingField = document.querySelector(".fbdrawing-overlay");
-
-  console.log(drawingField);
 
   if (
     currentCursor ===
@@ -305,7 +363,7 @@ const stopDraw = () => {
 };
 
 const changeColor = (e) => {
-  const colorDisp = document.getElementById("colorDisp");
+  const colorDisp = document.getElementById("fbcolorDisp");
   color = e.target.value;
   colorDisp.style.backgroundColor = color;
 };
@@ -331,6 +389,7 @@ const initDrawing = () => {
 
   if (large) {
     const controls = document.createElement("div");
+    controls.id = "fbcontrolbox";
     const contStyle = controls.style;
 
     //Controller base styles
@@ -352,7 +411,7 @@ const initDrawing = () => {
     /* Control Buttons */
     //Drawing Toggle
     const pen = document.createElement("button");
-    pen.id = "drawing";
+    pen.id = "fbdrawing";
     pen.innerHTML =
       '<svg viewBox="0 0 24 24" style="width: 25px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13.9713 8.02792C14.5398 7.45944 15.4615 7.45944 16.0299 8.02792C16.5984 8.59639 16.5984 9.51807 16.0299 10.0865L12.0091 14.1074C11.4978 14.6187 11.2421 14.8744 10.9507 15.0773C10.692 15.2575 10.413 15.4064 10.1194 15.521C9.78861 15.6501 9.43388 15.7203 8.72443 15.8605L7.9668 16.0102L8.15783 15.1976C8.31291 14.5379 8.39045 14.2081 8.51946 13.9006C8.634 13.6276 8.77848 13.3682 8.95026 13.1271C9.14376 12.8555 9.38334 12.6159 9.8625 12.1367L13.9713 8.02792Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>';
     const penStyle = pen.style;
@@ -419,11 +478,11 @@ const initDrawing = () => {
     controls.appendChild(splitter);
 
     const colorWrap = document.createElement("label");
-    colorWrap.id = "colorWrap";
+    colorWrap.id = "fbcolorWrap";
 
     const colorBall = document.createElement("div");
     colorBall.style.backgroundColor = color;
-    colorBall.id = "colorDisp";
+    colorBall.id = "fbcolorDisp";
 
     const colorButton = document.createElement("input");
     colorButton.id = "colorSelect";
@@ -445,12 +504,12 @@ const initDrawing = () => {
 //Render the base UI.
 (async function renderUi() {
   const submissionbox = document.createElement("section");
-  submissionbox.id = "subbox";
+  submissionbox.id = "fbsubbox";
 
   //Create toast for sending confirmations to user
 
   const toast = document.createElement("div");
-  toast.id = "toaster";
+  toast.id = "fbtoaster";
 
   //Create header field
   const header = document.createElement("div");
@@ -464,7 +523,7 @@ const initDrawing = () => {
 
   //Button for opening and closing menu
   const openButton = document.createElement("button");
-  openButton.id = "openbutton";
+  openButton.id = "fbopenbutton";
   openButton.style.backgroundColor = "transparent";
   openButton.style.border = "none";
   openButton.style.width = "25px";
@@ -484,7 +543,7 @@ const initDrawing = () => {
 
   //Create box for input name
   const box = document.createElement("div");
-  box.id = "inputbox";
+  box.id = "fbinputbox";
   box.style.width = "100%";
   box.style.height = "0px";
   box.style.display = "none";
@@ -500,7 +559,7 @@ const initDrawing = () => {
   nameLabel.style.color = "black";
   box.appendChild(nameLabel);
   const name = document.createElement("input");
-  name.id = "nameinput";
+  name.id = "fbnameinput";
   name.placeholder = "Enter your name";
   name.style.width = "100%";
   name.style.padding = "4px";
@@ -513,7 +572,7 @@ const initDrawing = () => {
 
   //Create box for input name
   const boxTitle = document.createElement("div");
-  boxTitle.id = "inputbox";
+  boxTitle.id = "fbinputbox";
   boxTitle.style.width = "100%";
   boxTitle.style.height = "0px";
   boxTitle.style.display = "none";
@@ -528,6 +587,7 @@ const initDrawing = () => {
   titleLabel.style.color = "black";
   boxTitle.appendChild(titleLabel);
   const title = document.createElement("input");
+  title.id = "fbtitleinput";
   title.placeholder = "What is the issue?";
   title.style.width = "100%";
   title.style.padding = "4px";
@@ -539,7 +599,7 @@ const initDrawing = () => {
 
   //Description textarea
   const boxDesc = document.createElement("div");
-  boxDesc.id = "inputbox";
+  boxDesc.id = "fbinputbox";
 
   const descLabel = document.createElement("label");
   descLabel.innerHTML = "Describe it.";
@@ -554,7 +614,7 @@ const initDrawing = () => {
   //Screenshot
 
   const boxShot = document.createElement("div");
-  boxShot.id = "inputbox";
+  boxShot.id = "fbinputbox";
 
   const shotLabel = document.createElement("label");
   shotLabel.innerHTML = "Screenshot";
@@ -566,7 +626,7 @@ const initDrawing = () => {
   //Screenshot not taken
 
   const noScreen = document.createElement("button");
-  noScreen.id = "noShot";
+  noScreen.id = "fbnoShot";
   noScreen.innerHTML = "No sceenshot taken. Take one!";
   noScreen.addEventListener("click", capureTrigger);
   shotBox.appendChild(noScreen);
@@ -583,17 +643,17 @@ const initDrawing = () => {
     "https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1692.0/aws-sdk.min.js";
 
   const isScreen = document.createElement("div");
-  isScreen.id = "isShot";
+  isScreen.id = "fbisShot";
 
   const remImg = document.createElement("button");
-  remImg.id = "delBtn";
+  remImg.id = "fbdelBtn";
   remImg.innerHTML = "X";
 
   remImg.addEventListener("click", clearScreenshot);
   isScreen.appendChild(remImg);
 
   const image = document.createElement("img");
-  image.id = "imgSend";
+  image.id = "fbimgSend";
 
   isScreen.appendChild(image);
   boxShot.appendChild(shotBox);
@@ -613,7 +673,7 @@ const initDrawing = () => {
     }
 
 
-    #colorWrap{
+    #fbcolorWrap{
     position: relative;
     height: 33px;
     width: auto;
@@ -627,7 +687,7 @@ const initDrawing = () => {
     }
 
 
-    #colorDisp{
+    #fbcolorDisp{
 
     width: 20px;
     height: 20px;
@@ -655,7 +715,7 @@ const initDrawing = () => {
       pointer-events: all !important;
     }
 
-    #subbox{
+    #fbsubbox{
     position: fixed;
     width: 300px;
     height: auto;
@@ -677,7 +737,7 @@ const initDrawing = () => {
   }
 
 
-  #toaster{
+  #fbtoaster{
  border-radius: 5px;
  padding: 6px;
  font-family: 'Poppins', sans-serif;
@@ -699,7 +759,7 @@ const initDrawing = () => {
     font-size: 16px;
   }
 
-    #inputbox{
+    #fbinputbox{
     width: 100%;
     height: 0px;
     display: none;
@@ -710,14 +770,14 @@ const initDrawing = () => {
     font-family: 'Poppins', sans-serif;
   }
 
-  #screenshot{
+  #fbscreenshot{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  #noShot{
+  #fbnoShot{
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -730,7 +790,7 @@ const initDrawing = () => {
     flex-direction: column;
   }
 
-  #isShot{
+  #fbisShot{
     display: none;
     position: relative;
     width: 100%;
@@ -739,7 +799,7 @@ const initDrawing = () => {
     border: 1px solid black;
     overflow: hidden;
   }
-  #delBtn{
+  #fbdelBtn{
     position: absolute;
     top: 0;
     right: 0;
@@ -754,7 +814,7 @@ const initDrawing = () => {
     cursor: pointer;
   }
 
-  #imgSend{
+  #fbimgSend{
     display:block;
     width:100%;
     height:100%;
@@ -764,7 +824,7 @@ const initDrawing = () => {
 
 
 
-  #submitter{
+  #fbsubmitter{
     width: 100%;
     padding : 6px;
     border:none;
@@ -782,11 +842,8 @@ const initDrawing = () => {
   //Submit button
 
   const button = document.createElement("button");
-
-  button.id = "submitter";
-
+  button.id = "fbsubmitter";
   button.innerHTML = "Send Feedback";
-
   button.addEventListener("click", sendFeedbackToClient);
 
   const cloudScript = document.createElement("script");

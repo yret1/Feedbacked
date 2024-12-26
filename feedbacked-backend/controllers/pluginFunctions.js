@@ -2,8 +2,17 @@ import User from "../schemas/usermodel.js";
 import { v4 as uuidv4 } from "uuid";
 
 export const addFeedback = async (req, res) => {
-  const { userId, clientId, feedbackTitle, feedbackBody, ImageUrl, by } =
-    req.body;
+  const {
+    userId,
+    clientId,
+    feedbackTitle,
+    feedbackBody,
+    ImageUrl,
+    by,
+    errors,
+    warnings,
+    device,
+  } = req.body;
 
   console.log(req.body);
   if (!userId || !clientId || !feedbackTitle) {
@@ -34,8 +43,11 @@ export const addFeedback = async (req, res) => {
       id: uuidv4(),
       title: feedbackTitle,
       description: feedbackBody,
+      errors: errors,
+      warnings: warnings,
       by: by,
       image: ImageUrl,
+      device: device,
       created_at: new Date(),
     };
 
