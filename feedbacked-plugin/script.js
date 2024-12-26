@@ -245,6 +245,11 @@ const sendFeedbackToClient = async () => {
     const deviceMatch = userAgent.match(/\((.*?)\)/);
     const device = deviceMatch ? deviceMatch[1] : "Unknown Device";
 
+    const windowWidth = window.innerWidth;
+
+    const deviceType =
+      windowWidth < 680 ? "Mobile" : windowWidth < 1024 ? "Tablet" : "Desktop";
+
     const sendFeedback = await fetch("http://localhost:3000/newfeedback", {
       method: "POST",
       headers: {
@@ -262,6 +267,7 @@ const sendFeedbackToClient = async () => {
         device: {
           browser: browser,
           device: device,
+          type: deviceType,
         },
       }),
     });
