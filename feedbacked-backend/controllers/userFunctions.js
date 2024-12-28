@@ -356,3 +356,25 @@ export const getFeedback = async (req, res) => {
     return res.status(404).json({ message: "No user found." });
   }
 };
+
+//Complete active feedback
+
+export const resolveFeedback = async (req, res) => {
+  const { userId, clientId, issueId } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const client = await user.clients.find((client) => client.id === clientId);
+
+    const targetIssue = await client.feedbacks.find(
+      (issue) => issue.id === issueId
+    );
+
+    targetIssue.status = "Resolved";
+
+    user.save();
+
+    return res.status(201).json({ message: "Resolved issue." });
+  }
+};

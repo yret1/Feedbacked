@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 6px;
     align-items: flex-start;
     padding: 80px 12px;
     font-family: "Poppins", "sans-serif";
@@ -20,6 +21,49 @@
     }
 
 
+    .message{
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+gap: 8px;
+        align-items: center;
+
+        div{
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        span{
+            padding: 4px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+    }
+
+
+    .image{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .technicals{
+
+        summary{
+            color: grey;
+        }
+
+        p{
+            font-size: 12px;
+            color: gray;
+        }
+    }
+
+    app-device-screen{
+        width: 100%;
+    }
     .details{
         width: 100%;
 
@@ -28,6 +72,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            .issueTitle{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 8px;
+
+                svg{
+                    width: 30px;
+                }
+            }
 
 
             button{
@@ -44,16 +99,15 @@
                     background-color: var(--acceptcolor);
                 }
             }
+
+          
         }
 
         summary{
             color: grey;
         }
 
-        p{
-            font-size: 12px;
-            color: gray;
-        }
+        
 
     }
 }

@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import {
   ClientsInterface,
   FeedbackInterface,
+  IssueInterface,
 } from '../../interfaces/Clientsinterface';
 import { AuthService } from '../../../services/auth';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
@@ -197,7 +198,9 @@ export class ClientdashComponent implements OnInit {
           this.clientData = data.client;
           console.log(data);
           this.issues = data.client.feedbacks;
-          this.currentIssueLoop = data.client.feedbacks;
+          this.currentIssueLoop = data.client.feedbacks.filter(
+            (issue: IssueInterface) => issue.status !== 'Resolved'
+          );
           this.loading.set(false);
         },
         (error) => {

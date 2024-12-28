@@ -8,6 +8,7 @@ import {
   getUser,
   initializeKey,
   loginUser,
+  resolveFeedback,
   setAgencyName,
   signupUser,
   updateClientStatus,
@@ -31,6 +32,8 @@ router.post("/create-key", checkAuth, initializeKey);
 router.post("/delete-key", checkAuth, deleteKey);
 router.post("/setUName", checkAuth, setAgencyName);
 router.get("/getFeedback/:userId/:issueId/:clientId", checkAuth, getFeedback);
+
+router.put("/resolveFeedback", checkAuth, resolveFeedback);
 
 //Plugin routes
 

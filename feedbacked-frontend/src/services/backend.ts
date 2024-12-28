@@ -78,4 +78,12 @@ export class BackendService {
       `http://${this.baseUrl}/getFeedback/${userId}/${issueId}/${clientId}`
     );
   }
+
+  resolveIssue(userId: string, issueId: string, clientId: string) {
+    return this.http.put(`http://${this.baseUrl}/resolveFeedback`, {
+      userId,
+      issueId,
+      clientId,
+    });
+  }
 }

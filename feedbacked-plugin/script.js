@@ -176,12 +176,16 @@ const capureTrigger = async () => {
   const noImg = document.getElementById("fbnoShot").style;
   const isImg = document.getElementById("fbisShot").style;
   const imgbox = document.getElementById("fbimgSend");
-  const controls = document.getElementById("fbcontrolbox").style;
+
+  if (large) {
+    const controls = document.getElementById("fbcontrolbox").style;
+  }
 
   const submissionbox = document.getElementById("fbsubbox").style;
 
   submissionbox.display = "none";
-  controls.display = "none";
+
+  large ? (controls.display = "none") : "";
   const presignedUrl = await fetchPresignedUrl();
   await captureAndUploadScreenshot(presignedUrl);
 
@@ -189,7 +193,10 @@ const capureTrigger = async () => {
     noImg.display = "none";
     isImg.display = "flex";
     submissionbox.display = "flex";
-    controls.display = "flex";
+
+    if (large) {
+      controls.display = "flex";
+    }
     imgbox.src = publicUrlImg;
   }, 300);
 };

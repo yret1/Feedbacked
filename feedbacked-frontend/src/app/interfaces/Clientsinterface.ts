@@ -28,4 +28,11 @@ export interface IssueInterface {
   status: 'Unresolved' | 'Resolved';
   created_at: string;
   _id: string;
+  errors: any[];
+  warnings: any[];
+  device: {
+    browser: string;
+    device: string;
+    type: 'Mobile' | 'Desktop' | 'Tablet';
+  };
 }
