@@ -71,6 +71,20 @@
       }
     </section>
 
+    <section class="blobhold">
+      <div class="blob">
+        <div [innerHTML]="browserIcon"></div>
+        {{ userBrowser }}
+      </div>
+      <div class="blob">
+        <div [innerHTML]="osIcon"></div>
+        {{ userOperating }}
+      </div>
+
+      <p class="blob">Warnings: {{ issue.warnings.length }}</p>
+      <p class="blob">Errors: {{ issue.errors.length }}</p>
+    </section>
+
     <section class="technicals">
       <details title="Issue details">
         <summary>Issue technicals</summary>

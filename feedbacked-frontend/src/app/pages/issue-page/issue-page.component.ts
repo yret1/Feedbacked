@@ -7,7 +7,12 @@ import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadin
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 import { DeviceScreenComponent } from '../../components/Issue Comps/device-screen/device-screen.component';
-import { DeviceDetectionService } from '../../../services/device-detections.service';
+import {
+  BrowserType,
+  DeviceDetectionService,
+  OSType,
+} from '../../../services/device-detections.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-issue-page',
@@ -29,7 +34,8 @@ export class IssuePageComponent implements OnInit {
     private router: Router,
     private backend: BackendService,
     private auth: AuthService,
-    private deviceDetect: DeviceDetectionService
+    private deviceDetect: DeviceDetectionService,
+    private sanitizer: DomSanitizer
   ) {}
 
   //Store id's for handling issue
@@ -42,8 +48,10 @@ export class IssuePageComponent implements OnInit {
 
   //UserAgent Details
 
-  userBrowser = '';
-  userOperating = '';
+  userBrowser!: BrowserType;
+  browserIcon!: SafeHtml;
+  userOperating!: OSType;
+  osIcon!: SafeHtml;
   //When issue is resloved
 
   onResolve() {
@@ -52,6 +60,16 @@ export class IssuePageComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate(['user/projects/client']);
       });
+  }
+
+  getBrowserIconSafe(browser: BrowserType): SafeHtml {
+    const svgString = this.deviceDetect.getBrowserIcon(browser);
+    return this.sanitizer.bypassSecurityTrustHtml(svgString);
+  }
+
+  getOsIconSafe(OS: OSType): SafeHtml {
+    const svgString = this.deviceDetect.getOsIcon(OS);
+    return this.sanitizer.bypassSecurityTrustHtml(svgString);
   }
 
   //When component mounts run
@@ -72,12 +90,15 @@ export class IssuePageComponent implements OnInit {
             //Use the found issue
             this.issue = issue as IssueInterface;
 
-            this.userBrowser = this.deviceDetect.detectBrowser(
-              this.issue.device.browser
-            );
-            this.userOperating = this.deviceDetect.detectOS(
+            const DeviceInfo = this.deviceDetect.getDeviceInfo(
+              this.issue.device.browser,
               this.issue.device.device
             );
+
+            this.userBrowser = DeviceInfo.browser;
+            this.browserIcon = this.getBrowserIconSafe(this.userBrowser);
+            this.userOperating = DeviceInfo.os;
+            this.osIcon = this.getOsIconSafe(this.userOperating);
           });
       }
     });
