@@ -35,8 +35,8 @@ gap: 8px;
             justify-content: center;
             align-items: center;
             svg{
-                aspect-ratio: 1/1;
                 width: 15px;
+                height: 15px;
             }
         }
         span{
@@ -52,27 +52,69 @@ gap: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         flex-wrap: wrap;
         width: 100%;
         gap: 4px;
 
+      
+
+
+        .blobOS{
+            display: flex;
+            gap:2px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .blobWarn{
+            display: flex;
+            gap:2px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .blob.error{
+            border: 2px solid red;
+            color: red;
+            background-color: rgba(255, 0, 0, 0.485);
+           
+
+        }
+        .blob.warn{
+            border: 2px solid #f79e45;
+            color: #f79e45;
+            background-color: #ffff0071;
+        }
+
 
 
         .blob{
-            font-size: small;
+            font-size: medium;
             padding: 4px;
             border: 2px solid black;
             border-radius: 40px;
             display: flex;
+            text-wrap: nowrap;
             justify-content: center;
             align-items: center;
             gap: 2px;
 
+            svg{
+                width: 15px;
+                height: 15px;
+            }
             div{
                 width: 15px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+
+               
             }
         }
     }
@@ -80,8 +122,20 @@ gap: 8px;
     .image{
         width: 100%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+
+
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+            
+        }
+
+
+
+   
     }
 
     .technicals{
@@ -99,9 +153,34 @@ gap: 8px;
     app-device-screen{
         width: 100%;
     }
+
+
+    .detailwrapper{
+        width: 100%;
+    }
+
+
+    .largeDetails{
+        display: none;
+        
+
+        @media (min-width: 768px){
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 100%;
+
+        }
+
+    }
     .details{
         width: 100%;
 
+
+        @media (min-width: 768px){
+            display: none;
+        }
 
         section{
             display: flex;
