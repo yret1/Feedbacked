@@ -3,7 +3,7 @@ import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../services/auth';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   animate,
   query,
@@ -52,7 +52,11 @@ import {
   ],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private _location: Location
+  ) {}
 
   navVersion: 'Landing' | 'Dash' | 'Client' | 'Auth' = 'Landing';
 
@@ -78,6 +82,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   signout() {
     this.authService.logout();
     this.open = false;
+  }
+
+  goBack() {
+    this._location.back();
   }
 
   openMenu() {

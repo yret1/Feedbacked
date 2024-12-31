@@ -13,6 +13,24 @@ nav {
     transition: all 0.3s;
 
 
+
+    .back{
+        border: transparent;
+        padding: 0px;
+        background-color: transparent;
+
+
+        svg{
+            width: 35px;
+
+            @media (min-width: 1024px){
+                width: 45px;
+            }
+        }
+    }
+
+
+
     .openMobilenav{
         position: fixed;
         top: 0;
@@ -50,6 +68,7 @@ nav {
         }
 
 
+        
         .actionbtns{
             display: flex;
             flex-direction: column;
@@ -164,10 +183,13 @@ nav {
 
 
         background-color: transparent;
-
         svg{
             width: 25px;
-            transition: all 0.3s;
+            transition: all 0.3s ease-in-out;
+
+            @media (min-width: 1024px){
+                width: 35px;
+            }
         }
 
         @media screen and (min-width: 768px){
