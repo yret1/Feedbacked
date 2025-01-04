@@ -1,138 +1,144 @@
 <nav
-  [ngClass]="scrolled ? 'scrollshadow' : ''"
-  [ngClass]="navVersion == 'Auth' ? 'authcolors' : ''"
+  [ngClass]="navVersion !== 'Auth' && navVersion !== 'Landing' ? 'signed' : ''"
 >
-  @if(this.open){ @if(this.navVersion == "Landing" || this.navVersion ==
-  "Auth"){
-  <section class="openMobilenav" [@openClose]>
-    <ul [@linkStagger]="open">
-      @for(link of links; track link.name){
-      <li [@linkStagger]="open" (click)="openMenu()" [routerLink]="link.route">
-        {{ link.name }}
-      </li>
-      }
-    </ul>
-
-    <section class="actionbtns">
-      <button class="sign" (click)="openMenu()" routerLink="/signin">
-        Sign In
-      </button>
-      <button class="starter" (click)="openMenu()" routerLink="/signup">
-        Get Started
-      </button>
-    </section>
-  </section>
-  }@else if (this.navVersion === "Dash" || navVersion === "Client"){
-  <section class="openMobilenav" [@openClose]>
-    <ul [@linkStagger]="open">
-      @for(link of dashlinks; track link.name){
-      <li [@linkStagger]="open" (click)="openMenu()" [routerLink]="link.route">
-        {{ link.name }}
-      </li>
-      }
-    </ul>
-
-    <section class="actionbtns">
-      <button class="out" (click)="signout()">Log out</button>
-    </section>
-  </section>
-  } } @if(this.navVersion !== "Client"){
-  <section class="title">
-    <p
-      [routerLink]="this.routeTo"
-      [ngClass]="navVersion == 'Auth' ? 'auth' : ''"
-      [ngClass]="open ? 'open' : ''"
+  <section
+    class="large"
+    [ngClass]="scrolled ? 'scrollbuff' : ''"
+    [ngClass]="navVersion == 'Auth' ? 'scrollbuff' : ''"
+  >
+    <h1
+      [routerLink]="
+        navVersion === 'Auth' || navVersion === 'Landing' ? '/' : '/dashboard'
+      "
     >
-      FEEDBACKED
-    </p>
+      Feedbacked
+    </h1>
+
+    @if(navVersion !== 'Auth' && navVersion !== 'Landing'){
+    <ul>
+      @for(link of dashlinks; track link.route){
+      <li
+        [ngClass]="activeRoute(link.name) ? 'active' : ''"
+        [routerLink]="link.route"
+      >
+        {{ link.name }}
+      </li>
+      }
+    </ul>
+    }@else {
+
+    <ul>
+      @for(link of links; track link.route){
+      <li
+        [ngClass]="activeRoute(link.name) ? 'active' : ''"
+        [routerLink]="link.route"
+      >
+        {{ link.name }}
+      </li>
+      }
+    </ul>
+    }
+
+    <section class="buttons">
+      @if(signedin()){
+      <button class="outer" (click)="signout()">Sign out</button>
+      }@else {
+      <button class="signer" routerLink="/signin">Sign in</button>
+      <button class="starter" routerLink="/signup">Get started</button>
+      }
+    </section>
   </section>
-  } @if (navVersion== "Dash" || navVersion === "Client") { @if(navVersion !==
-  "Dash"){
-  <button (click)="goBack()" class="back">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      ></g>
-      <g id="SVGRepo_iconCarrier">
-        <path
-          d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
-          stroke="#292D32"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>
-        <path
-          d="M9.00002 15.3802H13.92C15.62 15.3802 17 14.0002 17 12.3002C17 10.6002 15.62 9.22021 13.92 9.22021H7.15002"
-          stroke="#292D32"
-          stroke-width="1.5"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>
-        <path
-          d="M8.57 10.7701L7 9.19012L8.57 7.62012"
-          stroke="#292D32"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>
-      </g>
-    </svg>
-  </button>
-  }
-  <button (click)="openMenu()" class="mobilenav">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      ></g>
-      <g id="SVGRepo_iconCarrier">
-        <path
-          d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z"
-          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
-        ></path>
-        <path
-          d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z"
-          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
-        ></path>
-        <path
-          d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z"
-          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
-        ></path>
-      </g>
-    </svg>
-  </button>
-  }@else if (navVersion == "Landing" || navVersion == "Auth") {
 
-  <button (click)="openMenu()" class="mobilenav">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      ></g>
-      <g id="SVGRepo_iconCarrier">
-        <path
-          d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z"
-          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
-        ></path>
-        <path
-          d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z"
-          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
-        ></path>
-        <path
-          d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z"
-          [ngStyle]="{ fill: open ? '#ffffff' : '#0F0F0F' }"
-        ></path>
-      </g>
-    </svg>
-  </button>
+  <section class="mobile" [ngClass]="scrolled ? 'scrollbuff' : ''">
+    <h1 [ngClass]="open ? 'open' : ''">Feedbacked</h1>
 
+    <button (click)="openMenu()">
+      <hr [ngClass]="open ? 'open turn1' : ''" />
+      <hr [ngClass]="open ? 'open turn2' : ''" />
+      <hr [ngClass]="open ? 'open turn3' : ''" />
+    </button>
+  </section>
+
+  @if(this.open){
+  <section
+    class="mobileMenu"
+    [@openClose]
+    [@staggerItems]
+    [ngClass]="scrolled ? 'scrollbuff' : ''"
+  >
+    @if(navVersion == "Landing" || navVersion == "Auth"){
+    <ul>
+      @for(link of this.links ; track link.route){
+      <li [routerLink]="link.route" (click)="openMenu()">
+        {{ link.name }}
+        <div>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z"
+                fill="#0F0F0F"
+              ></path>
+            </g>
+          </svg>
+        </div>
+      </li>
+      }
+    </ul>
+    }@else{
+    <ul>
+      @for(link of dashlinks; track link.route){
+      <li
+        [ngClass]="activeRoute(link.name) ? 'active' : ''"
+        [routerLink]="link.route"
+      >
+        {{ link.name }}
+        <div>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z"
+                fill="#0F0F0F"
+              ></path>
+            </g>
+          </svg>
+        </div>
+      </li>
+      }
+    </ul>
+    }
+
+    <section class="buttons">
+      @if(signedin()){
+      <button routerLink="/" class="outer" (click)="signout()">Sign out</button>
+      }@else {
+      <button routerLink="/signup" (click)="openMenu()" class="starter">
+        Get started
+      </button>
+      <button routerLink="/signin" (click)="openMenu()" class="signer">
+        Sign in
+      </button>
+      }
+    </section>
+  </section>
   }
 </nav>

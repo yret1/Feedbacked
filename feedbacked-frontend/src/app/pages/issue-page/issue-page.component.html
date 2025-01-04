@@ -126,13 +126,13 @@
                 </g>
               </svg>
             </div>
-            <span>{{ issue.description }}</span>
+            <p>{{ issue.description }}</p>
           </div>
         </section>
 
         <section class="blobhold">
-          <p>User device</p>
           <section class="blobOS">
+            <p>User device :</p>
             <div class="blob">
               <div [innerHTML]="browserIcon"></div>
               {{ userBrowser }}
@@ -143,8 +143,8 @@
             </div>
           </section>
 
-          <p>Console logs:</p>
           <section class="blobWarn">
+            <p>Console logs :</p>
             <div class="blob warn">
               <svg
                 fill="#f79e45"

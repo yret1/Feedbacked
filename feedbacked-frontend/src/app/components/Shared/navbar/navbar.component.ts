@@ -29,19 +29,16 @@ import {
         animate('0.3s ease-in-out', style({ opacity: 0 })),
       ]),
     ]),
-    trigger('linkStagger', [
+    trigger('staggerItems', [
       transition(':enter', [
         query(
-          'li',
+          'li, button',
           [
-            style({ opacity: 0, transform: 'translateY(20px)' }),
-            stagger(100, [
+            style({ opacity: 0, transform: 'translateY(-20px)' }),
+            stagger(60, [
               animate(
-                '300ms ease-out',
-                style({
-                  opacity: 1,
-                  transform: 'translateY(0)',
-                })
+                '0.2s ease-out',
+                style({ opacity: 1, transform: 'translateY(0)' })
               ),
             ]),
           ],
@@ -61,15 +58,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navVersion: 'Landing' | 'Dash' | 'Client' | 'Auth' = 'Landing';
 
   links = [
-    { name: 'Home', route: '/' },
+    { name: 'Why', route: '/why' },
     { name: 'Integrations', route: '/integrations' },
     { name: 'Pricing', route: '/pricing' },
-    { name: 'Why', route: '/why' },
     { name: 'Contact', route: '/contact' },
   ];
 
   dashlinks = [
-    { name: 'Dashboard', route: '/dashboard' },
+    { name: 'Projects', route: '/dashboard' },
     { name: 'Settings', route: '/dashboard/settings' },
   ];
 
@@ -82,6 +78,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   signout() {
     this.authService.logout();
     this.open = false;
+  }
+
+  activeRoute(route: string): boolean {
+    if (this.router.url.includes(route)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  signedin() {
+    return this.authService.getIsAuthenthicated();
   }
 
   goBack() {
