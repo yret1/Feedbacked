@@ -1,4 +1,10 @@
 <section class="dashboard">
+  <section class="welcome">
+    @if(currentUser){
+    <p class="welcomeline">Welcome back {{ currentUser.username }}</p>
+    <p>{{ currentPhrase }}</p>
+    }
+  </section>
   <section class="lower">
     <section class="searchbox">
       <div class="inputbox">

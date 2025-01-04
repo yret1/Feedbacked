@@ -14,6 +14,7 @@ import {
 } from '../../interfaces/Clientsinterface';
 import { AuthService } from '../../../services/auth';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
+import { InstallpopupComponent } from '../../components/Clientdash Comps/installpopup/installpopup.component';
 
 @Component({
   selector: 'app-clientdash',
@@ -27,6 +28,7 @@ import { CenterwrappComponent } from '../../components/Shared/centerwrapp/center
     KeycompComponent,
     FormsModule,
     CenterwrappComponent,
+    InstallpopupComponent,
   ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
@@ -63,7 +65,13 @@ export class ClientdashComponent implements OnInit {
   action: string = '';
   adding = signal<boolean>(false);
   popup = signal<boolean>(false);
+  openPop = signal<boolean>(false);
 
+  //Toggle info
+
+  toggleInfo() {
+    this.openPop.set(!this.openPop);
+  }
   // (Key handle functions)
 
   //Trigger flow for adding new client key

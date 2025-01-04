@@ -3,10 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BackendService } from '../../../services/backend';
 import { AuthService } from '../../../services/auth';
 import { IssueInterface } from '../../interfaces/Clientsinterface';
-import { LoadingcompComponent } from '../../components/Shared/loadingcomp/loadingcomp.component';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
-import { DeviceScreenComponent } from '../../components/Issue Comps/device-screen/device-screen.component';
 import {
   BrowserType,
   DeviceDetectionService,
@@ -17,13 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-issue-page',
   standalone: true,
-  imports: [
-    LoadingcompComponent,
-    DatePipe,
-    TitleCasePipe,
-    CenterwrappComponent,
-    DeviceScreenComponent,
-  ],
+  imports: [DatePipe, TitleCasePipe, CenterwrappComponent],
   templateUrl: './issue-page.component.html',
   styleUrl: './issue-page.component.scss',
 })
@@ -38,6 +30,8 @@ export class IssuePageComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {}
 
+  //Motivational
+
   //Store id's for handling issue
   issueId!: string;
   clientId!: string;
@@ -47,7 +41,6 @@ export class IssuePageComponent implements OnInit {
   issue!: IssueInterface;
 
   //UserAgent Details
-
   userBrowser!: BrowserType;
   browserIcon!: SafeHtml;
   userOperating!: OSType;
