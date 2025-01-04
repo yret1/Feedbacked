@@ -1,0 +1,57 @@
+<app-centerwrapp>
+  <section class="wrapper">
+    <aside class="nav">
+      @for(link of tabs; track link;){
+      <button
+        (click)="updateSetting(link)"
+        [ngClass]="currentSetting() === link ? 'active' : ''"
+      >
+        {{ link }}
+      </button>
+      }
+    </aside>
+    <section class="displaybox">
+      @if(currentSetting() === "Profile"){
+      <!-- Profile Settings -->
+      <section class="base">
+        <p class="current">{{ currentSetting() }}</p>
+        <section class="settingsbox">
+          <div class="setting">
+            <p>Email:</p>
+          </div>
+        </section>
+      </section>
+      }@else if (currentSetting() === "Payment") {
+      <!-- Payment Settings -->
+      <section class="base">
+        <p class="current">{{ currentSetting() }}</p>
+      </section>
+      }@else if (currentSetting() === "Integrations") {
+      <!-- Integrations Settings -->
+      <section class="base">
+        <p class="current">{{ currentSetting() }}</p>
+
+        <div>
+          <p>Select an Integration</p>
+          <select [(ngModel)]="selectedIntegration" name="Integration">
+            <option value="">Choose one</option>
+            <option value="github">Github</option>
+          </select>
+
+          <p>{{ selectedIntegration }}</p>
+        </div>
+      </section>
+      }@else if (currentSetting() === "Account") {
+      <!-- Account Settings -->
+      <section class="base">
+        <p class="current">{{ currentSetting() }}</p>
+      </section>
+      }@else if (currentSetting() === "Data") {
+      <!-- Data Settings -->
+      <section class="base">
+        <p class="current">{{ currentSetting() }}</p>
+      </section>
+      }
+    </section>
+  </section>
+</app-centerwrapp>

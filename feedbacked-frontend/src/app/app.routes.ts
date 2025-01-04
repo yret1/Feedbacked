@@ -7,6 +7,7 @@ import { LandingpageComponent } from './pages/landingpage/landingpage.component'
 import { AuthGuard } from '../services/authguard';
 import { CreateClientComponent } from './components/Dashboard Comps/create-client/create-client.component';
 import { IssuePageComponent } from './pages/issue-page/issue-page.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,12 @@ export const routes: Routes = [
     title: 'New Project',
     path: 'dashboard/create',
     component: CreateClientComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    title: 'Settings',
+    path: 'dashboard/settings',
+    component: SettingsComponent,
     canActivate: [AuthGuard],
   },
   {

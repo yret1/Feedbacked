@@ -4,7 +4,110 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rbga(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.176);
     z-index: 200;
     display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    .popupmodal{
+        background-color: whitesmoke;
+        width: 90%;
+        padding: 12px;
+        position: relative;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        overflow: hidden;
+        gap: 8px;
+
+
+        @media (min-width: 768px){
+            width: 70%;
+        }
+
+        @media (min-width: 1024px){
+            width: 30%;
+        }
+
+        .close{
+            padding: 4px;
+            font-weight: 700;
+            border-radius: 14px;
+            background-color: transparent;
+            position: absolute;
+            top: 15px;
+            height: 30px;
+            aspect-ratio: 1/1;
+            right: 15px;
+
+            color: black;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            &:hover{
+                color:white;
+                background-color: black;
+            }
+        }
+
+
+        .code-container {
+            position: relative;
+            width: 100%;
+
+            p{
+                color: gray;
+                font-size: small;
+            }
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            padding-right: 100px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        code {
+            color: #333;
+            display: block;
+            line-height: 1.5;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 8px 12px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .copy-button:active {
+            transform: scale(0.98);
+        }
+
+        .copy-button.copied {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+    }
+
+
 }

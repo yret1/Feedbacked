@@ -40,7 +40,7 @@
       </select>
 
       <div class="buttonbox">
-        <button (click)="openPop()">Plugin details</button>
+        <button (click)="toggleInfo()">Plugin installation</button>
       </div>
     </section>
   </app-centerwrapp>
@@ -66,9 +66,12 @@
     <p>Something went wrong. Couldnt find client</p>
     <button [routerLink]="goBack"></button>
   </div>
+  } @if(openPop() === true){
+  <app-installpopup
+    [clientId]="clientId"
+    [clientName]="clientData.name"
+    [userId]="userId"
+    (close)="closeRequest()"
+  />
   }
 </section>
-
-@if(openPop()){
-<app-installpopup></app-installpopup>
-}

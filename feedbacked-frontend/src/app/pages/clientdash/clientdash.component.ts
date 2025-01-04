@@ -15,6 +15,7 @@ import {
 import { AuthService } from '../../../services/auth';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 import { InstallpopupComponent } from '../../components/Clientdash Comps/installpopup/installpopup.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-clientdash',
@@ -70,7 +71,17 @@ export class ClientdashComponent implements OnInit {
   //Toggle info
 
   toggleInfo() {
-    this.openPop.set(!this.openPop);
+    if (this.openPop()) {
+      this.openPop.set(false);
+    } else {
+      this.openPop.set(true);
+    }
+
+    console.log(this.openPop());
+  }
+
+  closeRequest() {
+    this.toggleInfo();
   }
   // (Key handle functions)
 

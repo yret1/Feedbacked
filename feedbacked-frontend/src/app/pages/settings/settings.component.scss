@@ -1,0 +1,100 @@
+.wrapper{
+    padding-top: 80px;
+    font-family: var(--main-font);
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: 1024px){
+        flex-direction: row;
+        padding-top: 0px;
+    }
+
+
+    .nav{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+
+        gap: 6px;
+
+
+        @media (min-width: 1024px){
+            flex-direction: column;
+            border-right: 1px solid rgba(0,0,0,0.2);
+            height: 100svh;
+            width: 30%;
+            padding: 12px;
+        }
+        button{
+            padding: 8px;
+            border-radius: 10px;
+            border: 0px solid transparent;
+            background-color: white;
+            color:black;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+
+
+    @media (min-width: 1024px){
+        width: 100%;
+        font-size: 20px;
+    }
+        }
+
+        button.active{
+            background-color: blue;
+            color: white;
+        }
+    }
+
+    .displaybox{
+
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 12px;
+
+        @media (min-width: 1024px){
+            padding-top: 80px;
+            padding-left: 20px;
+            width: 100%;
+            min-height: 100svh;
+        }
+
+        .base{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+
+            .current{
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .settingsbox{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+
+                .setting{
+                    
+                }
+            }
+        }
+       
+    }
+}

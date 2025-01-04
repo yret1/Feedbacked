@@ -1,3 +1,20 @@
-<section class="popup">
-  <section class="popupmodal"></section>
+<section class="popup" [@Fader] (click)="closeModal($event)">
+  <section class="popupmodal" (click)="$event.stopPropagation()">
+    <button class="close" (click)="closeModal($event)">X</button>
+    <h4>Install plugin</h4>
+    <p>
+      To install the plugin for your client: <span>{{ clientName }}</span>
+    </p>
+    <p>Simply insert this script into your index.html file</p>
+
+    <section class="code-container">
+      <pre><code>&lt;script src="http://localhost:3002/script/{{userId}}/{{clientId}}"&gt;&lt;/script&gt;</code></pre>
+      <button class="copy-button" (click)="copyCode()">{{ copyText() }}</button>
+      <div class="raw-content"></div>
+      <p>
+        <span>Note:</span> The structure of the tag should not be changed as
+        this is how the server knows what client issues are sent to.
+      </p>
+    </section>
+  </section>
 </section>

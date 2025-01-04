@@ -21,6 +21,12 @@ export class ClientdetailsComponent implements OnInit {
     private router: Router
   ) {}
 
+  normalizeUrl = (url: string): string => {
+    return url.startsWith('http://') || url.startsWith('https://')
+      ? url
+      : `https://${url}`;
+  };
+
   clientCompleted() {
     this.backendService
       .clientCompleted(this.userId, this.clientData.email, 'inactive')

@@ -7,16 +7,24 @@
     background-color: var(--background);
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
 
     .welcome{
-      width: 100%;
+      width: 95%;
       padding: 12px;
 
-      
       .welcomeline{
         font-size: large;
       font-weight: 700;
+      }
+
+      @media (min-width: 768px){
+        width: 90%;
+      }
+      @media (min-width: 1024px){
+        width: 85%;
       }
     }
 
