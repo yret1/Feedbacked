@@ -12,6 +12,14 @@ const userSchema = new mongoose.Schema({
     default: [],
   },
   created_at: { type: Date, default: Date.now },
+  settings: {
+    integrations: [],
+    payment: {
+      currentPlan: { type: String, default: "Trial" },
+      stripePlan: { type: String, default: "Monthly" },
+      activeUntil: { type: Date },
+    },
+  },
 });
 
 const User = mongoose.model("User", userSchema);
