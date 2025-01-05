@@ -1,3 +1,4 @@
+@if(user){
 <app-centerwrapp>
   <section class="wrapper">
     <aside class="nav">
@@ -17,7 +18,18 @@
         <p class="current">{{ currentSetting() }}</p>
         <section class="settingsbox">
           <div class="setting">
-            <p>Email:</p>
+            <p class="titlehold">Email:</p>
+            <p>{{ this.user.email }}</p>
+          </div>
+          <div class="setting">
+            <p class="titlehold">Username:</p>
+            <p>{{ this.user.username }}</p>
+          </div>
+          <div class="setting">
+            <p class="titlehold">Request password change</p>
+
+            <!-- TODO: Implement password change -->
+            <button class="change">Change password</button>
           </div>
         </section>
       </section>
@@ -31,15 +43,15 @@
       <section class="base">
         <p class="current">{{ currentSetting() }}</p>
 
-        <div>
+        <div class="setting">
           <p>Select an Integration</p>
           <select [(ngModel)]="selectedIntegration" name="Integration">
-            <option value="">Choose one</option>
+            <option value="none">Choose one</option>
             <option value="github">Github</option>
           </select>
-
-          <p>{{ selectedIntegration }}</p>
         </div>
+
+        <app-integration [selected]="selectedIntegration" />
       </section>
       }@else if (currentSetting() === "Account") {
       <!-- Account Settings -->
@@ -55,3 +67,5 @@
     </section>
   </section>
 </app-centerwrapp>
+
+}

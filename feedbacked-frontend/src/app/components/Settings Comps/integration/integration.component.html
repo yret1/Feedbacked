@@ -1,0 +1,35 @@
+<section class="integbox" [ngClass]="selected()">
+  <section class="header">
+    <div [innerHTML]="currentIcon()">
+      <!-- Insert SVG -->
+    </div>
+    @if(selected() !== "none"){
+    <p [ngClass]="selected() + 'text'">{{ selected() | titlecase }} settings</p>
+    }@else {
+    <p>No integration selected</p>
+    }
+  </section>
+
+  @if(selected() !== "none"){
+
+  <section class="settingswrapper">
+    @switch (selected()) { @case ("github"){
+
+    <div class="settingbox">
+      <div>
+        <p [ngClass]="selected() + 'text'">Github personal access token</p>
+      </div>
+      <div class="inputs">
+        <input
+          [ngClass]="selected() + 'buttons'"
+          type="text"
+          placeholder="Token here"
+        />
+        <button [ngClass]="selected() + 'buttons'">Save token</button>
+      </div>
+    </div>
+    <div class="settingbox"></div>
+    } }
+  </section>
+  }
+</section>

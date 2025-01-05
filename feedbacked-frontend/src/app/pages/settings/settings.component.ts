@@ -1,15 +1,29 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BackendService } from '../../../services/backend';
+import { AuthService } from '../../../services/auth';
+import { UserInterface } from '../../interfaces/UserInterface';
+import {
+  integration,
+  IntegrationComponent,
+} from '../../components/Settings Comps/integration/integration.component';
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CenterwrappComponent, CommonModule, FormsModule],
+  imports: [
+    CenterwrappComponent,
+    CommonModule,
+    FormsModule,
+    IntegrationComponent,
+  ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
+  constructor(private backend: BackendService, private auth: AuthService) {}
+
   tabs: ['Profile', 'Payment', 'Integrations', 'Account', 'Data'] = [
     'Profile',
     'Payment',
@@ -18,15 +32,25 @@ export class SettingsComponent {
     'Data',
   ];
 
-  selectedIntegration = '';
+  user!: UserInterface;
+
+  selectedIntegration: integration = 'github';
 
   currentSetting = signal<
     'Profile' | 'Payment' | 'Integrations' | 'Account' | 'Data'
-  >('Profile');
+  >('Integrations');
 
   updateSetting = (
     path: 'Profile' | 'Payment' | 'Integrations' | 'Account' | 'Data'
   ) => {
     this.currentSetting.set(path);
   };
+
+  ngOnInit(): void {
+    this.auth.getId().subscribe((id) => {
+      this.backend.getUser(id as string).subscribe((user) => {
+        this.user = user.user;
+      });
+    });
+  }
 }

@@ -4,7 +4,7 @@
   <section
     class="large"
     [ngClass]="scrolled ? 'scrollbuff' : ''"
-    [ngClass]="navVersion == 'Auth' ? 'scrollbuff' : ''"
+    [ngClass]="navVersion !== 'Landing' ? 'scrollbuff' : ''"
   >
     <h1
       [routerLink]="
