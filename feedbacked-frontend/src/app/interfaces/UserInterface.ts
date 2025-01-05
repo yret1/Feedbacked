@@ -1,4 +1,3 @@
-
 export interface UserInterface {
   username?: string;
   email: string;
@@ -12,11 +11,17 @@ export interface UserInterface {
       feedbacks: feedbackInterface[];
       keys: Key[];
     }
-  ]
+  ];
+  settings: {
+    integrations: integrationInterface[];
+    payment: {
+      currentPlan: 'Pro' | 'Trial' | 'Cancelled';
+      stripePlan: 'Pro' | 'Trial' | 'Cancelled';
+      activeUntil: Date | 'Lifetime';
+    };
+  };
   created_at?: Date;
 }
-
-
 
 interface feedbackInterface {
   title: string;
@@ -26,10 +31,14 @@ interface feedbackInterface {
   created_at: Date;
 }
 
+interface integrationInterface {
+  title: string;
+  token: string;
+}
+
 type Key = {
   key: string;
   for: string;
   clientEmail: string;
   created_at: Date;
-
-}
+};

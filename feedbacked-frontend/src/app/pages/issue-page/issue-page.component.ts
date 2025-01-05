@@ -11,6 +11,10 @@ import {
   OSType,
 } from '../../../services/device-detections.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {
+  GithubService,
+  TargetParams,
+} from '../../../services/Integrationservices/github.service';
 
 @Component({
   selector: 'app-issue-page',
@@ -27,7 +31,8 @@ export class IssuePageComponent implements OnInit {
     private backend: BackendService,
     private auth: AuthService,
     private deviceDetect: DeviceDetectionService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private github: GithubService
   ) {}
 
   //Motivational
@@ -58,6 +63,10 @@ export class IssuePageComponent implements OnInit {
   getBrowserIconSafe(browser: BrowserType): SafeHtml {
     const svgString = this.deviceDetect.getBrowserIcon(browser);
     return this.sanitizer.bypassSecurityTrustHtml(svgString);
+  }
+
+  sendToGithub(issue: IssueInterface) {
+    this.github.newIssue(issue, { owner: 'yret1', repo: 'Feedbacked' });
   }
 
   getOsIconSafe(OS: OSType): SafeHtml {
