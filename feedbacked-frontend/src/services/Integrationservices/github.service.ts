@@ -5,6 +5,7 @@ import { IssueInterface } from '../../app/interfaces/Clientsinterface';
 import { UserInterface } from '../../app/interfaces/UserInterface';
 import { Octokit } from 'octokit';
 import { lastValueFrom } from 'rxjs';
+import { environment } from '../../enviroments/enviroment';
 
 export interface TargetParams {
   owner: string;
@@ -13,6 +14,15 @@ export interface TargetParams {
 @Injectable({ providedIn: 'root' })
 export class GithubService {
   constructor(private auth: AuthService, private backend: BackendService) {}
+
+  private key = environment.ENCRYPTER;
+
+  // Decrypt key
+  decrypt(encryptedValue: string): string {
+    const bytes = CryptoJS.AES.decrypt(encryptedValue, this.key);
+    const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+    return decryptedData;
+  }
 
   newIssue = async (issue: IssueInterface, target: TargetParams) => {
     try {
@@ -29,7 +39,7 @@ export class GithubService {
 
             if (token) {
               const octokit = new Octokit({
-                auth: token.token,
+                auth: this.decrypt(token.token),
               });
 
               const date = new Date(issue.created_at).toLocaleDateString();

@@ -10,6 +10,9 @@ import {
   IntegrationComponent,
 } from '../../components/Settings Comps/integration/integration.component';
 import { GithubService } from '../../../services/Integrationservices/github.service';
+import * as CryptoJS from 'crypto-js';
+import { environment } from '../../../enviroments/enviroment';
+
 @Component({
   selector: 'app-settings',
   standalone: true,
@@ -41,6 +44,8 @@ export class SettingsComponent implements OnInit {
 
   selectedIntegration: integration = 'github';
 
+  private key = environment.ENCRYPTER;
+
   currentSetting = signal<
     'Profile' | 'Payment' | 'Integrations' | 'Account' | 'Data'
   >('Integrations');
@@ -59,15 +64,23 @@ export class SettingsComponent implements OnInit {
         this.user.set(response.user);
       });
   };
+  encrypt(value: string): string | null {
+    if (this.key) {
+      return CryptoJS.AES.encrypt(value, this.key).toString();
+    }
+    return null;
+  }
 
   addToken = (token: string) => {
     const userId = this.auth.getCurrentUserId();
-
-    const updatedUser = this.backend
-      .newToken(token, this.selectedIntegration, userId!)
-      .subscribe((response: { message: string; user: UserInterface }) => {
-        this.user.set(response!.user);
-      });
+    const encryptedToken = this.encrypt(token);
+    if (encryptedToken) {
+      const updatedUser = this.backend
+        .newToken(encryptedToken, this.selectedIntegration, userId!)
+        .subscribe((response: { message: string; user: UserInterface }) => {
+          this.user.set(response!.user);
+        });
+    }
   };
 
   ngOnInit(): void {
