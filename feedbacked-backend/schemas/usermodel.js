@@ -13,7 +13,13 @@ const userSchema = new mongoose.Schema({
   },
   created_at: { type: Date, default: Date.now },
   settings: {
-    integrations: [],
+    integrations: [
+      {
+        title: { type: String, required: true },
+        token: { type: String, required: true },
+        updated_on: { type: Date, default: Date.now() },
+      },
+    ],
     payment: {
       currentPlan: { type: String, default: "Trial" },
       stripePlan: { type: String, default: "Monthly" },

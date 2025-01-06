@@ -66,7 +66,11 @@ export class IssuePageComponent implements OnInit {
   }
 
   sendToGithub(issue: IssueInterface) {
-    this.github.newIssue(issue, { owner: 'yret1', repo: 'Feedbacked' });
+    this.github
+      .newIssue(issue, { owner: 'yret1', repo: 'Feedbacked' })
+      .then(() => {
+        alert('Issue sent to target repository');
+      });
   }
 
   getOsIconSafe(OS: OSType): SafeHtml {

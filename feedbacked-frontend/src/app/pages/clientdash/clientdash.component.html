@@ -1,27 +1,5 @@
 <section class="dashclient">
-  @if(clientData && !loading()){ @if(this.adding()){
-  <section class="addkeymodal">
-    <section class="innerbox">
-      <p class="title">Add New Key</p>
-      <fieldset>
-        <label for="name">Key name </label>
-        <input
-          type="text"
-          [(ngModel)]="newKeyName"
-          required
-          placeholder="Who is this key for?"
-        />
-      </fieldset>
-
-      <div class="buttonbox">
-        <button class="cancel" (click)="toggleAdd('erroraddkey')">
-          Cancel
-        </button>
-        <button class="accept" (click)="addKey()">Add key</button>
-      </div>
-    </section>
-  </section>
-  } @if(popup()){
+  @if(clientData && !loading()){ @if(this.adding()){ } @if(popup()){
   <app-popup class="popup" [type]="action" />
   }
 

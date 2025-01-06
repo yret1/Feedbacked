@@ -9,6 +9,7 @@ import {
   integration,
   IntegrationComponent,
 } from '../../components/Settings Comps/integration/integration.component';
+import { GithubService } from '../../../services/Integrationservices/github.service';
 @Component({
   selector: 'app-settings',
   standalone: true,
@@ -22,7 +23,11 @@ import {
   styleUrl: './settings.component.scss',
 })
 export class SettingsComponent implements OnInit {
-  constructor(private backend: BackendService, private auth: AuthService) {}
+  constructor(
+    private backend: BackendService,
+    private auth: AuthService,
+    private github: GithubService
+  ) {}
 
   tabs: ['Profile', 'Payment', 'Integrations', 'Account', 'Data'] = [
     'Profile',
@@ -32,7 +37,7 @@ export class SettingsComponent implements OnInit {
     'Data',
   ];
 
-  user!: UserInterface;
+  user = signal<UserInterface | null>(null);
 
   selectedIntegration: integration = 'github';
 
@@ -46,10 +51,31 @@ export class SettingsComponent implements OnInit {
     this.currentSetting.set(path);
   };
 
+  cancelToken = async (token: string) => {
+    const userId = this.auth.getCurrentUserId();
+    const updatedUser = this.backend
+      .deleteToken(token, userId!)
+      .subscribe((response) => {
+        this.user.set(response.user);
+      });
+  };
+
+  addToken = (token: string) => {
+    const userId = this.auth.getCurrentUserId();
+
+    const updatedUser = this.backend
+      .newToken(token, this.selectedIntegration, userId!)
+      .subscribe((response: { message: string; user: UserInterface }) => {
+        this.user.set(response!.user);
+      });
+  };
+
   ngOnInit(): void {
     this.auth.getId().subscribe((id) => {
       this.backend.getUser(id as string).subscribe((user) => {
-        this.user = user.user;
+        this.user.set(user.user);
+
+        console.log(this.user);
       });
     });
   }

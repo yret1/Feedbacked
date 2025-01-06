@@ -1,4 +1,4 @@
-@if(user){
+@if(user() !== null){
 <app-centerwrapp>
   <section class="wrapper">
     <aside class="nav">
@@ -19,11 +19,11 @@
         <section class="settingsbox">
           <div class="setting">
             <p class="titlehold">Email:</p>
-            <p>{{ this.user.email }}</p>
+            <p>{{ this.user()!.email }}</p>
           </div>
           <div class="setting">
             <p class="titlehold">Username:</p>
-            <p>{{ this.user.username }}</p>
+            <p>{{ this.user()!.username }}</p>
           </div>
           <div class="setting">
             <p class="titlehold">Request password change</p>
@@ -51,7 +51,13 @@
           </select>
         </div>
 
-        <app-integration [selected]="selectedIntegration" />
+        <app-integration
+          [selected]="selectedIntegration"
+          [integrations]="user()!.settings!.integrations"
+          [user]="user()"
+          (removeToken)="cancelToken($event)"
+          (addToken)="addToken($event)"
+        />
       </section>
       }@else if (currentSetting() === "Account") {
       <!-- Account Settings -->

@@ -1,12 +1,14 @@
 import app from "express";
 import {
   addClient,
+  createPersonalKey,
   deleteKey,
   getClient,
   getClients,
   getFeedback,
   getUser,
   initializeKey,
+  killPersonalKey,
   loginUser,
   resolveFeedback,
   setAgencyName,
@@ -34,6 +36,10 @@ router.post("/setUName", checkAuth, setAgencyName);
 router.get("/getFeedback/:userId/:issueId/:clientId", checkAuth, getFeedback);
 
 router.put("/resolveFeedback", checkAuth, resolveFeedback);
+
+//Githubkey
+router.post("/createpersonaltoken", checkAuth, createPersonalKey);
+router.delete("/deletepersonaltoken", checkAuth, killPersonalKey);
 
 //Plugin routes
 

@@ -34,6 +34,7 @@ interface feedbackInterface {
 interface integrationInterface {
   title: string;
   token: string;
+  updated_on: Date;
 }
 
 type Key = {

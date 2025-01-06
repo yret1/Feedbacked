@@ -112,54 +112,6 @@ export class ClientdashComponent implements OnInit {
     }, 4000);
   }
 
-  //Delete key
-  deleteKey(key: string) {
-    this.backendService.deleteKey(this.userId, this.clientId, key).subscribe(
-      (data) => {
-        this.clientData.keys = this.clientData.keys.filter(
-          (k: any) => k.key !== key
-        );
-
-        this.action = 'successdeletekey';
-        this.popup.set(true);
-
-        setTimeout(() => {
-          this.popup.set(false);
-        }, 4000);
-      },
-      (error) => {
-        this.action = 'errordeletekey';
-        this.popup.set(true);
-
-        setTimeout(() => {
-          this.popup.set(false);
-        }, 4000);
-      }
-    );
-  }
-
-  addKey() {
-    this.adding.set(false);
-    this.backendService
-      .addKey(this.userId, this.clientId, this.newKeyName)
-      .subscribe(
-        (data: any) => {
-          const generatedkey = data.key;
-          this.clientData.keys.push({
-            key: generatedkey,
-            for: this.newKeyName,
-            clientEmail: this.clientData.email,
-            created_at: new Date().toISOString(),
-          });
-          this.newKeyName = '';
-          this.toggleAdd('successaddkey');
-        },
-        (error) => {
-          this.toggleAdd('erroraddkey');
-        }
-      );
-  }
-
   //Placeholder plan
   plan = 'base';
 
