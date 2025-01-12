@@ -16,6 +16,7 @@ import { AuthService } from '../../../services/auth';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 import { InstallpopupComponent } from '../../components/Clientdash Comps/installpopup/installpopup.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { GithubService } from '../../../services/Integrationservices/github.service';
 
 @Component({
   selector: 'app-clientdash',
@@ -54,7 +55,8 @@ export class ClientdashComponent implements OnInit {
   constructor(
     private backendService: BackendService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private github: GithubService
   ) {}
 
   //Loading tracker
@@ -130,6 +132,10 @@ export class ClientdashComponent implements OnInit {
         this.allowedKeys = 10;
         break;
     }
+  }
+
+  getIssues() {
+    return this.github.retriveIssues({ owner: 'yret1', repo: 'feedbacked' });
   }
 
   //Filtersetter

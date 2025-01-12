@@ -6,6 +6,7 @@ import { UserInterface } from '../../app/interfaces/UserInterface';
 import { Octokit } from 'octokit';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../enviroments/enviroment';
+import * as CryptoJS from 'crypto-js';
 
 export interface TargetParams {
   owner: string;
@@ -84,6 +85,51 @@ export class GithubService {
       return true;
     } catch (error) {
       return false;
+    }
+  };
+
+  retriveIssues = async (target: TargetParams) => {
+    const userId = this.auth.getCurrentUserId();
+
+    const { owner, repo } = target;
+
+    const FeedbackIssues: IssueInterface[] = [];
+
+    if (userId) {
+      this.backend
+        .getUser(userId)
+        .subscribe(async (user: { user: UserInterface }) => {
+          const userData = user.user;
+          const token = userData.settings.integrations.find(
+            (setting) => setting.title === 'github'
+          );
+
+          if (token) {
+            const octokit = new Octokit({
+              auth: this.decrypt(token.token),
+            });
+            const allIssues = await octokit.request(
+              `GET /repos/${owner}/${repo}/issues`,
+              {
+                owner: owner,
+                repo: repo,
+                headers: {
+                  'X-GitHub-Api-Version': '2022-11-28',
+                },
+              }
+            );
+
+            const feedbackIssues = await allIssues.data.filter((issue: any) =>
+              issue.labels.some(
+                (label: any) => label.name === 'Feedbacked Issue'
+              )
+            );
+
+            if (feedbackIssues.length > 0) {
+              feedbackIssues.map(() => {});
+            }
+          }
+        });
     }
   };
 
