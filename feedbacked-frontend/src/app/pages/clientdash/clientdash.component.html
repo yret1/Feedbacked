@@ -7,8 +7,6 @@
     <section class="clientexists">
       <app-clientdetails [clientData]="clientData"></app-clientdetails>
     </section>
-
-    <button (click)="getIssues()">Get all issues</button>
   </app-centerwrapp>
 
   <app-centerwrapp>
@@ -22,6 +20,16 @@
       <div class="buttonbox">
         <button (click)="toggleInfo()">Plugin installation</button>
       </div>
+    </section>
+  </app-centerwrapp>
+  <app-centerwrapp>
+    <section class="integ_wrapper">
+      <section *ngIf="integrated()">
+        <button>Set Integration details</button>
+      </section>
+      <section *ngIf="!integrated()">
+        <button routerLink="/dashboard/settings">Setup Integration</button>
+      </section>
     </section>
   </app-centerwrapp>
 

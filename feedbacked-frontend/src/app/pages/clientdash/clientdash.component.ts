@@ -17,6 +17,7 @@ import { CenterwrappComponent } from '../../components/Shared/centerwrapp/center
 import { InstallpopupComponent } from '../../components/Clientdash Comps/installpopup/installpopup.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { GithubService } from '../../../services/Integrationservices/github.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-clientdash',
@@ -28,6 +29,7 @@ import { GithubService } from '../../../services/Integrationservices/github.serv
     LoadingcompComponent,
     PopupComponent,
     KeycompComponent,
+    CommonModule,
     FormsModule,
     CenterwrappComponent,
     InstallpopupComponent,
@@ -69,6 +71,7 @@ export class ClientdashComponent implements OnInit {
   adding = signal<boolean>(false);
   popup = signal<boolean>(false);
   openPop = signal<boolean>(false);
+  integrated = signal<boolean>(false);
 
   //Toggle info
 
@@ -101,6 +104,8 @@ export class ClientdashComponent implements OnInit {
       }, 4000);
     }
   }
+
+  reciveDetails() {}
 
   //Copy key to clipboard
   copyToClipboard(key: string) {
@@ -161,7 +166,7 @@ export class ClientdashComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.authService.getId().subscribe((userId) => {
       this.userId = userId ?? '';
       this.clientId = localStorage.getItem('client') || '';
@@ -185,5 +190,7 @@ export class ClientdashComponent implements OnInit {
         }
       );
     });
+
+    this.integrated.set(await this.github.isIntegrated());
   }
 }

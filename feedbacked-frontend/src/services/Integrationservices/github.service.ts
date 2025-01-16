@@ -25,6 +25,21 @@ export class GithubService {
     return decryptedData;
   }
 
+  isIntegrated = async () => {
+    const userId = this.auth.getCurrentUserId();
+    let user;
+    if (userId) {
+      user = await this.backend.getUser(userId).toPromise();
+    }
+
+    const userData = await user.user.settings.integrations.find(
+      (integ: any) => integ.title === 'github'
+    );
+
+    console.log(userData);
+    return userData;
+  };
+
   newIssue = async (issue: IssueInterface, target: TargetParams) => {
     try {
       const id = this.auth.getCurrentUserId();
