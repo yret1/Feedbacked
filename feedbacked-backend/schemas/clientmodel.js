@@ -13,6 +13,13 @@ const clientModel = new mongoose.Schema({
     required: false,
     default: [],
   },
+  integrationSettings: {
+    type: {
+      owner: String,
+      repo: String,
+    },
+    required: false,
+  },
   keys: [],
 });
 

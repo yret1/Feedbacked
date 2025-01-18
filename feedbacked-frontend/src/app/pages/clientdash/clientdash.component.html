@@ -24,10 +24,10 @@
   </app-centerwrapp>
   <app-centerwrapp>
     <section class="integ_wrapper">
-      <section *ngIf="integrated()">
-        <button>Set Integration details</button>
+      <section *ngIf="integratonKey">
+        <button (click)="toggleIntSettings()">Set Integration details</button>
       </section>
-      <section *ngIf="!integrated()">
+      <section *ngIf="!integratonKey">
         <button routerLink="/dashboard/settings">Setup Integration</button>
       </section>
     </section>
@@ -61,5 +61,7 @@
     [userId]="userId"
     (close)="closeRequest()"
   />
+  } @if(integTargetOpen() === true){
+  <app-integsettings></app-integsettings>
   }
 </section>

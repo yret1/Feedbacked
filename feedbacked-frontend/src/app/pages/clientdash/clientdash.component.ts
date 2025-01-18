@@ -18,6 +18,8 @@ import { InstallpopupComponent } from '../../components/Clientdash Comps/install
 import { animate, style, transition, trigger } from '@angular/animations';
 import { GithubService } from '../../../services/Integrationservices/github.service';
 import { CommonModule } from '@angular/common';
+import { IntegsettingsComponent } from '../../components/Clientdash Comps/integsettings/integsettings.component';
+import { UserInterface } from '../../interfaces/UserInterface';
 
 @Component({
   selector: 'app-clientdash',
@@ -28,11 +30,11 @@ import { CommonModule } from '@angular/common';
     ClientissuesComponent,
     LoadingcompComponent,
     PopupComponent,
-    KeycompComponent,
     CommonModule,
     FormsModule,
     CenterwrappComponent,
     InstallpopupComponent,
+    IntegsettingsComponent,
   ],
   templateUrl: './clientdash.component.html',
   styleUrl: './clientdash.component.scss',
@@ -49,6 +51,8 @@ export class ClientdashComponent implements OnInit {
   //Issueholders
   issues!: FeedbackInterface[];
   currentIssueLoop!: FeedbackInterface[];
+  integrationTargeted: boolean = false;
+  integratonKey: boolean = false;
 
   //Filter functions
   currentFilter: 'All' | 'Unresolved' | 'Resolved' = 'All';
@@ -71,7 +75,8 @@ export class ClientdashComponent implements OnInit {
   adding = signal<boolean>(false);
   popup = signal<boolean>(false);
   openPop = signal<boolean>(false);
-  integrated = signal<boolean>(false);
+  integrated!: boolean;
+  integTargetOpen = signal<boolean>(false);
 
   //Toggle info
 
@@ -81,14 +86,28 @@ export class ClientdashComponent implements OnInit {
     } else {
       this.openPop.set(true);
     }
+  }
 
-    console.log(this.openPop());
+  toggleIntSettings() {
+    if (this.integTargetOpen()) {
+      this.integTargetOpen.set(false);
+    } else {
+      this.integTargetOpen.set(true);
+    }
   }
 
   closeRequest() {
     this.toggleInfo();
   }
   // (Key handle functions)
+
+  //Targetset
+
+  targetGithub(owner: string, repo: string) {
+    this.github.addTarget(owner, repo).then(() => {
+      this.reloader();
+    });
+  }
 
   //Trigger flow for adding new client key
   toggleAdd(action: string) {
@@ -166,19 +185,32 @@ export class ClientdashComponent implements OnInit {
     }
   }
 
-  async ngOnInit(): Promise<void> {
+  reloader() {
     this.authService.getId().subscribe((userId) => {
       this.userId = userId ?? '';
       this.clientId = localStorage.getItem('client') || '';
 
       this.backendService.getUser(this.userId).subscribe((data) => {
         this.plan = data.user.plan;
+
+        const userData = data.user as UserInterface;
+        if (
+          userData.settings.integrations.some(
+            (integ) => integ.title === 'github'
+          )
+        ) {
+          this.integratonKey = true;
+        }
       });
       this.keyCheck();
       this.backendService.getClient(this.userId, this.clientId).subscribe(
         (data) => {
           this.clientData = data.client;
           console.log(data);
+
+          if (this.clientData.integrationSettings?.owner) {
+            this.integrationTargeted = true;
+          }
           this.issues = data.client.feedbacks;
           this.currentIssueLoop = data.client.feedbacks.filter(
             (issue: IssueInterface) => issue.status !== 'Resolved'
@@ -190,7 +222,44 @@ export class ClientdashComponent implements OnInit {
         }
       );
     });
+  }
 
-    this.integrated.set(await this.github.isIntegrated());
+  async ngOnInit(): Promise<void> {
+    this.authService.getId().subscribe((userId) => {
+      this.userId = userId ?? '';
+      this.clientId = localStorage.getItem('client') || '';
+
+      this.backendService.getUser(this.userId).subscribe((data) => {
+        this.plan = data.user.plan;
+
+        const userData = data.user as UserInterface;
+        if (
+          userData.settings.integrations.some(
+            (integ) => integ.title === 'github'
+          )
+        ) {
+          this.integratonKey = true;
+        }
+      });
+      this.keyCheck();
+      this.backendService.getClient(this.userId, this.clientId).subscribe(
+        (data) => {
+          this.clientData = data.client;
+          console.log(data);
+
+          if (this.clientData.integrationSettings?.owner) {
+            this.integrationTargeted = true;
+          }
+          this.issues = data.client.feedbacks;
+          this.currentIssueLoop = data.client.feedbacks.filter(
+            (issue: IssueInterface) => issue.status !== 'Resolved'
+          );
+          this.loading.set(false);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
   }
 }

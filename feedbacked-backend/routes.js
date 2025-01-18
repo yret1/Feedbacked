@@ -40,6 +40,7 @@ router.put("/resolveFeedback", checkAuth, resolveFeedback);
 //Githubkey
 router.post("/createpersonaltoken", checkAuth, createPersonalKey);
 router.delete("/deletepersonaltoken", checkAuth, killPersonalKey);
+router.post("/addTarget"), router.patch("/removeTarget");
 
 //Plugin routes
 

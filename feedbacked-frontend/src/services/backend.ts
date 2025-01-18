@@ -120,4 +120,30 @@ export class BackendService {
       }
     );
   };
+
+  addTarget = (
+    owner: string,
+    repo: string,
+    userId: string,
+    clientId: string
+  ) => {
+    return this.http.post<{
+      message: string;
+      integrationTarget: { owner: string; repo: string };
+    }>(`http://${this.baseUrl}/addTarget`, {
+      userId,
+      clientId,
+      owner,
+      repo,
+    });
+  };
+  removeTarget = (userId: string, clientId: string) => {
+    return this.http.post<{ message: string }>(
+      `http://${this.baseUrl}/removeTarget`,
+      {
+        userId,
+        clientId,
+      }
+    );
+  };
 }

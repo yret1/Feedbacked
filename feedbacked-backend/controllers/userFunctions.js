@@ -380,7 +380,6 @@ export const resolveFeedback = async (req, res) => {
 };
 
 //Delete authkey
-
 export const killPersonalKey = async (req, res) => {
   const { token, userId } = req.body;
 
@@ -408,6 +407,8 @@ export const killPersonalKey = async (req, res) => {
     return res.status(404).json({ message: "Oops, User not found" });
   }
 };
+
+//Create integration key
 
 export const createPersonalKey = async (req, res) => {
   const { token, integration, userId } = req.body;
@@ -440,4 +441,53 @@ export const createPersonalKey = async (req, res) => {
   } else {
     return res.status(404).json({ message: "Oops, User not found" });
   }
+};
+
+//Clientissue add target integ
+
+export const targetGithubIntegration = async (req, res) => {
+  const { userId, clientId, owner, repo } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const client = user.clients.find((client) => client.id == clientId);
+
+    if (client) {
+      client.integrationSettings = {
+        owner: owner,
+        repo: repo,
+      };
+
+      await user.save();
+
+      res
+        .status(201)
+        .json({
+          message: "Target Repo added",
+          integrationTarget: client.integrationSettings,
+        });
+    }
+  }
+
+  res.status(404).json({ message: "User not found" });
+};
+
+export const killTargetGithubIntegration = async (req, res) => {
+  const { userId, clientId } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const client = user.clients.find((client) => client.id == clientId);
+
+    if (client) {
+      client.integrationSettings = {};
+
+      await user.save();
+
+      res.status(201).json({ message: "Integration Deleted" });
+    }
+  }
+  res.status(404).json({ message: "User not found" });
 };

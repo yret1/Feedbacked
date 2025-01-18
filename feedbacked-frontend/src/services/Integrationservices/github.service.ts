@@ -103,6 +103,7 @@ export class GithubService {
     }
   };
 
+  //TODO: Split returnmessage into usable values,
   retriveIssues = async (target: TargetParams) => {
     const userId = this.auth.getCurrentUserId();
 
@@ -162,5 +163,35 @@ export class GithubService {
     }
 
     return 'Something went wrong!';
+  };
+
+  addTarget = async (owner: string, repo: string) => {
+    const userId = this.auth.getCurrentUserId();
+    const clientId = this.auth.getCurrentClientId();
+
+    if (userId && clientId) {
+      const response = await lastValueFrom(
+        this.backend.addTarget(owner, repo, userId, clientId)
+      );
+
+      return response.integrationTarget;
+    }
+
+    return null;
+  };
+
+  removeTarget = async () => {
+    const userId = this.auth.getCurrentUserId();
+    const clientId = this.auth.getCurrentClientId();
+
+    if (userId && clientId) {
+      const response = await lastValueFrom(
+        this.backend.removeTarget(userId, clientId)
+      );
+
+      return response;
+    }
+
+    return null;
   };
 }

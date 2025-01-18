@@ -31,7 +31,7 @@ interface feedbackInterface {
   created_at: Date;
 }
 
-interface integrationInterface {
+export interface integrationInterface {
   title: string;
   token: string;
   updated_on: Date;
