@@ -80,18 +80,14 @@ const toggleOpen = () => {
 //Data handlers
 const setName = (e) => {
   nameIn = e.currentTarget.value;
-
-  console.log("Name", e.currentTarget.value);
 };
 
 const setDesc = (e) => {
   desc = e.target.value;
-  console.log("Desc", e.currentTarget.value);
 };
 
 const addTitle = (e) => {
   title = e.target.value;
-  console.log("Title", e.currentTarget.value);
 };
 async function uploadImageToS3(file, presignedUrl) {
   try {
