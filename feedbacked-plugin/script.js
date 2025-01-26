@@ -151,7 +151,7 @@ async function captureAndUploadScreenshot(presignedUrl) {
 async function fetchPresignedUrl() {
   try {
     const response = await fetch(
-      "http://localhost:3002/generate-presigned-url"
+      "https://feedbacked-plugin.onrender.com/generate-presigned-url"
     );
     const { url, publicUrl } = await response.json();
     publicUrlImg = publicUrl;
@@ -257,27 +257,30 @@ const sendFeedbackToClient = async () => {
     const deviceType =
       windowWidth < 680 ? "Mobile" : windowWidth < 1024 ? "Tablet" : "Desktop";
 
-    const sendFeedback = await fetch("http://localhost:3000/newfeedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: user,
-        clientId: client,
-        feedbackTitle: title,
-        feedbackBody: desc,
-        ImageUrl: publicUrlImg,
-        by: nameIn,
-        errors: consoleErrors,
-        warnings: consoleWarnings,
-        device: {
-          browser: browser,
-          device: device,
-          type: deviceType,
+    const sendFeedback = await fetch(
+      "https://feedbacked.onrender.com/newfeedback",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      }),
-    });
+        body: JSON.stringify({
+          userId: user,
+          clientId: client,
+          feedbackTitle: title,
+          feedbackBody: desc,
+          ImageUrl: publicUrlImg,
+          by: nameIn,
+          errors: consoleErrors,
+          warnings: consoleWarnings,
+          device: {
+            browser: browser,
+            device: device,
+            type: deviceType,
+          },
+        }),
+      }
+    );
 
     setTimeout(() => {
       toastAlert(true, "Feedback sent!");
