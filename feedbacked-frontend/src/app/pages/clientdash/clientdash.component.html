@@ -62,6 +62,12 @@
     (close)="closeRequest()"
   />
   } @if(integTargetOpen() === true){
-  <app-integsettings></app-integsettings>
+  <app-integsettings
+    [isIntegrated]="integrationTargeted"
+    [details]="integrationTarget"
+    (triggerClose)="toggleIntSettings()"
+    (removeIntegration)="removeTargetGithub()"
+    (newIntegration)="targetGithub($event)"
+  ></app-integsettings>
   }
 </section>

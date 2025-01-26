@@ -165,16 +165,16 @@ export class GithubService {
     return 'Something went wrong!';
   };
 
-  addTarget = async (owner: string, repo: string) => {
+  addTarget = (owner: string, repo: string) => {
     const userId = this.auth.getCurrentUserId();
-    const clientId = this.auth.getCurrentClientId();
+    const clientId = localStorage.getItem('client') || '';
+
+    console.log(owner, repo, userId, clientId);
 
     if (userId && clientId) {
-      const response = await lastValueFrom(
-        this.backend.addTarget(owner, repo, userId, clientId)
-      );
-
-      return response.integrationTarget;
+      const response = this.backend
+        .addTarget(owner, repo, userId, clientId)
+        .subscribe();
     }
 
     return null;
@@ -182,7 +182,7 @@ export class GithubService {
 
   removeTarget = async () => {
     const userId = this.auth.getCurrentUserId();
-    const clientId = this.auth.getCurrentClientId();
+    const clientId = localStorage.getItem('client') || '';
 
     if (userId && clientId) {
       const response = await lastValueFrom(

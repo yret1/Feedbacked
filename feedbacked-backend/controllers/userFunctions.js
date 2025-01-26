@@ -436,7 +436,7 @@ export const createPersonalKey = async (req, res) => {
 
       user.save();
 
-      res.status(201).json({ message: "Token added", user: user });
+      return res.status(201).json({ message: "Token added", user: user });
     }
   } else {
     return res.status(404).json({ message: "Oops, User not found" });
@@ -448,6 +448,7 @@ export const createPersonalKey = async (req, res) => {
 export const targetGithubIntegration = async (req, res) => {
   const { userId, clientId, owner, repo } = req.body;
 
+  console.log("Triggered target");
   const user = await User.findById(userId);
 
   if (user) {
@@ -461,16 +462,14 @@ export const targetGithubIntegration = async (req, res) => {
 
       await user.save();
 
-      res
-        .status(201)
-        .json({
-          message: "Target Repo added",
-          integrationTarget: client.integrationSettings,
-        });
+      return res.status(201).json({
+        message: "Target Repo added",
+        integrationTarget: client.integrationSettings,
+      });
     }
   }
 
-  res.status(404).json({ message: "User not found" });
+  return res.status(404).json({ message: "User not found" });
 };
 
 export const killTargetGithubIntegration = async (req, res) => {
@@ -486,8 +485,9 @@ export const killTargetGithubIntegration = async (req, res) => {
 
       await user.save();
 
-      res.status(201).json({ message: "Integration Deleted" });
+      return res.status(201).json({ message: "Integration Deleted" });
     }
+  } else {
+    return res.status(404).json({ message: "User not found" });
   }
-  res.status(404).json({ message: "User not found" });
 };

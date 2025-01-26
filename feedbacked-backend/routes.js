@@ -9,10 +9,12 @@ import {
   getUser,
   initializeKey,
   killPersonalKey,
+  killTargetGithubIntegration,
   loginUser,
   resolveFeedback,
   setAgencyName,
   signupUser,
+  targetGithubIntegration,
   updateClientStatus,
 } from "./controllers/userFunctions.js";
 import { addFeedback } from "./controllers/pluginFunctions.js";
@@ -40,7 +42,8 @@ router.put("/resolveFeedback", checkAuth, resolveFeedback);
 //Githubkey
 router.post("/createpersonaltoken", checkAuth, createPersonalKey);
 router.delete("/deletepersonaltoken", checkAuth, killPersonalKey);
-router.post("/addTarget"), router.patch("/removeTarget");
+router.post("/addTarget", checkAuth, targetGithubIntegration);
+router.patch("/removeTarget", checkAuth, killTargetGithubIntegration);
 
 //Plugin routes
 

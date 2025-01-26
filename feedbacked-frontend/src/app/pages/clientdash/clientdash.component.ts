@@ -47,6 +47,7 @@ export class ClientdashComponent implements OnInit {
   userId!: string;
   clientId!: string;
   clientData!: ClientsInterface;
+  integrationTarget?: any;
 
   //Issueholders
   issues!: FeedbackInterface[];
@@ -103,10 +104,24 @@ export class ClientdashComponent implements OnInit {
 
   //Targetset
 
-  targetGithub(owner: string, repo: string) {
-    this.github.addTarget(owner, repo).then(() => {
+  async targetGithub(event: { owner: string; repo: string }) {
+    this.github.addTarget(event.owner, event.repo);
+    alert('Created new connection');
+    this.integTargetOpen.set(false);
+    window.location.reload();
+    setTimeout(() => {
       this.reloader();
-    });
+    }, 1000);
+  }
+
+  async removeTargetGithub() {
+    this.github.removeTarget();
+    alert('Connection removed');
+    this.integTargetOpen.set(false);
+    window.location.reload();
+    setTimeout(() => {
+      this.reloader();
+    }, 1000);
   }
 
   //Trigger flow for adding new client key
@@ -156,10 +171,6 @@ export class ClientdashComponent implements OnInit {
         this.allowedKeys = 10;
         break;
     }
-  }
-
-  getIssues() {
-    return this.github.retriveIssues({ owner: 'yret1', repo: 'feedbacked' });
   }
 
   //Filtersetter
@@ -249,6 +260,8 @@ export class ClientdashComponent implements OnInit {
 
           if (this.clientData.integrationSettings?.owner) {
             this.integrationTargeted = true;
+
+            this.integrationTarget = this.clientData.integrationSettings;
           }
           this.issues = data.client.feedbacks;
           this.currentIssueLoop = data.client.feedbacks.filter(

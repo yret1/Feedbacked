@@ -8,6 +8,7 @@ import { AuthGuard } from '../services/authguard';
 import { CreateClientComponent } from './components/Dashboard Comps/create-client/create-client.component';
 import { IssuePageComponent } from './pages/issue-page/issue-page.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { DemopageComponent } from './pages/demopage/demopage.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
     title: 'Sign Up',
     path: 'signup',
     component: SignUpComponent,
+  },
+  {
+    title: 'Demo',
+    path: 'demo',
+    component: DemopageComponent,
   },
   {
     title: 'Sign In',

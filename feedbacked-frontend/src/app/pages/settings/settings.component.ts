@@ -32,13 +32,7 @@ export class SettingsComponent implements OnInit {
     private github: GithubService
   ) {}
 
-  tabs: ['Profile', 'Payment', 'Integrations', 'Account', 'Data'] = [
-    'Profile',
-    'Payment',
-    'Integrations',
-    'Account',
-    'Data',
-  ];
+  tabs: ['Profile', 'Integrations'] = ['Profile', 'Integrations'];
 
   user = signal<UserInterface | null>(null);
 

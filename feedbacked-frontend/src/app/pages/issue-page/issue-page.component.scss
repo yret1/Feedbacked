@@ -1,9 +1,10 @@
 .wrapper{
     padding-top: 80px;
     width: 95%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     font-family: var(--main-font);
 
@@ -30,19 +31,53 @@
 
         text-align: center;
 
-        button{
-            border-radius: 9px;
-            padding: 12px;
-            height: 100%;
-            font-size: 12px;
-            background: var(--background-radient);
-            border:none;
-            color: white;
 
-            @media (min-width: 768px){
-                font-size: 16px;
+        .headwrapp{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+
+
+            .ghbutton{
+                background-color: black !important;
+                border-radius: 9px;
+                padding: 12px;
+                height: 100%;
+                font-size: 12px;
+                border:none;
+                cursor: pointer;
+                color: white;
+                @media (min-width: 768px){
+                    font-size: 16px;
+                }
+                transition: all 0.3s ease-in-out;
+
+                &:hover{
+                    box-shadow: 0 0 30px black;
+                }
+            }
+            .resolver{
+                border-radius: 9px;
+                padding: 12px;
+                height: 100%;
+                font-size: 12px;
+                background: var(--background-radient);
+                border:none;
+                color: white;
+                cursor: pointer;
+                @media (min-width: 768px){
+                    font-size: 16px;
+                }
+                transition: all 0.3s ease-in-out;
+
+                &:hover{
+                    box-shadow: 0 0 30px rgb(56, 118, 232);
+                }
             }
         }
+
+        
 
 
         section{

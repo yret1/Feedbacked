@@ -138,7 +138,7 @@ export class BackendService {
     });
   };
   removeTarget = (userId: string, clientId: string) => {
-    return this.http.post<{ message: string }>(
+    return this.http.patch<{ message: string }>(
       `http://${this.baseUrl}/removeTarget`,
       {
         userId,
