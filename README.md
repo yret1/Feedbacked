@@ -1,16 +1,47 @@
-### Feedbacked - handle issues with ease
-<br/>
-<br/>
+Here's an expanded README with sections for backend and plugin:
 
-Try the plugin at : https://timerinl-mning.vercel.app/timermain
+### Feedbacked - Handle Issues with Ease
 
-Use the app at : https://feedbacked.vercel.app/
+Try the plugin at: https://timerinl-mning.vercel.app/timermain
+Use the app at: https://feedbacked.vercel.app/
 
-<br/>
-<br/>
+## Frontend
+- **Framework**: Angular
+- **Deployment**: Vercel
+- **Key Features**:
+  - Responsive design
+  - User authentication
+  - Issue tracking
+  - Collaborative workspace
+
+## Backend
+- **Framework**: Node.js with Express
+- **Database**: MongoDB
+- **Deployment**: Render
+- **Key Features**:
+  - RESTful API
+  - AWS S3 Integration
+  - User management
+  - Secure authentication
+  - Environment variable configuration
+
+## Plugin
+- **Purpose**: Seamless feedback collection
+- **Integration**: Lightweight JavaScript snippet
+- **Key Features**:
+  - Easy installation
+  - Cross-domain support
+  - Secure data transmission
+
+### Plugin Installation
+1. Include script in your HTML:
+   ```html
+   <script 
+     src="https://feedbacked-plugin.onrender.com/script/[USER_ID]/[CLIENT_ID]">
+   </script>
+   ```
+3. Collect and manage feedback in Feedbacked dashboard
 
 
-# Frontend
 
-Framework: Angular
-
+Last updated 26/01/25
