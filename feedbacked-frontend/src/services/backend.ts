@@ -9,21 +9,19 @@ import { UserInterface } from '../app/interfaces/UserInterface';
   providedIn: 'root',
 })
 export class BackendService {
-  //private baseUrl = 'feedbacked.onrender.com';
-  private baseUrl = 'localhost:3000';
-
+  private baseUrl = 'feedbacked.onrender.com';
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   //Return full user
   getUser(userId: string): Observable<any> {
-    return this.http.post(`http://${this.baseUrl}/get-user`, {
+    return this.http.post(`https://${this.baseUrl}/get-user`, {
       userId,
     });
   }
 
   //Get all user clients
   getClients(userId: string): Observable<any> {
-    return this.http.post(`http://${this.baseUrl}/get-clients`, {
+    return this.http.post(`https://${this.baseUrl}/get-clients`, {
       userId,
     });
   }
@@ -31,7 +29,7 @@ export class BackendService {
   //Get specific client
   getClient(userId: string, clientId: string): Observable<any> {
     console.log('client', clientId);
-    return this.http.post(`http://${this.baseUrl}/get-client`, {
+    return this.http.post(`https://${this.baseUrl}/get-client`, {
       userId,
       clientId,
     });
@@ -39,7 +37,7 @@ export class BackendService {
 
   //New client
   addClient({ userId, clientEmail, clientName, clientUrl }: newClient) {
-    return this.http.post(`http://${this.baseUrl}/add-client`, {
+    return this.http.post(`https://${this.baseUrl}/add-client`, {
       userId,
       clientEmail,
       clientName,
@@ -49,7 +47,7 @@ export class BackendService {
 
   //Project completed
   clientCompleted(userId: string, clientEmail: string, newStatus: string) {
-    return this.http.post(`http://${this.baseUrl}/update-client-status`, {
+    return this.http.post(`https://${this.baseUrl}/update-client-status`, {
       userId: userId,
       clientEmail,
       newStatus,
@@ -76,7 +74,7 @@ export class BackendService {
   //Agency name
   updateAgencyName(userId: string, agencyName: string) {
     console.log(userId, agencyName);
-    return this.http.post(`http://${this.baseUrl}/setUName`, {
+    return this.http.post(`https://${this.baseUrl}/setUName`, {
       userId,
       agencyName,
     });
@@ -86,12 +84,12 @@ export class BackendService {
 
   getSpecificIssue(userId: string, issueId: string, clientId: string) {
     return this.http.get(
-      `http://${this.baseUrl}/getFeedback/${userId}/${issueId}/${clientId}`
+      `https://${this.baseUrl}/getFeedback/${userId}/${issueId}/${clientId}`
     );
   }
 
   resolveIssue(userId: string, issueId: string, clientId: string) {
-    return this.http.put(`http://${this.baseUrl}/resolveFeedback`, {
+    return this.http.put(`https://${this.baseUrl}/resolveFeedback`, {
       userId,
       issueId,
       clientId,
@@ -103,7 +101,7 @@ export class BackendService {
   deleteToken = (token: string, userId: string) => {
     console.log('Deleting token');
     return this.http.delete<{ message: string; user: UserInterface }>(
-      `http://${this.baseUrl}/deletepersonaltoken`,
+      `https://${this.baseUrl}/deletepersonaltoken`,
       {
         body: { token, userId },
       }
@@ -112,7 +110,7 @@ export class BackendService {
 
   newToken = (token: string, integration: string, userId: string) => {
     return this.http.post<{ message: string; user: UserInterface }>(
-      `http://${this.baseUrl}/createpersonaltoken`,
+      `https://${this.baseUrl}/createpersonaltoken`,
       {
         token,
         integration,
@@ -130,7 +128,7 @@ export class BackendService {
     return this.http.post<{
       message: string;
       integrationTarget: { owner: string; repo: string };
-    }>(`http://${this.baseUrl}/addTarget`, {
+    }>(`https://${this.baseUrl}/addTarget`, {
       userId,
       clientId,
       owner,
@@ -139,7 +137,7 @@ export class BackendService {
   };
   removeTarget = (userId: string, clientId: string) => {
     return this.http.patch<{ message: string }>(
-      `http://${this.baseUrl}/removeTarget`,
+      `https://${this.baseUrl}/removeTarget`,
       {
         userId,
         clientId,
