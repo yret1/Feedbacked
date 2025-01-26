@@ -77,6 +77,8 @@ app.get("/script/:userId/:clientId", (req, res) => {
   });
 });
 
-app.listen(3002, () => {
+const port = process.env.PORT || 3002;
+
+app.listen(port, () => {
   console.log("Running on port 3002");
 });
