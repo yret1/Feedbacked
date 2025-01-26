@@ -46,7 +46,7 @@ export class CreateClientComponent implements OnInit {
       await this.backendService.addClient(params).subscribe();
 
       setTimeout(() => {
-        this.router.navigate(['/user/projects/client']);
+        this.router.navigate(['/user/projects']);
       }, 200);
     }
   };
