@@ -177,8 +177,7 @@ const capureTrigger = async () => {
   const isImg = document.getElementById("fbisShot").style;
   const imgbox = document.getElementById("fbimgSend");
 
-  i;
-  const controls = document.getElementById("fbcontrolbox").style || "";
+  const controls = large ? document.getElementById("fbcontrolbox").style : "";
 
   const submissionbox = document.getElementById("fbsubbox").style;
 
