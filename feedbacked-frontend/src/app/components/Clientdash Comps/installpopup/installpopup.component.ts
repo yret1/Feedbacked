@@ -36,7 +36,7 @@ export class InstallpopupComponent {
 
   copyCode() {
     // Construct the script tag
-    const scriptTag = `<script src="http://localhost:3002/script/${this.userId}/${this.clientId}"></script>`;
+    const scriptTag = `<script src="https://feedbacked-plugin.onrender.com/script/${this.userId}/${this.clientId}"></script>`;
 
     navigator.clipboard
       .writeText(scriptTag)

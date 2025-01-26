@@ -15,7 +15,6 @@ import {
 import { AuthService } from '../../../services/auth';
 import { CenterwrappComponent } from '../../components/Shared/centerwrapp/centerwrapp.component';
 import { InstallpopupComponent } from '../../components/Clientdash Comps/installpopup/installpopup.component';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { GithubService } from '../../../services/Integrationservices/github.service';
 import { CommonModule } from '@angular/common';
 import { IntegsettingsComponent } from '../../components/Clientdash Comps/integsettings/integsettings.component';
@@ -138,9 +137,6 @@ export class ClientdashComponent implements OnInit {
       }, 4000);
     }
   }
-
-  reciveDetails() {}
-
   //Copy key to clipboard
   copyToClipboard(key: string) {
     navigator.clipboard.writeText(key);
