@@ -4,6 +4,10 @@ import { BackendService } from '../../../services/backend';
 import { AuthService } from '../../../services/auth';
 import { Subscription } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import {
+  integrationInterface,
+  UserInterface,
+} from '../../interfaces/UserInterface';
 
 interface Client {
   id: string;
@@ -37,11 +41,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   userId = this.authService.getCurrentUserId();
-  currentUser!: User;
+  currentUser!: UserInterface;
   loading = signal<boolean>(true);
   clients = signal<Client[]>([]);
   placeholders = ['1', '2', '3', '4'];
   currentPhrase!: string;
+  hasSetupIntegration: boolean = false;
 
   phrases = [
     'Ready to solve some issues?',
@@ -75,6 +80,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         this.backendService.getUser(userId).subscribe((user) => {
           this.currentUser = user.user;
+
+          if (
+            this.currentUser.settings.integrations.some(
+              (integ: any) => integ.title === 'github'
+            )
+          ) {
+            this.hasSetupIntegration = true;
+          }
         });
       }
     });

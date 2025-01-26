@@ -58,10 +58,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navVersion: 'Landing' | 'Dash' | 'Client' | 'Auth' = 'Landing';
 
   links = [
-    { name: 'Why', route: '/why' },
-    { name: 'Integrations', route: '/integrations' },
-    { name: 'Pricing', route: '/pricing' },
-    { name: 'Contact', route: '/contact' },
+    { name: 'Why', route: '/', hash: 'why' },
+    { name: 'Integrations', route: '/', hash: 'integrations' },
+    { name: 'Demo', route: '/demo' },
   ];
 
   dashlinks = [

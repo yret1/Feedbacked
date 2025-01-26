@@ -29,7 +29,7 @@
     }@else {
 
     <ul>
-      @for(link of links; track link.route){
+      @for(link of links; track link.route + link.hash){
       <li
         (click)="openMenu()"
         [ngClass]="activeRoute(link.name) ? 'active' : ''"
@@ -70,8 +70,8 @@
   >
     @if(navVersion == "Landing" || navVersion == "Auth"){
     <ul>
-      @for(link of this.links ; track link.route){
-      <li [routerLink]="link.route" (click)="openMenu()">
+      @for(link of this.links ; track link.route + link.hash){
+      <li [routerLink]="link.route" [fragment]="link.hash" (click)="openMenu()">
         {{ link.name }}
         <div>
           <svg

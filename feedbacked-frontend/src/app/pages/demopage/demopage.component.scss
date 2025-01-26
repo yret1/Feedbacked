@@ -1,0 +1,45 @@
+.wrapper{
+    width: 100%;
+    min-height: 100vh;
+    font-family: var(--main-font);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+
+
+    h3{
+        font-weight: 600;
+        color: black;
+        font-size: 1.6rem;
+    }
+
+    section{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+
+
+        .ball{
+
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+            background-color: red;
+        }
+    }
+
+    .square{
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        background-color: blue;
+    }
+    
+}

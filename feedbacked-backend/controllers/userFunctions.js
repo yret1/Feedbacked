@@ -378,3 +378,116 @@ export const resolveFeedback = async (req, res) => {
     return res.status(201).json({ message: "Resolved issue." });
   }
 };
+
+//Delete authkey
+export const killPersonalKey = async (req, res) => {
+  const { token, userId } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const targetKey = user.settings.integrations.find(
+      (integ) => integ.token === token
+    );
+
+    if (targetKey) {
+      user.settings.integrations = user.settings.integrations.filter(
+        (integ) => integ.title !== targetKey.title
+      );
+
+      user.save();
+
+      return res
+        .status(200)
+        .json({ message: "Key deleted succesfully!", user: user });
+    } else {
+      return res.status(404).json({ message: "Oops, Integration not found" });
+    }
+  } else {
+    return res.status(404).json({ message: "Oops, User not found" });
+  }
+};
+
+//Create integration key
+
+export const createPersonalKey = async (req, res) => {
+  const { token, integration, userId } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const newIntegrationKey = {
+      title: integration,
+      token: token,
+      updated_on: new Date(),
+    };
+
+    const integrationExists = user.settings.integrations.find(
+      (integ) => integ.title === integration
+    );
+
+    if (integrationExists) {
+      return res.status(400).json({
+        message:
+          "Integration already exists. Please delete the old key before adding a new key.",
+      });
+    } else {
+      user.settings.integrations.push(newIntegrationKey);
+
+      user.save();
+
+      return res.status(201).json({ message: "Token added", user: user });
+    }
+  } else {
+    return res.status(404).json({ message: "Oops, User not found" });
+  }
+};
+
+//Clientissue add target integ
+
+export const targetGithubIntegration = async (req, res) => {
+  const { userId, clientId, owner, repo } = req.body;
+
+  console.log("Triggered target");
+  const user = await User.findById(userId);
+
+  if (user) {
+    const client = user.clients.find((client) => client.id == clientId);
+
+    if (client) {
+      client.integrationSettings = {
+        owner: owner,
+        repo: repo,
+      };
+
+      await user.save();
+
+      return res.status(201).json({
+        message: "Target Repo added",
+        integrationTarget: client.integrationSettings,
+      });
+    }
+  }
+
+  return res.status(404).json({ message: "User not found" });
+};
+
+export const killTargetGithubIntegration = async (req, res) => {
+  const { userId, clientId } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const client = user.clients.find((client) => client.id == clientId);
+
+    if (client) {
+      client.integrationSettings = {};
+
+      await user.save();
+
+      return res.status(201).json({ message: "Integration Deleted" });
+    }
+  } else {
+    return res.status(404).json({ message: "User not found" });
+  }
+};

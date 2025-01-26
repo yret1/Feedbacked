@@ -5,6 +5,10 @@ export interface ClientsInterface {
   phone: string;
   status: string;
   feedbacks: FeedbackInterface[];
+  integrationSettings?: {
+    owner: string;
+    repo: string;
+  };
   url: string;
   keys: { key: string; for: string; clientEmail: string; created_at: string }[];
 }

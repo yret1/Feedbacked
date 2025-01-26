@@ -5,8 +5,12 @@
         <h2># {{ issue.title | titlecase }}</h2>
         <p>Added {{ issue.created_at | date }} by {{ issue.by }}</p>
       </section>
-
-      <button>Mark resolved</button>
+      <section class="headwrapp">
+        <button class="ghbutton" (click)="sendToGithub(this.issue)">
+          Send issue to github
+        </button>
+        <button class="resolver" (click)="onResolve()">Mark resolved</button>
+      </section>
     </section>
 
     <section class="attatched">

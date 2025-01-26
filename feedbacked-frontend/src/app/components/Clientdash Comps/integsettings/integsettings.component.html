@@ -1,0 +1,45 @@
+<section class="wrapper">
+  <section class="targetbox">
+    <button class="closer" (click)="close()">Close</button>
+    <div class="ghtitle">
+      <div [innerHTML]="ghIcon"></div>
+      <h1>Integration Settings</h1>
+    </div>
+
+    <section class="integs" *ngIf="isIntegrated && details">
+      <div>
+        <p class="title">Repository owner</p>
+        <p>{{ details.owner }}</p>
+      </div>
+      <div>
+        <p class="title">Integration repositiory</p>
+        <p>{{ details.repo }}</p>
+      </div>
+
+      <button (click)="killIntegration()">Remove integration</button>
+    </section>
+
+    <section class="integs" *ngIf="!isIntegrated">
+      <div>
+        <p>Repository owner</p>
+        <input type="text" [(ngModel)]="this.owner" />
+        <small
+          >Enter the github username for the owner of your target
+          repository</small
+        >
+      </div>
+      <div>
+        <p>Integration repositiory</p>
+        <input type="text" [(ngModel)]="this.repo" />
+        <small
+          >Enter the name of the repository you would like to send incoming
+          feedback to.</small
+        >
+      </div>
+
+      <button (click)="sendIntegration()" [disabled]="validate()">
+        Create integration
+      </button>
+    </section>
+  </section>
+</section>

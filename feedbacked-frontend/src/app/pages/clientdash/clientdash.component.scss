@@ -21,6 +21,35 @@
 
 app-centerwrapp{
     width: 100%;
+
+    .integ_wrapper{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        padding: 12px;
+        @media (min-width: 768px){
+            width: 80%;
+        }
+        @media (min-width: 1024px){
+            width: 60%;
+        }
+
+        section{
+            button{
+                border-radius: 5px;
+                font-size: 0.8rem;
+                font-family: var(--main-font);
+                font-weight: 600;
+                cursor: pointer;
+                transition: 0.3s;
+                padding: 10px;
+                border: none !important;
+                color: white;
+                background-color: #1e1e1e;
+            }
+        }
+    }
 }
 
 .issueFilters{
@@ -199,6 +228,7 @@ app-centerwrapp{
 
         background-color: var(--acceptcolor);
     }
+
 }
 
 .popup{
@@ -210,3 +240,4 @@ app-centerwrapp{
     align-items: center;
 
 }
+
