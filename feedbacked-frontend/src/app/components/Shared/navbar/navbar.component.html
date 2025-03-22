@@ -29,7 +29,8 @@
     }@else {
 
     <ul>
-      @for(link of links; track link.route + link.hash){
+      @for(link of links; track link.route + link.hash){ @if(link.name !==
+      "Demo"){
       <li
         (click)="openMenu()"
         [ngClass]="activeRoute(link.name) ? 'active' : ''"
@@ -37,7 +38,17 @@
       >
         {{ link.name }}
       </li>
-      }
+      }@else {
+      <a
+        class="nostyle"
+        (click)="openMenu()"
+        [ngClass]="activeRoute(link.name) ? 'active' : ''"
+        target="_blank"
+        [href]="link.route"
+      >
+        {{ link.name }}
+      </a>
+      } }
     </ul>
     }
 

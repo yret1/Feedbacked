@@ -672,6 +672,10 @@ const initDrawing = () => {
   const styles = document.createElement("style");
   styles.textContent = `
 
+    input{
+    color: black;
+    }
+
     #colorSelect{
 
    height: 33px;
@@ -798,6 +802,7 @@ const initDrawing = () => {
     border-radius: 6px;
     background-color: transparent;
     flex-direction: column;
+    color:black;
   }
 
   #fbisShot{

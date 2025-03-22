@@ -35,6 +35,15 @@ nav {
             align-items: center;
             gap: 6px;
 
+            .nostyle{
+                color: black;
+                text-decoration: none;
+
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+
 
             li{
                 transition: all 0.3s ease-in;

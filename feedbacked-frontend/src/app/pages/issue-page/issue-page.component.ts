@@ -65,11 +65,27 @@ export class IssuePageComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(svgString);
   }
 
-  sendToGithub(issue: IssueInterface) {
-    this.github
-      .newIssue(issue, { owner: 'yret1', repo: 'Feedbacked' })
-      .then(() => {
-        alert('Issue sent to target repository');
+  async sendToGithub(issue: IssueInterface) {
+    let target: any;
+    const client = await this.backend
+      .getClient(this.userId, this.clientId)
+      .subscribe((client) => {
+        if (client.client.integrationSettings.owner) {
+          target = {
+            owner: client.client.integrationSettings.owner,
+            repo: client.client.integrationSettings.repo,
+          };
+
+          console.log(client.client, target);
+
+          this.github
+            .newIssue(issue, { owner: target.owner, repo: target.repo })
+            .then(() => {
+              alert('Issue sent to target repository');
+            });
+        } else {
+          alert('Please check integration details');
+        }
       });
   }
 

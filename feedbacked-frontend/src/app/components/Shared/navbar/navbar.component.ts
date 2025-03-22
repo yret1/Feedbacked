@@ -59,8 +59,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   links = [
     { name: 'Why', route: '/', hash: 'why' },
-    { name: 'Integrations', route: '/', hash: 'integrations' },
-    { name: 'Demo', route: '/demo' },
+    { name: 'Demo', route: 'https://timerinl-mning.vercel.app/timermain' },
   ];
 
   dashlinks = [
