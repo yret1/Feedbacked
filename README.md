@@ -1,5 +1,3 @@
-Here's an expanded README with sections for backend and plugin:
-
 ### Feedbacked - Handle Issues with Ease
 
 Try the plugin at: https://timerinl-mning.vercel.app/timermain
