@@ -22,11 +22,6 @@ export const routes: Routes = [
     component: SignUpComponent,
   },
   {
-    title: 'Demo',
-    path: 'demo',
-    component: DemopageComponent,
-  },
-  {
     title: 'Sign In',
     path: 'signin',
     component: SignInComponent,
