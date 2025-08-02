@@ -14,16 +14,15 @@ import * as CryptoJS from 'crypto-js';
 import { environment } from '../../../enviroments/enviroment';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [
-    CenterwrappComponent,
-    CommonModule,
-    FormsModule,
-    IntegrationComponent,
-  ],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss',
+    selector: 'app-settings',
+    imports: [
+        CenterwrappComponent,
+        CommonModule,
+        FormsModule,
+        IntegrationComponent,
+    ],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit {
   constructor(

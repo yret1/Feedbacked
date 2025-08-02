@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-messagedisplaybox',
-  standalone: true,
-  imports: [],
-  templateUrl: './messagedisplaybox.component.html',
-  styleUrl: './messagedisplaybox.component.scss',
+    selector: 'app-messagedisplaybox',
+    imports: [],
+    templateUrl: './messagedisplaybox.component.html',
+    styleUrl: './messagedisplaybox.component.scss'
 })
 export class MessagedisplayboxComponent {
   messages: string[] = [

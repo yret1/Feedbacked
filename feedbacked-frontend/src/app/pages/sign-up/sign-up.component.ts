@@ -7,54 +7,47 @@ import { RouterLink } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { passwordMatchValidator } from '../../../services/Validator';
 @Component({
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  standalone: true,
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss',
-  animations: [
-    trigger('errorAnimation', [
-      transition(':enter', [
-        style({
-          opacity: 0,
-          height: 0,
-          marginTop: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
-          overflow: 'hidden',
-        }),
-        animate(
-          '200ms ease-out',
-          style({
-            opacity: 1,
-            height: '*',
-            marginTop: '0.25rem',
-            paddingTop: '*',
-            paddingBottom: '*',
-          })
-        ),
-      ]),
-      transition(':leave', [
-        style({
-          opacity: 1,
-          height: '*',
-          marginTop: '0.25rem',
-          paddingTop: '*',
-          paddingBottom: '*',
-          overflow: 'hidden',
-        }),
-        animate(
-          '200ms ease-in',
-          style({
-            opacity: 0,
-            height: 0,
-            marginTop: 0,
-            paddingTop: 0,
-            paddingBottom: 0,
-          })
-        ),
-      ]),
-    ]),
-  ],
+    imports: [CommonModule, ReactiveFormsModule, RouterLink],
+    templateUrl: './sign-up.component.html',
+    styleUrl: './sign-up.component.scss',
+    animations: [
+        trigger('errorAnimation', [
+            transition(':enter', [
+                style({
+                    opacity: 0,
+                    height: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    overflow: 'hidden',
+                }),
+                animate('200ms ease-out', style({
+                    opacity: 1,
+                    height: '*',
+                    marginTop: '0.25rem',
+                    paddingTop: '*',
+                    paddingBottom: '*',
+                })),
+            ]),
+            transition(':leave', [
+                style({
+                    opacity: 1,
+                    height: '*',
+                    marginTop: '0.25rem',
+                    paddingTop: '*',
+                    paddingBottom: '*',
+                    overflow: 'hidden',
+                }),
+                animate('200ms ease-in', style({
+                    opacity: 0,
+                    height: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                })),
+            ]),
+        ]),
+    ]
 })
 export class SignUpComponent {
   signupForm!: FormGroup;

@@ -17,11 +17,10 @@ import {
 } from '../../../services/Integrationservices/github.service';
 
 @Component({
-  selector: 'app-issue-page',
-  standalone: true,
-  imports: [DatePipe, TitleCasePipe, CenterwrappComponent],
-  templateUrl: './issue-page.component.html',
-  styleUrl: './issue-page.component.scss',
+    selector: 'app-issue-page',
+    imports: [DatePipe, TitleCasePipe, CenterwrappComponent],
+    templateUrl: './issue-page.component.html',
+    styleUrl: './issue-page.component.scss'
 })
 export class IssuePageComponent implements OnInit {
   //Services

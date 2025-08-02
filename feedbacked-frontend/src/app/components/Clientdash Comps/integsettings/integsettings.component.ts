@@ -12,11 +12,10 @@ import { Iconservice } from '../../../../services/icons.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-integsettings',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './integsettings.component.html',
-  styleUrl: './integsettings.component.scss',
+    selector: 'app-integsettings',
+    imports: [FormsModule, CommonModule],
+    templateUrl: './integsettings.component.html',
+    styleUrl: './integsettings.component.scss'
 })
 export class IntegsettingsComponent implements OnInit {
   @Output() newIntegration = new EventEmitter();

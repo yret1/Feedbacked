@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-headerbox',
-  standalone: true,
-  imports: [],
-  templateUrl: './headerbox.component.html',
-  styleUrl: './headerbox.component.scss',
+    selector: 'app-headerbox',
+    imports: [],
+    templateUrl: './headerbox.component.html',
+    styleUrl: './headerbox.component.scss'
 })
 export class HeaderboxComponent {
   @Input() title!: string;

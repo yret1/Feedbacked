@@ -15,11 +15,10 @@ import { UserInterface } from '../../../interfaces/UserInterface';
 export type integration = 'github' | 'none';
 
 @Component({
-  selector: 'app-integration',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './integration.component.html',
-  styleUrl: './integration.component.scss',
+    selector: 'app-integration',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './integration.component.html',
+    styleUrl: './integration.component.scss'
 })
 export class IntegrationComponent {
   @Output() removeToken = new EventEmitter();

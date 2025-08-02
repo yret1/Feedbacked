@@ -3,11 +3,10 @@ import { ProconComponent } from '../procon/procon.component';
 import { WwoInterface } from '../../../../interfaces/wwoInterface';
 
 @Component({
-  selector: 'app-wwo',
-  standalone: true,
-  imports: [ProconComponent],
-  templateUrl: './wwo.component.html',
-  styleUrl: './wwo.component.scss',
+    selector: 'app-wwo',
+    imports: [ProconComponent],
+    templateUrl: './wwo.component.html',
+    styleUrl: './wwo.component.scss'
 })
 export class WwoComponent {
   //With and Without Feedbacked

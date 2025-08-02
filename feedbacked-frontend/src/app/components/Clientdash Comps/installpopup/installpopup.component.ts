@@ -2,22 +2,21 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-installpopup',
-  standalone: true,
-  imports: [],
-  templateUrl: './installpopup.component.html',
-  styleUrl: './installpopup.component.scss',
-  animations: [
-    trigger('Fader', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('0.3s ease-in-out', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('0.3s ease-in-out', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: 'app-installpopup',
+    imports: [],
+    templateUrl: './installpopup.component.html',
+    styleUrl: './installpopup.component.scss',
+    animations: [
+        trigger('Fader', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('0.3s ease-in-out', style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                animate('0.3s ease-in-out', style({ opacity: 0 })),
+            ]),
+        ]),
+    ]
 })
 export class InstallpopupComponent {
   @Input() userId!: string;

@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-popup',
-  standalone: true,
-  imports: [],
-  templateUrl: './popup.component.html',
-  styleUrl: './popup.component.scss',
+    selector: 'app-popup',
+    imports: [],
+    templateUrl: './popup.component.html',
+    styleUrl: './popup.component.scss'
 })
 export class PopupComponent implements OnInit {
   @Input() type!: string;

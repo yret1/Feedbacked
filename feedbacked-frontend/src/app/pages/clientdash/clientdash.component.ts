@@ -21,22 +21,21 @@ import { IntegsettingsComponent } from '../../components/Clientdash Comps/integs
 import { UserInterface } from '../../interfaces/UserInterface';
 
 @Component({
-  selector: 'app-clientdash',
-  standalone: true,
-  imports: [
-    RouterLink,
-    ClientdetailsComponent,
-    ClientissuesComponent,
-    LoadingcompComponent,
-    PopupComponent,
-    CommonModule,
-    FormsModule,
-    CenterwrappComponent,
-    InstallpopupComponent,
-    IntegsettingsComponent,
-  ],
-  templateUrl: './clientdash.component.html',
-  styleUrl: './clientdash.component.scss',
+    selector: 'app-clientdash',
+    imports: [
+        RouterLink,
+        ClientdetailsComponent,
+        ClientissuesComponent,
+        LoadingcompComponent,
+        PopupComponent,
+        CommonModule,
+        FormsModule,
+        CenterwrappComponent,
+        InstallpopupComponent,
+        IntegsettingsComponent,
+    ],
+    templateUrl: './clientdash.component.html',
+    styleUrl: './clientdash.component.scss'
 })
 export class ClientdashComponent implements OnInit {
   //Back url

@@ -7,11 +7,10 @@ import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-clientissues',
-  standalone: true,
-  imports: [RouterLink, DatePipe],
-  templateUrl: './clientissues.component.html',
-  styleUrl: './clientissues.component.scss',
+    selector: 'app-clientissues',
+    imports: [RouterLink, DatePipe],
+    templateUrl: './clientissues.component.html',
+    styleUrl: './clientissues.component.scss'
 })
 export class ClientissuesComponent implements OnInit {
   @Input() issue!: FeedbackInterface;

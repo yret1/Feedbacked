@@ -9,11 +9,10 @@ import { BackendService } from '../../../../services/backend';
 import { newClientResponse } from '../../../interfaces/Backend';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-create-client',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './create-client.component.html',
-  styleUrl: './create-client.component.scss',
+    selector: 'app-create-client',
+    imports: [ReactiveFormsModule],
+    templateUrl: './create-client.component.html',
+    styleUrl: './create-client.component.scss'
 })
 export class CreateClientComponent implements OnInit {
   createNewProject!: FormGroup;

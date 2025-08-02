@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth';
 
 @Component({
-  selector: 'app-clientoverviewmodal',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './clientoverviewmodal.component.html',
-  styleUrls: ['./clientoverviewmodal.component.scss'],
+    selector: 'app-clientoverviewmodal',
+    imports: [RouterLink],
+    templateUrl: './clientoverviewmodal.component.html',
+    styleUrls: ['./clientoverviewmodal.component.scss']
 })
 export class ClientoverviewmodalComponent {
   @Input() status!: string;

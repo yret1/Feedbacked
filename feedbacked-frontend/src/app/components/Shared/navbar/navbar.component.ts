@@ -14,39 +14,31 @@ import {
 } from '@angular/animations';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
-  animations: [
-    trigger('openClose', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('0.3s ease-in-out', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('0.3s ease-in-out', style({ opacity: 0 })),
-      ]),
-    ]),
-    trigger('staggerItems', [
-      transition(':enter', [
-        query(
-          'li, button',
-          [
-            style({ opacity: 0, transform: 'translateY(-20px)' }),
-            stagger(60, [
-              animate(
-                '0.2s ease-out',
-                style({ opacity: 1, transform: 'translateY(0)' })
-              ),
+    selector: 'app-navbar',
+    imports: [RouterLink, CommonModule],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss',
+    animations: [
+        trigger('openClose', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('0.3s ease-in-out', style({ opacity: 1 })),
             ]),
-          ],
-          { optional: true }
-        ),
-      ]),
-    ]),
-  ],
+            transition(':leave', [
+                animate('0.3s ease-in-out', style({ opacity: 0 })),
+            ]),
+        ]),
+        trigger('staggerItems', [
+            transition(':enter', [
+                query('li, button', [
+                    style({ opacity: 0, transform: 'translateY(-20px)' }),
+                    stagger(60, [
+                        animate('0.2s ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+                    ]),
+                ], { optional: true }),
+            ]),
+        ]),
+    ]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   constructor(

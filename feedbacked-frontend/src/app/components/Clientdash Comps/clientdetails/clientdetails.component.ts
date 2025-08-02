@@ -5,11 +5,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth';
 
 @Component({
-  selector: 'app-clientdetails',
-  standalone: true,
-  imports: [],
-  templateUrl: './clientdetails.component.html',
-  styleUrl: './clientdetails.component.scss',
+    selector: 'app-clientdetails',
+    imports: [],
+    templateUrl: './clientdetails.component.html',
+    styleUrl: './clientdetails.component.scss'
 })
 export class ClientdetailsComponent implements OnInit {
   @Input() clientData!: ClientsInterface;

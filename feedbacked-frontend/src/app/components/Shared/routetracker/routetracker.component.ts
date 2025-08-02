@@ -4,11 +4,10 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-routetracker',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './routetracker.component.html',
-  styleUrl: './routetracker.component.scss',
+    selector: 'app-routetracker',
+    imports: [RouterLink],
+    templateUrl: './routetracker.component.html',
+    styleUrl: './routetracker.component.scss'
 })
 export class RoutetrackerComponent implements OnInit {
   constructor(private router: Router) {}
